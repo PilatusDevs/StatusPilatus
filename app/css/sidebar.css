@@ -73,6 +73,10 @@ body {
   color: #999999;
 }
 
+.sidebar-subitem li a {
+  margin-left: 20px;
+}
+
 .sidebar-nav li a:hover {
   text-decoration: none;
   color: #fff;

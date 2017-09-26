@@ -5,7 +5,7 @@
   <title>StaPi</title>
 
   <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="./css/sidebar.css" rel="stylesheet">
+  <link href="./app/css/sidebar.css" rel="stylesheet">
 
 </head>
 <body>
@@ -20,26 +20,31 @@
           </a>
         </li>
         <li>
-          <a href="#">Dashboard</a>
+          <a href="#tab">Dashboard</a>
         </li>
         <li>
-          <a href="#">Shortcuts</a>
+          <a href="#">Monitoring</a>
         </li>
-        <li>
-          <a href="#">Overview</a>
-        </li>
-        <li>
-          <a href="#">Events</a>
-        </li>
-        <li>
-          <a href="#">About</a>
-        </li>
-        <li>
-          <a href="#">Services</a>
-        </li>
-        <li>
-          <a href="#">Contact</a>
-        </li>
+        <div class="sidebar-subitem">
+          <li>
+            <a href="#tab">CPU</a>
+          </li>
+          <li>
+            <a href="#tab">GPU</a>
+          </li>
+          <li>
+            <a href="#tab">HDD</a>
+          </li>
+          <li>
+            <a href="#tab">OS</a>
+          </li>
+          <li>
+            <a href="#tab">Network</a>
+          </li>
+        </div>
+        <!-- <li>
+          <a href="#"></a>
+        </li> -->
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -47,9 +52,11 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="container-fluid">
-        <h1>Simple Sidebar</h1>
-        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+        <div class="page-header">
+          <h1>Dashboard</h1>
+        </div>
+        <!-- <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p> -->
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -64,6 +71,7 @@
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="./node_modules/popper.js/dist/popper.min.js"></script>
+  <script src="./app/js/app.js"></script>
   <!-- <script> require('./renderer.js') </script> -->
 
   <!-- Insert this line after script imports -->
