@@ -17,6 +17,6 @@
 */
 "use strict";
 
-function refreshCpu() {
+function refreshHdd() {
 
 }

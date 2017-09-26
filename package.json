@@ -1,7 +1,7 @@
 {
   "name": "statuspilatus",
   "version": "0.0.1",
-  "description": "Monitor your system etc",
+  "description": "Monitor your PC like never before!",
   "main": "main.js",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
@@ -23,10 +23,10 @@
   "keywords": [
     "electron"
   ],
-  "author": "MeesMaas & Jelmerro",
-  "license": "ISC",
+  "author": "PilatusDevs",
+  "license": "GPL-3.0+",
   "bugs": {
     "url": "https://github.com/PilatusDevs/StatusPilatus/issues"
   },
-  "homepage": "https://github.com/PilatusDevs/StatusPilatus#readme"
+  "homepage": "https://github.com/PilatusDevs/StatusPilatus"
 }
