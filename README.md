@@ -31,20 +31,25 @@ Any errors that occur during the process can mean two things:
 # Structure
 
 We decided to structure our project like so:
-
-- index.html
-- main.js
-- package.json
-- README.md
-- LICENSE
-- .gitignore
-- core
-    - css
-    - js
-    - img
-- components
-    - hdd, cpu folder etc.
-
+```
+.
+├── components
+│   ├── cpu/
+│   ├── gpu/
+│   ├── hdd/
+│   ├── network/
+│   └── os/
+├── core
+│   ├── css/
+│   ├── img/
+│   └── js/
+├── index.html
+├── LICENSE
+├── main.js
+├── npm-shrinkwrap.json
+├── package.json
+└── README.md
+```
 
 # Style guide
 
