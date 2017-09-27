@@ -44,10 +44,12 @@ We decided to structure our project like so:
 │   ├── img/
 │   └── js/
 ├── index.html
-├── LICENSE
 ├── main.js
 ├── npm-shrinkwrap.json
 ├── package.json
+├── LICENSE
+├── ISSUE_TEMPLATE.md
+├── PULL_REQUEST_TEMPLATE.md
 └── README.md
 ```
 

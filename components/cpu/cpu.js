@@ -1,19 +1,19 @@
 /*
-    StatusPilatus: Monitor your PC like never before!
-    Copyright (C) 2017 PilatusDevs
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*    StatusPilatus: Monitor your PC like never before!
+*    Copyright (C) 2017 PilatusDevs
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 "use strict";
 const si = require('systeminformation');
@@ -21,6 +21,7 @@ var speedmin = 0;
 var speedmax = 0;
 var speed = 0;
 
+/* set the config for the graph */
 var config = {
     type: 'line',
     data: {
@@ -97,6 +98,7 @@ function refreshCpu() {
 * Update the chart
 */
 function refreshCpuUsage() {
+    /* get the cpu information */
     si.cpu(function(data) {
         speedmin = data.speedmin;
         speedmax = data.speedmax;
@@ -106,9 +108,11 @@ function refreshCpuUsage() {
         speed = data.avg;
     })
 
+    /* calculate it */
     var usage = (speed - speedmin) / (speedmax - speedmin) * 100;
     console.log(parseInt(usage));
-    
+
+    /* update the graph */
     config.data.labels.push("");
     config.data.datasets.forEach(function(dataset) {
         dataset.data.push(parseInt(usage));
