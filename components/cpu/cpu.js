@@ -16,7 +16,105 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 "use strict";
+const si = require('systeminformation');
+var speedmin = 0;
+var speedmax = 0;
+var speed = 0;
 
+var config = {
+    type: 'line',
+    data: {
+        //labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "Usage",
+            backgroundColor: "#f38b4a",
+            borderColor: "#f38b4a",
+            data: [
+                      0,
+                      0,
+                      0,
+                      0,
+                   ],
+            fill: false,
+        }]
+    },
+    options: {
+        responsive: true,
+        title:{
+            display:false,
+            text:'Chart.js Line Chart'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Time'
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    min : 0,
+                    max : 100,
+                    stepSize : 10,
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Value'
+                }
+            }]
+        }
+    }
+};
+
+/**
+* Called when someone clicks cpu in the sidebar
+*/
+function initCpu() {
+    console.log("initCpu");
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx, config);
+}
+
+/**
+* Called in a loop in app.js
+*/
 function refreshCpu() {
+    console.log("CPU refresh");
+    refreshCpuUsage();
+}
+
+/**
+* Update the chart
+*/
+function refreshCpuUsage() {
+    si.cpu(function(data) {
+        speedmin = data.speedmin;
+        speedmax = data.speedmax;
+    })
+
+    si.cpuCurrentspeed(function(data) {
+        speed = data.avg;
+    })
+
+    var usage = (speed - speedmin) / (speedmax - speedmin) * 100;
+    console.log(parseInt(usage));
+    
+    config.data.labels.push("");
+    config.data.datasets.forEach(function(dataset) {
+        dataset.data.push(parseInt(usage));
+    });
+     window.myLine.update();
+    // $("#cpuUsage").text(parseInt(usage) + "%");
+    // $("#cpuUsage").css( "width", parseInt(usage)+"%" );
 
 }

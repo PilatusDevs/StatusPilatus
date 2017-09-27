@@ -18,5 +18,5 @@
 "use strict";
 
 function refreshGpu() {
-
+    console.log("Gpuu shit geresrhed");
 }
