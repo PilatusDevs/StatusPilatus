@@ -64,9 +64,9 @@
       "resolved": "https://registry.npmjs.org/boom/-/boom-4.3.1.tgz"
     },
     "bootstrap": {
-      "version": "4.0.0-beta",
-      "from": "bootstrap@>=4.0.0-alpha.6 <5.0.0",
-      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.0.0-beta.tgz"
+      "version": "3.3.7",
+      "from": "bootstrap@>=3.3.7 <4.0.0",
+      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz"
     },
     "brace-expansion": {
       "version": "1.1.8",
@@ -602,11 +602,6 @@
       "version": "2.0.1",
       "from": "pinkie-promise@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz"
-    },
-    "popper.js": {
-      "version": "1.12.5",
-      "from": "popper.js@>=1.12.5 <2.0.0",
-      "resolved": "https://registry.npmjs.org/popper.js/-/popper.js-1.12.5.tgz"
     },
     "pretty-bytes": {
       "version": "1.0.4",
