@@ -30,11 +30,11 @@ var config = {
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
             data: [
-                      0,
-                      0,
-                      0,
-                      0,
-                   ],
+                0,
+                0,
+                0,
+                0,
+            ],
             fill: false,
         }]
     },
@@ -81,10 +81,10 @@ var config = {
 */
 function initCpu() {
     si.cpu()
-        .then(data => {
-            console.log(data);
-            $("#subtitle").text(data.manufacturer+" "+data.brand)
-        });
+    .then(data => {
+        console.log(data);
+        $("#subtitle").text(data.manufacturer+" "+data.brand)
+    });
     console.log("initCpu");
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx, config);
@@ -103,26 +103,31 @@ function refreshCpu() {
 */
 function refreshCpuUsage() {
     /* get the cpu information */
-    si.cpu(function(data) {
-        speedmin = data.speedmin;
-        speedmax = data.speedmax;
-    })
+    var usage;
 
-    si.cpuCurrentspeed(function(data) {
-        speed = data.avg;
-    })
+    si.currentLoad()
+    .then(data => {
+        // console.log(data);
+        //console.log(usage = data.currentload);
+        usage = data.currentload;
 
-    /* calculate it */
-    var usage = (speed - speedmin) / (speedmax - speedmin) * 100;
-    console.log(parseInt(usage));
+        console.log(usage);
+        config.data.labels.push("");
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data.push(parseInt(usage));
+        });
+        window.myLine.update();
+        $("#cpuUsage").text(parseInt(usage) + "%");
+        $("#cpuUsage").css( "width", parseInt(usage)+"%" );
 
-    /* update the graph */
-    config.data.labels.push("");
-    config.data.datasets.forEach(function(dataset) {
-        dataset.data.push(parseInt(usage));
+
+
     });
-     window.myLine.update();
-    // $("#cpuUsage").text(parseInt(usage) + "%");
-    // $("#cpuUsage").css( "width", parseInt(usage)+"%" );
+    //
+    // /* calculate it */
+    // var usage = (speed - speedmin) / (speedmax - speedmin) * 100;
+    // console.log(parseInt(usage));
+    //
+    // /* update the graph */
 
 }
