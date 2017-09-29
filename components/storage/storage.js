@@ -17,10 +17,10 @@
 */
 "use strict";
 
-function initHdd() {
+function initStorage() {
 
 }
 
-function refreshHdd() {
+function refreshStorage() {
     console.log("HDD refresh call");
 }

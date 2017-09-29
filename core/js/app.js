@@ -49,6 +49,7 @@ function changePage(){
 
             // Now set the functionName to loop
             functionName = "refresh" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
         });
 
     });
