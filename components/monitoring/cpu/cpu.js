@@ -68,7 +68,7 @@ var configTemperature = {
     data: {
         //labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
-            label: "temperature",
+            label: "Temperature",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
             //data: [],
@@ -139,7 +139,7 @@ function refreshTemperature(){
 
     si.cpuTemperature()
     .then(data => {
-        temperature = data.main;
+        temperature = data.max;
 
         console.log(data);
         /* update the graph */
