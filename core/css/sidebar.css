@@ -174,7 +174,6 @@ body {
 
 .active-tab {
     font-weight: bolder;
-    /*text-decoration: underline !important;*/
 }
 
 .active-tab::before {
