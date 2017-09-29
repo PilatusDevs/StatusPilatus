@@ -6,7 +6,7 @@ Monitor your PC like never before!
 
 ## Features
 
-* None so far ;)
+- Check your cpu usage
 
 ## How to use
 
@@ -36,23 +36,28 @@ We decided to structure our project like so:
 ```
 .
 ├── components
-│   ├── cpu/
-│   ├── gpu/
-│   ├── hdd/
-│   ├── network/
-│   └── os/
+│   ├── dashboard
+│   │   └── dashboard/
+│   └── monitoring
+│       ├── cpu/
+│       ├── gpu/
+│       ├── memory/
+│       ├── network/
+│       ├── os/
+│       └── storage/
 ├── core
-│   ├── css/
-│   ├── img/
-│   └── js/
+│   ├── css/
+│   ├── img/
+│   └── js/
 ├── index.html
+├── ISSUE_TEMPLATE.md
+├── LICENSE
 ├── main.js
 ├── npm-shrinkwrap.json
 ├── package.json
-├── LICENSE
-├── ISSUE_TEMPLATE.md
 ├── PULL_REQUEST_TEMPLATE.md
 └── README.md
+
 ```
 
 ## Style guide
