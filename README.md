@@ -4,11 +4,11 @@
 
 Monitor your PC like never before!
 
-# Features
+## Features
 
 * None so far ;)
 
-# How to use
+## How to use
 
 Currently there are no binary releases.
 
@@ -28,7 +28,7 @@ Any errors that occur during the process can mean two things:
 * You downloaded the latest source from an unstable branch
 * Node.js, npm or you have configured something wrong
 
-# Structure
+## Structure
 
 We decided to structure our project like so:
 ```
@@ -53,7 +53,7 @@ We decided to structure our project like so:
 └── README.md
 ```
 
-# Style guide
+## Style guide
 
 We try to follow these suggestions when writing code:
 
@@ -66,7 +66,7 @@ We try to follow these suggestions when writing code:
 * In js, always declare strings with double quotes, unless there is a good reason not to
 * When you need to store complex structures, use JSON
 
-# Technologies
+## Technologies
 
 We made use of the following software to create StatusPilatus:
 
@@ -78,6 +78,6 @@ We made use of the following software to create StatusPilatus:
 * Systeminformation (MIT)
 * Tether (MIT)
 
-# License
+## License
 
 GPL-3.0+, see LICENSE for details.
