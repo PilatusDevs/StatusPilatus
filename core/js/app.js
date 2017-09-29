@@ -19,14 +19,14 @@
 
 var functionName = "dummy";
 
-const si = require('systeminformation');
+const si = require("systeminformation");
 
 /*
 * Boot all the core things of the app
 */
 function init() {
     // set interval for loop()
-    setTimeout(loop, 500, '');
+    setTimeout(loop, 500, "");
 
     // Load the changePage for the listener
     changePage();
@@ -39,6 +39,8 @@ function init() {
 */
 function changePage(){
     $('a[href="#tab"]').click(function() {
+        $('a[href="#tab"]').removeClass("activeTab");
+        $(this).addClass("activeTab");
         $("#dashTitle").text($(this).text());
 
         var name = $(this).text().toLowerCase();
@@ -57,7 +59,7 @@ function changePage(){
 
 function loop(args) {
     window[functionName]();
-    setTimeout(loop, 500, '');
+    setTimeout(loop, 500, "");
 }
 
 /*
