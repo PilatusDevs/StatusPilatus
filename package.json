@@ -8,8 +8,7 @@
     "chart.js": "^2.7.0",
     "electron": "^1.7.8",
     "jquery": "^3.2.1",
-    "systeminformation": "^3.30.2",
-    "tether": "^1.4.0"
+    "systeminformation": "^3.30.2"
   },
   "devDependencies": {},
   "scripts": {

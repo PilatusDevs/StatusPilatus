@@ -34,15 +34,15 @@ We decided to structure our project like so:
 ```
 .
 ├── components
-│   ├── cpu/
-│   ├── gpu/
-│   ├── hdd/
-│   ├── network/
-│   └── os/
+│   ├── cpu/
+│   ├── gpu/
+│   ├── hdd/
+│   ├── network/
+│   └── os/
 ├── core
-│   ├── css/
-│   ├── img/
-│   └── js/
+│   ├── css/
+│   ├── img/
+│   └── js/
 ├── index.html
 ├── main.js
 ├── npm-shrinkwrap.json
@@ -70,13 +70,11 @@ We try to follow these suggestions when writing code:
 
 We made use of the following software to create StatusPilatus:
 
-* Electron (MIT)
-* Bootstrap (MIT)
-* JQuery (MIT)
-* Chartjs (MIT)
-* Popper.js (MIT)
-* Systeminformation (MIT)
-* Tether (MIT)
+* [Electron](https://github.com/electron/electron) (MIT)
+* [Bootstrap](https://github.com/twbs/bootstrap) (MIT)
+* [JQuery](https://github.com/jquery/jquery) (MIT)
+* [Chart.js](https://github.com/chartjs/Chart.js) (MIT)
+* [Systeminformation](https://github.com/sebhildebrandt/systeminformation) (MIT)
 
 ## License
 

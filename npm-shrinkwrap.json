@@ -763,11 +763,6 @@
       "from": "systeminformation@>=3.30.2 <4.0.0",
       "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-3.30.2.tgz"
     },
-    "tether": {
-      "version": "1.4.0",
-      "from": "tether@>=1.4.0 <2.0.0",
-      "resolved": "https://registry.npmjs.org/tether/-/tether-1.4.0.tgz"
-    },
     "throttleit": {
       "version": "0.0.2",
       "from": "throttleit@0.0.2",
