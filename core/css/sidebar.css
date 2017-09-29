@@ -28,16 +28,16 @@ body {
 }
 
 #wrapper.toggled {
-    padding-left: 250px;
+    padding-left: 200px;
 }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 250px;
+    left: 200px;
     width: 0;
     height: 100%;
-    margin-left: -250px;
+    margin-left: -200px;
     overflow-y: auto;
     background: #333;
     -webkit-transition: all 0.5s ease;
@@ -47,7 +47,7 @@ body {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 200px;
 }
 
 #page-content-wrapper {
@@ -58,7 +58,7 @@ body {
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
-    margin-right: -250px;
+    margin-right: -200px;
 }
 
 
@@ -67,10 +67,11 @@ body {
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 250px;
+    width: 200px;
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: 17px;
 }
 
 .sidebar-nav li {
@@ -118,13 +119,13 @@ body {
         padding-left: 0;
     }
     #wrapper.toggled {
-        padding-left: 250px;
+        padding-left: 200px;
     }
     #sidebar-wrapper {
         width: 0;
     }
     #wrapper.toggled #sidebar-wrapper {
-        width: 250px;
+        width: 200px;
     }
     #page-content-wrapper {
         padding: 20px;
@@ -138,10 +139,35 @@ body {
 
 /*custom colours for sidebar items*/
 
+#logo {
+    width: 150px;
+    height: 150px;
+}
+
 #monitoring {
     color: #999999;
 }
 
 #cpu {
     color: #f38b4a;
+}
+
+#gpu {
+    color: #aa2f3a;
+}
+
+#memory {
+    color: #cc576e;
+}
+
+#storage {
+    color: #c1cc66;
+}
+
+#os {
+    color: #9c86cc
+}
+
+#network {
+    color: #a4cc99;
 }
