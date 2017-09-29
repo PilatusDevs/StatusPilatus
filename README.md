@@ -30,6 +30,8 @@ Any errors that occur during the process can mean two things:
 
 ## Structure
 
+#OUTDATED
+
 We decided to structure our project like so:
 ```
 .

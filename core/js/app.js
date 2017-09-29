@@ -17,7 +17,7 @@
 */
 "use strict";
 
-var functionName = "dummy";
+var functionName = "refreshDashboard";
 
 const si = require("systeminformation");
 
@@ -25,6 +25,8 @@ const si = require("systeminformation");
 * Boot all the core things of the app
 */
 function init() {
+    window.initDashboard();
+    $("#dashboard").addClass("active-tab");
     // set interval for loop()
     setTimeout(loop, 500, "");
 
@@ -39,35 +41,30 @@ function init() {
 */
 function changePage(){
     $('a[href="#tab"]').click(function() {
-        $('a[href="#tab"]').removeClass("activeTab");
-        $(this).addClass("activeTab");
+        $('a[href="#tab"]').removeClass("active-tab");
+        $(this).addClass("active-tab");
         $("#dashTitle").text($(this).text());
 
-        var name = $(this).text().toLowerCase();
-        $(".frame").load("./components/"+name+"/"+name+".html", function(){
+        var layer = $(this).attr("data-layer");
+        var folder = $(this).attr("data-folder");
+        var name = $(this).attr("data-name");
+        var path = `./components/${layer}/${folder}/${name}.html`;
+        console.log(path);
+        $(".frame").load(path, function(){
             // Call the init function once so the function can set up the page (graphs etc..)
             var initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            console.log(initFunction);
             window[initFunction]();
 
             // Now set the functionName to loop
             functionName = "refresh" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-
         });
-
     });
 }
 
 function loop(args) {
     window[functionName]();
     setTimeout(loop, 500, "");
-}
-
-/*
-* So you dont get 1800 errors messages. This function can later
-* be replaced by something to run the dashboard.
-*/
-function dummy() {
-
 }
 
 $(function() {

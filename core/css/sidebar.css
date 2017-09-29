@@ -172,11 +172,11 @@ body {
     color: #a4cc99;
 }
 
-.activeTab {
+.active-tab {
     font-weight: bolder;
     /*text-decoration: underline !important;*/
 }
 
-.activeTab::before {
+.active-tab::before {
     content: "> ";
 }

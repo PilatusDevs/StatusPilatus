@@ -31,32 +31,32 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li>
-                    <img src="./core/img/logo2.png" id="logo">
+                    <img src="./core/img/logo.png" id="logo">
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="#tab" id="dashboard" class="active-tab" data-layer="dashboard" data-folder="dashboard" data-name="dashboard">Dashboard</a>
                 </li>
                 <li id="monitoring">
                     Monitoring
                 </li>
                 <div class="sidebar-subitem">
                     <li>
-                        <a href="#tab" id="cpu" data-name="cpu">CPU</a>
+                        <a href="#tab" id="cpu" data-layer="monitoring" data-folder="cpu" data-name="cpu">CPU</a>
                     </li>
                     <li>
-                        <a href="#tab" id="gpu" data-name="gpu">GPU</a>
+                        <a href="#tab" id="gpu" data-layer="monitoring" data-folder="gpu" data-name="gpu">GPU</a>
                     </li>
                     <li>
-                        <a href="#tab" id="memory" data-name="memory">Memory</a>
+                        <a href="#tab" id="memory" data-layer="monitoring" data-folder="memory" data-name="memory">Memory</a>
                     </li>
                     <li>
-                        <a href="#tab" id="storage" data-name="storage">Storage</a>
+                        <a href="#tab" id="storage" data-layer="monitoring" data-folder="storage" data-name="storage">Storage</a>
                     </li>
                     <li>
-                        <a href="#tab" id="os" data-name="os">OS</a>
+                        <a href="#tab" id="os" data-layer="monitoring" data-folder="os" data-name="os">OS</a>
                     </li>
                     <li>
-                        <a href="#tab" id="network" data-name="network">Network</a>
+                        <a href="#tab" id="network" data-layer="monitoring" data-folder="network" data-name="network">Network</a>
                     </li>
                 </div>
                 <!-- <li>
@@ -90,12 +90,13 @@
 <script src="./core/js/app.js"></script>
 
 <!-- all the components -->
-<script src="./components/cpu/cpu.js"></script>
-<script src="./components/gpu/gpu.js"></script>
-<script src="./components/memory/memory.js"></script>
-<script src="./components/storage/storage.js"></script>
-<script src="./components/network/network.js"></script>
-<script src="./components/os/os.js"></script>
+<script src="./components/dashboard/dashboard/dashboard.js"></script>
+<script src="./components/monitoring/cpu/cpu.js"></script>
+<script src="./components/monitoring/gpu/gpu.js"></script>
+<script src="./components/monitoring/memory/memory.js"></script>
+<script src="./components/monitoring/storage/storage.js"></script>
+<script src="./components/monitoring/network/network.js"></script>
+<script src="./components/monitoring/os/os.js"></script>
 
 <!-- Insert this line after script imports -->
 <script>if (window.module) module = window.module;</script>
