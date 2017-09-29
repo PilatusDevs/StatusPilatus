@@ -16,7 +16,6 @@
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 "use strict";
-const si = require('systeminformation');
 var speedmin = 0;
 var speedmax = 0;
 var speed = 0;
@@ -102,6 +101,7 @@ function refreshCpuUsage() {
     si.cpu(function(data) {
         speedmin = data.speedmin;
         speedmax = data.speedmax;
+        console.log(data);
     })
 
     si.cpuCurrentspeed(function(data) {

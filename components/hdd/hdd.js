@@ -18,5 +18,5 @@
 "use strict";
 
 function refreshHdd() {
-
+    console.log("HDD refresh call");
 }
