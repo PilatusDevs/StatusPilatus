@@ -42,14 +42,15 @@ function changePage(){
         $("#dashTitle").text($(this).text());
 
         var name = $(this).text().toLowerCase();
-        $(".frame").load("./components/"+name+"/"+name+".html");
+        $(".frame").load("./components/"+name+"/"+name+".html", function(){
+            // Call the init function once so the function can set up the page (graphs etc..)
+            var initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            window[initFunction]();
 
-        // Call the init function once so the function can set up the page (graphs etc..)
-        var initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-        window[initFunction]();
+            // Now set the functionName to loop
+            functionName = "refresh" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        });
 
-        // Now set the functionName to loop
-        functionName = "refresh" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     });
 }
 
