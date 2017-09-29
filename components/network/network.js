@@ -17,10 +17,30 @@
 */
 "use strict";
 
-function initNetwork() {
+function adapterHtml(adapter) {
+    var body = "<div>";
+    body += `<h3>${adapter.iface}</h3><br />`;
+    body += `<b>IPv4</b>: ${adapter.ip4}<br />`;
+    body += `<b>IPv6</b>: ${adapter.ip6}<br />`;
+    body += `<b>MAC</b>: ${adapter.mac}<br />`;
+    body += `</div>`;
+    return body;
+}
 
+function refreshAdapters() {
+    $("#adapters").html = "";
+    si.networkInterfaces(function(data) {
+        data.forEach(function(adapter) {
+            if (adapter.internal == false) {
+                $("#adapters").append(adapterHtml(adapter));
+            }
+        });
+    });
+}
+
+function initNetwork() {
+    refreshAdapters();
 }
 
 function refreshNetwork() {
-
 }

@@ -39,7 +39,7 @@ body {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #333;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -134,4 +134,14 @@ body {
         position: relative;
         margin-right: 0;
     }
+}
+
+/*custom colours for sidebar items*/
+
+#monitoring {
+    color: #999999;
+}
+
+#cpu {
+    color: #f38b4a;
 }
