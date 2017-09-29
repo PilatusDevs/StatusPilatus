@@ -24,7 +24,7 @@ var functionName = "dummy";
 */
 function init() {
     // set interval for loop()
-    //setTimeout(loop, 500, '');
+    setTimeout(loop, 500, '');
 
     // Load the changePage for the listener
     changePage();
@@ -64,4 +64,6 @@ function dummy() {
 
 }
 
-$( document ).ready( init );
+$(function() {
+    init();
+})
