@@ -29,12 +29,7 @@ var config = {
             label: "Usage",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
-            data: [
-                0,
-                0,
-                0,
-                0,
-            ],
+            //data: [],
             fill: false,
         }]
     },
@@ -45,12 +40,7 @@ var config = {
             text:'Chart.js Line Chart'
         },
         tooltips: {
-            mode: 'index',
-            intersect: false,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
+            enabled: false
         },
         scales: {
             xAxes: [{
@@ -107,27 +97,20 @@ function refreshCpuUsage() {
 
     si.currentLoad()
     .then(data => {
-        // console.log(data);
-        //console.log(usage = data.currentload);
         usage = data.currentload;
 
         console.log(usage);
+        /* update the graph */
         config.data.labels.push("");
         config.data.datasets.forEach(function(dataset) {
             dataset.data.push(parseInt(usage));
+            if (dataset.data.length > 31) {
+                dataset.data.splice(0, 1);
+                config.data.labels.splice(0, 1);
+            }
         });
         window.myLine.update();
-        $("#cpuUsage").text(parseInt(usage) + "%");
-        $("#cpuUsage").css( "width", parseInt(usage)+"%" );
-
-
 
     });
-    //
-    // /* calculate it */
-    // var usage = (speed - speedmin) / (speedmax - speedmin) * 100;
-    // console.log(parseInt(usage));
-    //
-    // /* update the graph */
 
 }
