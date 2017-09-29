@@ -17,6 +17,10 @@
 */
 "use strict";
 
+function initOs() {
+    
+}
+
 function refreshOs() {
 
 }

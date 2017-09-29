@@ -17,6 +17,10 @@
 */
 "use strict";
 
+function initGpu() {
+    
+}
+
 function refreshGpu() {
     console.log("Gpuu shit geresrhed");
 }

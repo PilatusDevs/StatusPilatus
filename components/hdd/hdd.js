@@ -17,6 +17,10 @@
 */
 "use strict";
 
+function initHdd() {
+
+}
+
 function refreshHdd() {
     console.log("HDD refresh call");
 }
