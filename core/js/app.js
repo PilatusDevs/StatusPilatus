@@ -39,7 +39,7 @@ function init() {
 */
 function changePage(){
     $('a[href="#tab"]').click(function() {
-        $(".page-header h1").text($(this).text());
+        $("#dashTitle").text($(this).text());
 
         var name = $(this).text().toLowerCase();
         $(".frame").load("./components/"+name+"/"+name+".html");

@@ -80,6 +80,11 @@ var config = {
 * Called when someone clicks cpu in the sidebar
 */
 function initCpu() {
+    si.cpu()
+        .then(data => {
+            console.log(data);
+            $("#subtitle").text(data.manufacturer+" "+data.brand)
+        });
     console.log("initCpu");
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx, config);
@@ -101,7 +106,6 @@ function refreshCpuUsage() {
     si.cpu(function(data) {
         speedmin = data.speedmin;
         speedmax = data.speedmax;
-        console.log(data);
     })
 
     si.cpuCurrentspeed(function(data) {
