@@ -38,6 +38,7 @@ function initCpu() {
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
                     fill: false,
+                    borderWidth: 1
                 });
             }
         }
