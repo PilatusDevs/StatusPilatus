@@ -63,7 +63,7 @@ We decided to structure our project like so:
 
 We try to follow these suggestions when writing code:
 
-* Always add "use strict"; to js files
+* Always add `"use strict";` to js files
 * Add the GPL license header to all js, css and html files
 * Always indent the js, css and html files with 4 spaces
 * For css classes, use names-like-this-one
