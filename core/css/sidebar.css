@@ -21,10 +21,6 @@ body {
 
 #wrapper {
     padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
 }
 
 #wrapper.toggled {
@@ -39,11 +35,7 @@ body {
     height: 100%;
     margin-left: -200px;
     overflow-y: auto;
-    background: #333;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    background: #212529;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -99,44 +91,6 @@ body {
     text-decoration: none;
 }
 
-.sidebar-nav>.sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
-
-.sidebar-nav>.sidebar-brand a {
-    color: #999999;
-}
-
-.sidebar-nav>.sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
-
-@media(min-width:768px) {
-    #wrapper {
-        padding-left: 0;
-    }
-    #wrapper.toggled {
-        padding-left: 200px;
-    }
-    #sidebar-wrapper {
-        width: 0;
-    }
-    #wrapper.toggled #sidebar-wrapper {
-        width: 200px;
-    }
-    #page-content-wrapper {
-        padding: 20px;
-        position: relative;
-    }
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
-}
-
 /*custom colours for sidebar items*/
 
 #logo {
@@ -148,34 +102,31 @@ body {
     color: #999999;
 }
 
-#cpu {
+#cpu.active-tab {
     color: #f38b4a;
 }
 
-#gpu {
+#gpu.active-tab {
     color: #aa2f3a;
 }
 
-#memory {
+#memory.active-tab {
     color: #cc576e;
 }
 
-#storage {
+#storage.active-tab {
     color: #c1cc66;
 }
 
-#os {
+#os.active-tab {
     color: #9c86cc
 }
 
-#network {
+#network.active-tab {
     color: #a4cc99;
 }
 
 .active-tab {
     font-weight: bolder;
-}
-
-.active-tab::before {
-    content: "> ";
+    background: #333;
 }
