@@ -20,7 +20,15 @@
 function initGpu() {
     si.graphics()
     .then(data => {
-      $("#subtitle").text(data.controllers[0].model);
+        let allGPUs = data.controllers;
+        let subtitle = allGPUs[0].model;
+        if(allGPUs.length > 1) {
+            allGPUs.shift();
+            allGPUs.forEach((gpu => {
+                subtitle += " + "+gpu.model;
+            }));
+        }
+        $("#subtitle").text(subtitle);
     });
 }
 
