@@ -43,7 +43,9 @@ function changePage(){
     $('a[href="#tab"]').click(function() {
         $('a[href="#tab"]').removeClass("active-tab");
         $(this).addClass("active-tab");
-        $("#dashTitle").text($(this).text());
+        $("#titles").removeClass();
+        $("#titles").addClass($(this).text().toLowerCase());
+        $("#dash-title").text($(this).text());
 
         var layer = $(this).attr("data-layer");
         var folder = $(this).attr("data-folder");

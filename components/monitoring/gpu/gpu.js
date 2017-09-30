@@ -18,7 +18,10 @@
 "use strict";
 
 function initGpu() {
-    
+    si.graphics()
+    .then(data => {
+      $("#subtitle").text(data.controllers[0].model);
+    });
 }
 
 function refreshGpu() {
