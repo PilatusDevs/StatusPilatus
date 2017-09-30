@@ -28,8 +28,22 @@ function initCpu() {
         $("#subtitle").text(data.manufacturer+" "+data.brand)
     });
     console.log("initCpu");
-    var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
-    window.cpuUsage = new Chart(ctx, configUsage);
+
+    si.currentLoad()
+    .then(data => {
+        if (configUsage.data.datasets.length == 1) {
+            for (var c = 0; c < data.cpus.length; c++) {
+                configUsage.data.datasets.push({
+                    label: "Thread " + c,
+                    backgroundColor: "#ddd",
+                    borderColor: "#ddd",
+                    fill: false,
+                });
+            }
+        }
+        var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
+        window.cpuUsage = new Chart(ctx, configUsage);
+    });
 
     var ctx = document.getElementById("canvasCpuTemperature").getContext("2d");
     window.cpuTemperature = new Chart(ctx, configTemperature);
@@ -44,6 +58,10 @@ function refreshCpu() {
     refreshCpuTemperature();
 }
 
+function graph_width() {
+    return 30;
+}
+
 /**
 * Update the cpu temperature chart
 */
@@ -53,18 +71,23 @@ function refreshCpuUsage() {
 
     si.currentLoad()
     .then(data => {
-        usage = data.currentload;
-
-        /* update the graph */
+        /* update the graph - average*/
         configUsage.data.labels.push("");
-        configUsage.data.datasets.forEach(function(dataset) {
-            dataset.data.push(parseInt(usage));
-            /* Delete a value at the beginning of the graph to make it 30 items */
-            if (dataset.data.length > 31) {
-                dataset.data.splice(0, 1);
-                configUsage.data.labels.splice(0, 1);
+        console.log(data.currentload);
+        configUsage.data.datasets[0].data.push(data.currentload);
+        if (configUsage.data.datasets[0].data.length > graph_width()) {
+            configUsage.data.datasets[0].data.splice(0, 1);
+            configUsage.data.labels.splice(0, 1);
+        }
+        /* update the graph - per thread */
+        for (var s = 0; s < configUsage.data.datasets.length - 1; s++) {
+            console.log(data.cpus[s]);
+            configUsage.data.datasets[s+1].data.push(data.cpus[s].load);
+            if (configUsage.data.datasets[s+1].data.length > graph_width()) {
+                configUsage.data.datasets[s+1].data.splice(0, 1);
             }
-        });
+        }
+        console.log(configUsage);
         window.cpuUsage.update();
     });
 }
@@ -102,12 +125,10 @@ function refreshCpuTemperature(){
 var configUsage = {
     type: 'line',
     data: {
-        //labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
-            label: "Usage",
+            label: "Average",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
-            //data: [],
             fill: false,
         }]
     },
@@ -125,7 +146,7 @@ var configUsage = {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Time'
+                    labelString: 'Usage'
                 }
             }],
             yAxes: [{
@@ -150,12 +171,10 @@ var configUsage = {
 var configTemperature = {
     type: 'line',
     data: {
-        //labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
-            label: "Temperature",
+            label: "Average",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
-            //data: [],
             fill: false,
         }]
     },
@@ -173,7 +192,7 @@ var configTemperature = {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Time'
+                    labelString: 'Temperature'
                 }
             }],
             yAxes: [{
