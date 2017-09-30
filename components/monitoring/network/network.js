@@ -39,6 +39,8 @@ function refreshAdapters() {
 }
 
 function initNetwork() {
+    //set subtitle or keep this line to have it empty
+    $("#subtitle").text("");
     refreshAdapters();
 }
 

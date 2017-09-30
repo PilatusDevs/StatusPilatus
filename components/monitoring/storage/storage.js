@@ -18,7 +18,8 @@
 "use strict";
 
 function initStorage() {
-
+    //set subtitle or keep this line to have it empty
+    $("#subtitle").text("");
 }
 
 function refreshStorage() {
