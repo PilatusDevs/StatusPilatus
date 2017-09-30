@@ -36,8 +36,8 @@ function initMemory() {
             data: {
                 datasets: [{
                     label: "Usage",
-                    backgroundColor: "#f38b4a",
-                    borderColor: "#f38b4a",
+                    backgroundColor: "#cc576e",
+                    borderColor: "#cc576e",
                     fill: false,
                 }]
             },
