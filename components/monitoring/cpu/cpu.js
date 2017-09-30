@@ -18,6 +18,87 @@
 "use strict";
 
 /* set the config for the graph */
+
+/**
+* Called when someone clicks cpu in the sidebar
+*/
+function initCpu() {
+    si.cpu()
+    .then(data => {
+        $("#subtitle").text(data.manufacturer+" "+data.brand)
+    });
+    console.log("initCpu");
+    var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
+    window.cpuUsage = new Chart(ctx, configUsage);
+
+    var ctx = document.getElementById("canvasCpuTemperature").getContext("2d");
+    window.cpuTemperature = new Chart(ctx, configTemperature);
+}
+
+/**
+* Called in a loop in app.js
+*/
+function refreshCpu() {
+    console.log("CPU refresh");
+    refreshCpuUsage();
+    refreshCpuTemperature();
+}
+
+/**
+* Update the cpu temperature chart
+*/
+function refreshCpuUsage() {
+    /* get the cpu information */
+    var usage;
+
+    si.currentLoad()
+    .then(data => {
+        usage = data.currentload;
+
+        /* update the graph */
+        configUsage.data.labels.push("");
+        configUsage.data.datasets.forEach(function(dataset) {
+            dataset.data.push(parseInt(usage));
+            /* Delete a value at the beginning of the graph to make it 30 items */
+            if (dataset.data.length > 31) {
+                dataset.data.splice(0, 1);
+                configUsage.data.labels.splice(0, 1);
+            }
+        });
+        window.cpuUsage.update();
+    });
+}
+
+/*
+* Update the cpu Temperature chart
+* TODO: On windows the temperature aint right
+*/
+function refreshCpuTemperature(){
+    console.log("temperature");
+    var temperature;
+
+    si.cpuTemperature()
+    .then(data => {
+        temperature = data.max;
+
+        console.log(data);
+        /* update the graph */
+        configTemperature.data.labels.push("");
+        configTemperature.data.datasets.forEach(function(dataset) {
+            dataset.data.push(parseInt(temperature));
+            /* Delete a value at the beginning of the graph to make it 30 items */
+            if (dataset.data.length > 31) {
+                dataset.data.splice(0, 1);
+                configTemperature.data.labels.splice(0, 1);
+            }
+        });
+        window.cpuTemperature.update();
+    });
+}
+
+/*
+* Config for the Usage chart
+*/
 var configUsage = {
     type: 'line',
     data: {
@@ -63,6 +144,9 @@ var configUsage = {
     }
 };
 
+/*
+* Config for the Temperature chart
+*/
 var configTemperature = {
     type: 'line',
     data: {
@@ -107,77 +191,3 @@ var configTemperature = {
         }
     }
 };
-
-/**
-* Called when someone clicks cpu in the sidebar
-*/
-function initCpu() {
-    si.cpu()
-    .then(data => {
-        $("#subtitle").text(data.manufacturer+" "+data.brand)
-    });
-    console.log("initCpu");
-    var ctx = document.getElementById("canvasUsage").getContext("2d");
-    window.usage = new Chart(ctx, configUsage);
-
-    var ctx = document.getElementById("canvasTemperature").getContext("2d");
-    window.temperature = new Chart(ctx, configTemperature);
-}
-
-/**
-* Called in a loop in app.js
-*/
-function refreshCpu() {
-    console.log("CPU refresh");
-    refreshCpuUsage();
-    refreshTemperature();
-}
-
-function refreshTemperature(){
-    console.log("temperature");
-    var temperature;
-
-    si.cpuTemperature()
-    .then(data => {
-        temperature = data.max;
-
-        console.log(data);
-        /* update the graph */
-        configTemperature.data.labels.push("");
-        configTemperature.data.datasets.forEach(function(dataset) {
-            dataset.data.push(parseInt(temperature));
-            if (dataset.data.length > 31) {
-                dataset.data.splice(0, 1);
-                configTemperature.data.labels.splice(0, 1);
-            }
-        });
-        window.temperature.update();
-
-    });
-}
-
-/**
-* Update the cpu temperature chart
-*/
-function refreshCpuUsage() {
-    /* get the cpu information */
-    var usage;
-
-    si.currentLoad()
-    .then(data => {
-        usage = data.currentload;
-
-        /* update the graph */
-        configUsage.data.labels.push("");
-        configUsage.data.datasets.forEach(function(dataset) {
-            dataset.data.push(parseInt(usage));
-            if (dataset.data.length > 31) {
-                dataset.data.splice(0, 1);
-                configUsage.data.labels.splice(0, 1);
-            }
-        });
-        window.usage.update();
-
-    });
-
-}

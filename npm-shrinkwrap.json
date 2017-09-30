@@ -1,6 +1,6 @@
 {
   "name": "statuspilatus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "@types/node": {
       "version": "7.0.43",

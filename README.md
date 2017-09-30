@@ -6,7 +6,8 @@ Monitor your PC like never before!
 
 ## Features
 
-- Check your cpu usage
+- Check your CPU usage
+- Check your RAM usage
 
 ## How to use
 
@@ -29,8 +30,6 @@ Any errors that occur during the process can mean two things:
 * Node.js, npm or you have configured something wrong
 
 ## Structure
-
-#OUTDATED
 
 We decided to structure our project like so:
 ```
