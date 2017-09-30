@@ -26,7 +26,7 @@ const si = require("systeminformation");
 */
 function init() {
     window.initDashboard();
-    $("#dashboard").addClass("active-tab");
+    $("#dashboard").addClass("active-tab")
     // set interval for loop()
     setTimeout(loop, 500, "");
 
@@ -46,6 +46,8 @@ function changePage(){
         $("#titles").removeClass();
         $("#titles").addClass($(this).text().toLowerCase());
         $("#dash-title").text($(this).text());
+        //clear subtitle so it can be set in component's init function
+        $("#subtitle").text("");
 
         var layer = $(this).attr("data-layer");
         var folder = $(this).attr("data-folder");
