@@ -34,11 +34,12 @@ function initCpu() {
         if (configUsage.data.datasets.length == 1) {
             for (var c = 0; c < data.cpus.length; c++) {
                 configUsage.data.datasets.push({
-                    label: "Thread " + c,
+                    label: "Thread " + (c + 1),
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
                     fill: false,
-                    borderWidth: 1
+                    borderWidth: 0.5,
+                    pointRadius: 1
                 });
             }
         }
