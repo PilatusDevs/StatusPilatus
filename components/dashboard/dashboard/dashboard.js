@@ -17,10 +17,10 @@
 */
 "use strict";
 
-function initMemory() {
-
+function initDashboard() {
+    
 }
 
-function refreshMemory() {
-    console.log("Memory refresh call");
+function refreshDashboard() {
+    
 }

@@ -1,6 +1,6 @@
 {
   "name": "statuspilatus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Monitor your PC like never before!",
   "main": "main.js",
   "dependencies": {
