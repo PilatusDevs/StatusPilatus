@@ -4,16 +4,12 @@ os:
 language: node_js
 node_js:
   - "8"
-addons:
-  apt:
-    packages:
-      - xvfb
 before_install:
   - npm i -g npm@5.3.0
 install:
-  - npm install
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3; fi
 script:
+  - npm install
   - npm start
