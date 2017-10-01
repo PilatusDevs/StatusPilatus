@@ -19,40 +19,16 @@ body {
     overflow-x: hidden;
 }
 
-#wrapper {
-    padding-left: 0;
-}
-
-#wrapper.toggled {
-    padding-left: 200px;
-}
-
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     left: 200px;
-    width: 0;
+    width: 200px;
     height: 100%;
     margin-left: -200px;
     overflow-y: auto;
     background: #212529;
 }
-
-#wrapper.toggled #sidebar-wrapper {
-    width: 200px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -200px;
-}
-
 
 /* Sidebar Styles */
 
