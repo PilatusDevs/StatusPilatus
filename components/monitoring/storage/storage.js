@@ -18,9 +18,29 @@
 "use strict";
 
 function initStorage() {
-    
+    initStorageUsage();
 }
 
 function refreshStorage() {
     console.log("HDD refresh call");
+}
+
+function initStorageUsage() {
+    si.fsSize()
+    .then(data => {
+        console.log(data);
+        for (var c = 0; c < data.length; c++) {
+            var html = "<h3>Disk "+data[c].mount+"</h3>";
+            var status;
+            if (data[c].use < 60) {
+                status = "progress-bar-success";
+            } else if (data[c].use > 60 && data[c].use < 90) {
+                status = "progress-bar-warning";
+            } else {
+                status = "progress-bar-danger";
+            }
+            html += "<div class='progress'> <div class='progress-bar "+status+"' role='progressbar' aria-valuenow='"+data[c].use+"' aria-valuemin='0' aria-valuemax='100' style='width: "+data[c].use+"%'>"+parseInt(data[c].use)+"%</div></div>"
+            $(".frame").append(html);
+        }
+    });
 }
