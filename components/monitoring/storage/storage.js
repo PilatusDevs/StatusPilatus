@@ -30,7 +30,9 @@ function initStorageUsage() {
     .then(data => {
         console.log(data);
         for (var c = 0; c < data.length; c++) {
-            var html = "<h3>Disk "+data[c].mount+"</h3>";
+            var size = formatSize(data[c].size);
+            var used = formatSize(data[c].size-data[c].used);
+            var html = "<h3>Disk " + data[c].mount + "<small> " + used[0].toFixed(2) + used[1]  + " free of " + size[0].toFixed(2) + size[1] + "</small></h3>";
             var status;
             if (data[c].use < 60) {
                 status = "progress-bar-success";

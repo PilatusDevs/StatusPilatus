@@ -31,9 +31,9 @@ function initCpu() {
 
     si.currentLoad()
     .then(data => {
-        if (configUsage.data.datasets.length == 1) {
+        if (configCpuUsage.data.datasets.length == 1) {
             for (var c = 0; c < data.cpus.length; c++) {
-                configUsage.data.datasets.push({
+                configCpuUsage.data.datasets.push({
                     label: "Thread " + (c + 1),
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
@@ -44,22 +44,25 @@ function initCpu() {
             }
         }
         var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
-        window.cpuUsage = new Chart(ctx, configUsage);
+        window.cpuUsage = new Chart(ctx, configCpuUsage);
     });
 
     var ctx = document.getElementById("canvasCpuTemperature").getContext("2d");
-    window.cpuTemperature = new Chart(ctx, configTemperature);
+    window.cpuTemperature = new Chart(ctx, configCpuTemperature);
 }
 
 /**
 * Called in a loop in app.js
 */
 function refreshCpu() {
-    console.log("CPU refresh");
+    console.log("CPU refresh call");
     refreshCpuUsage();
     refreshCpuTemperature();
 }
 
+/**
+* Set the width of the graphs
+*/
 function graph_width() {
     return 30;
 }
@@ -74,22 +77,22 @@ function refreshCpuUsage() {
     si.currentLoad()
     .then(data => {
         /* update the graph - average*/
-        configUsage.data.labels.push("");
+        configCpuUsage.data.labels.push("");
         console.log(data.currentload);
-        configUsage.data.datasets[0].data.push(data.currentload);
-        if (configUsage.data.datasets[0].data.length > graph_width()) {
-            configUsage.data.datasets[0].data.splice(0, 1);
-            configUsage.data.labels.splice(0, 1);
+        configCpuUsage.data.datasets[0].data.push(data.currentload);
+        if (configCpuUsage.data.datasets[0].data.length > graph_width()) {
+            configCpuUsage.data.datasets[0].data.splice(0, 1);
+            configCpuUsage.data.labels.splice(0, 1);
         }
         /* update the graph - per thread */
-        for (var s = 0; s < configUsage.data.datasets.length - 1; s++) {
+        for (var s = 0; s < configCpuUsage.data.datasets.length - 1; s++) {
             console.log(data.cpus[s]);
-            configUsage.data.datasets[s+1].data.push(data.cpus[s].load);
-            if (configUsage.data.datasets[s+1].data.length > graph_width()) {
-                configUsage.data.datasets[s+1].data.splice(0, 1);
+            configCpuUsage.data.datasets[s+1].data.push(data.cpus[s].load);
+            if (configCpuUsage.data.datasets[s+1].data.length > graph_width()) {
+                configCpuUsage.data.datasets[s+1].data.splice(0, 1);
             }
         }
-        console.log(configUsage);
+        console.log(configCpuUsage);
         window.cpuUsage.update();
     });
 }
@@ -108,13 +111,13 @@ function refreshCpuTemperature(){
 
         console.log(data);
         /* update the graph */
-        configTemperature.data.labels.push("");
-        configTemperature.data.datasets.forEach(function(dataset) {
+        configCpuTemperature.data.labels.push("");
+        configCpuTemperature.data.datasets.forEach(function(dataset) {
             dataset.data.push(parseInt(temperature));
             /* Delete a value at the beginning of the graph to make it 30 items */
             if (dataset.data.length > 31) {
                 dataset.data.splice(0, 1);
-                configTemperature.data.labels.splice(0, 1);
+                configCpuTemperature.data.labels.splice(0, 1);
             }
         });
         window.cpuTemperature.update();
@@ -124,7 +127,7 @@ function refreshCpuTemperature(){
 /*
 * Config for the Usage chart
 */
-var configUsage = {
+var configCpuUsage = {
     type: 'line',
     data: {
         datasets: [{
@@ -170,7 +173,7 @@ var configUsage = {
 /*
 * Config for the Temperature chart
 */
-var configTemperature = {
+var configCpuTemperature = {
     type: 'line',
     data: {
         datasets: [{

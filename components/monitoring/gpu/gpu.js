@@ -33,5 +33,5 @@ function initGpu() {
 }
 
 function refreshGpu() {
-    console.log("Gpuu shit geresrhed");
+    console.log("GPU refresh call");
 }

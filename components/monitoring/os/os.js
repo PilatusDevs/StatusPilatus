@@ -18,9 +18,9 @@
 "use strict";
 
 function initOs() {
-    
+
 }
 
 function refreshOs() {
-
+    console.log("OS refresh call");
 }
