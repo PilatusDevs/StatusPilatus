@@ -33,11 +33,9 @@ function initCpu() {
     .then(data => {
         if (configCpuUsage.data.datasets.length == 1) {
             let allThreads = data.cpus;
-            let currentThread = 0;
-            allThreads.forEach(thread => {
-                currentThread++;
+            allThreads.forEach((thread, index) => {
                 configCpuUsage.data.datasets.push({
-                    label: "Thread " + (currentThread),
+                    label: "Thread " + (index+1),
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
                     fill: false,
