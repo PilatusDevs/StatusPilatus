@@ -17,6 +17,13 @@
 */
 "use strict";
 
+/*
+* The following lines are for the global Charts settings.
+*/
+Chart.defaults.global.animation = false;
+Chart.defaults.global.animationSteps = 0;
+Chart.defaults.global.elements.responsive = true;
+
 var functionName = "refreshDashboard";
 
 const si = require("systeminformation");
@@ -89,6 +96,7 @@ function formatSize(bytes) {
 function graph_width() {
     return 30;
 }
+
 
 
 $(function() {

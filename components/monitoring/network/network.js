@@ -17,6 +17,8 @@
 */
 "use strict";
 
+var currentAdapter = "";
+
 function adapterHtml(adapter) {
     var body = "<div>";
     body += `<h3>${adapter.iface}</h3><br />`;
@@ -30,9 +32,11 @@ function adapterHtml(adapter) {
 function refreshAdapters() {
     $("#adapters").html = "";
     si.networkInterfaces(function(data) {
+        currentAdapter = data[0].iface;
         data.forEach(function(adapter) {
             if (adapter.internal == false) {
                 $("#adapters").append(adapterHtml(adapter));
+                $("#networkAdapterSelect").append("<option value='"+adapter.iface+"'>"+adapter.iface+"</option>");
             }
         });
     });
@@ -43,16 +47,26 @@ function refreshAdapters() {
 
 function initNetwork() {
     refreshAdapters();
+
 }
 
 function refreshNetwork() {
     refreshNetworkUsage();
 }
 
+function changeNetworkAdapater(){
+    var e = document.getElementById("");
+    currentAdapter = e.options[e.selectedIndex].value;
+    window.networkUsage.destroy();
+    configNetworkUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
+    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
+    window.networkUsage = new Chart(ctx, configNetworkUsage);
+}
+
 function refreshNetworkUsage() {
     var usage;
 
-    si.networkStats()
+    si.networkStats(currentAdapter)
     .then(data => {
         usage = ((data.rx_sec / (1024*1024)).toFixed(2));
         console.log(usage);
@@ -81,26 +95,6 @@ var configNetworkUsage = {
         }]
     },
     options: {
-        animation: {
-            duration: 0, // general animation time
-        },
-        hover: {
-            animationDuration: 0, // duration of animations when hovering an item
-        },
-        responsiveAnimationDuration: 0, // animation duration after a resize
-        elements: {
-            line: {
-                tension: 0, // disables bezier curves
-            }
-        },
-        responsive: true,
-        title:{
-            display:false,
-            text:'Chart.js Line Chart'
-        },
-        tooltips: {
-            enabled: false
-        },
         scales: {
             xAxes: [{
                 display: true,

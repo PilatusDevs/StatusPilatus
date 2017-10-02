@@ -27,6 +27,8 @@ let win
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({
+        minHeight: 600,
+        minWidth: 800,
         show: false,
         webPreferences: {
             nodeIntegrationInWorker: true
