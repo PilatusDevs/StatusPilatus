@@ -32,16 +32,19 @@ function initCpu() {
     si.currentLoad()
     .then(data => {
         if (configCpuUsage.data.datasets.length == 1) {
-            for (var c = 0; c < data.cpus.length; c++) {
+            let allThreads = data.cpus;
+            let currentThread = 0;
+            allThreads.forEach(thread => {
+                currentThread++;
                 configCpuUsage.data.datasets.push({
-                    label: "Thread " + (c + 1),
+                    label: "Thread " + (currentThread),
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
                     fill: false,
                     borderWidth: 0.5,
                     pointRadius: 1
                 });
-            }
+            });
         }
         var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
         window.cpuUsage = new Chart(ctx, configCpuUsage);
