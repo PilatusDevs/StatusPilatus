@@ -20,20 +20,20 @@
 var currentAdapter = "";
 
 function adapterHtml(adapter) {
-    var body = "<div>";
-    body += `<h3>${adapter.iface}</h3><br />`;
-    body += `<b>IPv4</b>: ${adapter.ip4}<br />`;
-    body += `<b>IPv6</b>: ${adapter.ip6}<br />`;
-    body += `<b>MAC</b>: ${adapter.mac}<br />`;
-    body += `</div>`;
+    let body = `<div>
+    <h3>${adapter.iface}</h3><br />
+    <b>IPv4</b>: ${adapter.ip4}<br />
+    <b>IPv6</b>: ${adapter.ip6}<br />
+    <b>MAC</b>: ${adapter.mac}<br />
+    </div>`
     return body;
 }
 
 function refreshAdapters() {
     $("#adapters").html = "";
-    si.networkInterfaces(function(data) {
+    si.networkInterfaces(data => {
         currentAdapter = data[0].iface;
-        data.forEach(function(adapter) {
+        data.forEach(adapter => {
             if (adapter.internal == false) {
                 $("#adapters").append(adapterHtml(adapter));
                 $("#networkAdapterSelect").append("<option value='"+adapter.iface+"'>"+adapter.iface+"</option>");
