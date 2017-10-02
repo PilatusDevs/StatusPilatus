@@ -26,12 +26,7 @@ let win
 
 function createWindow () {
     // Create the browser window.
-    win = new BrowserWindow({
-        show: false,
-        webPreferences: {
-            nodeIntegrationInWorker: true
-        }
-    })
+    win = new BrowserWindow({show: false})
     win.maximize();
     win.show();
 

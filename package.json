@@ -12,13 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "electron .",
-    "test": "standard",
-    "postinstall": "install-app-deps",
-    "rebuild": "electron-rebuild",
-    "clean": "rimraf dist && mkdirp dist",
-    "build": "build --dir",
-    "dist": "build"
+    "test": "electron .",
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
