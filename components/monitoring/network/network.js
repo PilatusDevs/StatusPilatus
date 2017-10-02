@@ -54,8 +54,8 @@ function refreshNetwork() {
     refreshNetworkUsage();
 }
 
-function changeNetworkAdapater(){
-    var e = document.getElementById("");
+function changeNetworkAdapter(){
+    var e = document.getElementById("networkAdapterSelect");
     currentAdapter = e.options[e.selectedIndex].value;
     window.networkUsage.destroy();
     configNetworkUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
