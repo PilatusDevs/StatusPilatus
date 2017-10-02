@@ -28,21 +28,24 @@ function refreshStorage() {
 function initStorageUsage() {
     si.fsSize()
     .then(data => {
-        console.log(data);
-        for (var c = 0; c < data.length; c++) {
-            var size = formatSize(data[c].size);
-            var used = formatSize(data[c].size-data[c].used);
-            var html = "<h3>Disk " + data[c].mount + "<small> " + used[0].toFixed(2) + used[1]  + " free of " + size[0].toFixed(2) + size[1] + "</small></h3>";
-            var status;
-            if (data[c].use < 60) {
+        data.forEach(drive => {
+            let size = formatSize(drive.size);
+            let used = formatSize(drive.size-drive.used);
+            let html = `<h3>Disk ${drive.mount}<small> ${used[0].toFixed(2)+used[1]} free of ${size[0].toFixed(2)+size[1]}</small></h3>`;
+            let status;
+            if(drive.use < 60){
                 status = "progress-bar-success";
-            } else if (data[c].use > 60 && data[c].use < 90) {
+            }else if(drive.use > 60 && drive.use < 90){
                 status = "progress-bar-warning";
-            } else {
+            }else{
                 status = "progress-bar-danger";
             }
-            html += "<div class='progress'> <div class='progress-bar "+status+"' role='progressbar' aria-valuenow='"+data[c].use+"' aria-valuemin='0' aria-valuemax='100' style='width: "+data[c].use+"%'>"+parseInt(data[c].use)+"%</div></div>"
+            html += `<div class='progress'>
+                        <div class='progress-bar ${status} role='progressbar' aria-valuenow='${drive.use}' aria-valuemin='0' aria-valuemax='100' style='width: ${drive.use}%'>
+                            ${parseInt(drive.use)}%
+                        </div>
+                    </div>`;
             $(".frame").append(html);
-        }
+        });
     });
 }

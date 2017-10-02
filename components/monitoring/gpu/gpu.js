@@ -24,9 +24,9 @@ function initGpu() {
         let subtitle = allGPUs[0].model;
         if(allGPUs.length > 1) {
             allGPUs.shift();
-            allGPUs.forEach((gpu => {
+            allGPUs.forEach(gpu => {
                 subtitle += " + "+gpu.model;
-            }));
+            });
         }
         $("#subtitle").text(subtitle);
     });
