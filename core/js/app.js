@@ -83,6 +83,14 @@ function formatSize(bytes) {
     return [bytes / Math.pow(1024, l), sizes[l]];
 }
 
+/**
+* Set the width of the graphs
+*/
+function graph_width() {
+    return 30;
+}
+
+
 $(function() {
     init();
 })

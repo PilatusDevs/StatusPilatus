@@ -32,17 +32,16 @@ function initCpu() {
     si.currentLoad()
     .then(data => {
         if (configCpuUsage.data.datasets.length == 1) {
-            let allThreads = data.cpus;
-            allThreads.forEach((thread, index) => {
+            for (var c = 0; c < data.cpus.length; c++) {
                 configCpuUsage.data.datasets.push({
-                    label: "Thread " + (index+1),
+                    label: "Thread " + (c + 1),
                     backgroundColor: "#ddd",
                     borderColor: "#ddd",
                     fill: false,
                     borderWidth: 0.5,
                     pointRadius: 1
                 });
-            });
+            }
         }
         var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
         window.cpuUsage = new Chart(ctx, configCpuUsage);
@@ -59,13 +58,6 @@ function refreshCpu() {
     console.log("CPU refresh call");
     refreshCpuUsage();
     refreshCpuTemperature();
-}
-
-/**
-* Set the width of the graphs
-*/
-function graph_width() {
-    return 30;
 }
 
 /**
@@ -139,6 +131,18 @@ var configCpuUsage = {
         }]
     },
     options: {
+        animation: {
+            duration: 0, // general animation time
+        },
+        hover: {
+            animationDuration: 0, // duration of animations when hovering an item
+        },
+        responsiveAnimationDuration: 0, // animation duration after a resize
+        elements: {
+            line: {
+                tension: 0, // disables bezier curves
+            }
+        },
         responsive: true,
         title:{
             display:false,
@@ -185,6 +189,18 @@ var configCpuTemperature = {
         }]
     },
     options: {
+        animation: {
+            duration: 0, // general animation time
+        },
+        hover: {
+            animationDuration: 0, // duration of animations when hovering an item
+        },
+            responsiveAnimationDuration: 0, // animation duration after a resize
+        elements: {
+            line: {
+                tension: 0, // disables bezier curves
+            }
+        },
         responsive: true,
         title:{
             display:false,

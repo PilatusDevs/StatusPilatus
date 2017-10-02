@@ -36,6 +36,9 @@ function refreshAdapters() {
             }
         });
     });
+
+    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
+    window.networkUsage = new Chart(ctx, configNetworkUsage);
 }
 
 function initNetwork() {
@@ -43,4 +46,80 @@ function initNetwork() {
 }
 
 function refreshNetwork() {
+    refreshNetworkUsage();
 }
+
+function refreshNetworkUsage() {
+    var usage;
+
+    si.networkStats()
+    .then(data => {
+        usage = ((data.rx_sec / (1024*1024)).toFixed(2));
+        console.log(usage);
+        /* update the graph - average*/
+        configNetworkUsage.data.labels.push("");
+        configNetworkUsage.data.datasets[0].data.push(usage);
+        if (configNetworkUsage.data.datasets[0].data.length > graph_width()) {
+            configNetworkUsage.data.datasets[0].data.splice(0, 1);
+            configNetworkUsage.data.labels.splice(0, 1);
+        }
+        window.networkUsage.update();
+    });
+}
+
+/*
+* Config for the Temperature chart
+*/
+var configNetworkUsage = {
+    type: 'line',
+    data: {
+        datasets: [{
+            label: "Usage down (Mb/sec)",
+            backgroundColor: "#a4cc99",
+            borderColor: "#a4cc99",
+            fill: false,
+        }]
+    },
+    options: {
+        animation: {
+            duration: 0, // general animation time
+        },
+        hover: {
+            animationDuration: 0, // duration of animations when hovering an item
+        },
+        responsiveAnimationDuration: 0, // animation duration after a resize
+        elements: {
+            line: {
+                tension: 0, // disables bezier curves
+            }
+        },
+        responsive: true,
+        title:{
+            display:false,
+            text:'Chart.js Line Chart'
+        },
+        tooltips: {
+            enabled: false
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Usage'
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    suggestedMin: 0,
+                    beginAtZero: true
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Value'
+                }
+            }]
+        }
+    }
+};
