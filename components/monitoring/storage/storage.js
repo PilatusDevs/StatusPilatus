@@ -17,14 +17,24 @@
 */
 "use strict";
 
+/**
+* Called once to initiate the page
+*/
 function initStorage() {
     initStorageUsage();
 }
 
+/**
+* Called from app.js
+*/
 function refreshStorage() {
     console.log("HDD refresh call");
 }
 
+/**
+* Make all the progess-bars for all the drives.
+* it explains itself
+*/
 function initStorageUsage() {
     si.fsSize()
     .then(data => {
@@ -40,11 +50,13 @@ function initStorageUsage() {
             }else{
                 status = "progress-bar-danger";
             }
+
+            /* generate the html and append it*/
             html += `<div class='progress'>
-                        <div class='progress-bar ${status} role='progressbar' aria-valuenow='${drive.use}' aria-valuemin='0' aria-valuemax='100' style='width: ${drive.use}%'>
-                            ${parseInt(drive.use)}%
-                        </div>
-                    </div>`;
+            <div class='progress-bar ${status} role='progressbar' aria-valuenow='${drive.use}' aria-valuemin='0' aria-valuemax='100' style='width: ${drive.use}%'>
+            ${parseInt(drive.use)}%
+            </div>
+            </div>`;
             $(".frame").append(html);
         });
     });

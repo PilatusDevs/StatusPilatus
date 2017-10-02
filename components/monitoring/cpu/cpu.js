@@ -20,7 +20,7 @@
 /* set the config for the graph */
 
 /**
-* Called when someone clicks cpu in the sidebar
+* Called once to initiate the page
 */
 function initCpu() {
     si.cpu()
@@ -52,7 +52,7 @@ function initCpu() {
 }
 
 /**
-* Called in a loop in app.js
+* Called in app.js
 */
 function refreshCpu() {
     console.log("CPU refresh call");

@@ -19,6 +19,24 @@
 
 var currentAdapter = "";
 
+/**
+* Called once to initiate the page
+*/
+function initNetwork() {
+    initAdapters();
+
+    /* make the chart */
+    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
+    window.networkUsage = new Chart(ctx, configNetworkUsage);
+}
+
+/**
+* Called from app.js
+*/
+function refreshNetwork() {
+    refreshNetworkUsage();
+}
+
 function adapterHtml(adapter) {
     var body = "<div>";
     body += `<h3>${adapter.iface}</h3><br />`;
@@ -29,7 +47,11 @@ function adapterHtml(adapter) {
     return body;
 }
 
-function refreshAdapters() {
+/**
+* This function is called from initNetwork()
+* so all the adapters are listed on the page
+*/
+function initAdapters() {
     $("#adapters").html = "";
     si.networkInterfaces(function(data) {
         currentAdapter = data[0].iface;
@@ -40,20 +62,13 @@ function refreshAdapters() {
             }
         });
     });
-
-    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
-    window.networkUsage = new Chart(ctx, configNetworkUsage);
 }
 
-function initNetwork() {
-    refreshAdapters();
-
-}
-
-function refreshNetwork() {
-    refreshNetworkUsage();
-}
-
+/**
+* When the used selects another network adapter this function is used to
+* set the new currentAdapter variable and delete all the current data from
+* the graph.
+*/
 function changeNetworkAdapter(){
     var e = document.getElementById("networkAdapterSelect");
     currentAdapter = e.options[e.selectedIndex].value;
@@ -63,14 +78,16 @@ function changeNetworkAdapter(){
     window.networkUsage = new Chart(ctx, configNetworkUsage);
 }
 
+/**
+* Refresh the network usage for the chosen adapter.
+*/
 function refreshNetworkUsage() {
-    var usage;
-
     si.networkStats(currentAdapter)
     .then(data => {
-        usage = ((data.rx_sec / (1024*1024)).toFixed(2));
+        /* convert the bytes to Mb */
+        var usage = ((data.rx_sec / (1024*1024)).toFixed(2));
         console.log(usage);
-        /* update the graph - average*/
+        /* update the graph - usage*/
         configNetworkUsage.data.labels.push("");
         configNetworkUsage.data.datasets[0].data.push(usage);
         if (configNetworkUsage.data.datasets[0].data.length > graph_width()) {
@@ -82,7 +99,7 @@ function refreshNetworkUsage() {
 }
 
 /*
-* Config for the Temperature chart
+* Config for the usage chart
 */
 var configNetworkUsage = {
     type: 'line',

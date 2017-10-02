@@ -17,10 +17,16 @@
 */
 "use strict";
 
+/**
+* Called once to initiate the page
+*/
 function initOs() {
 
 }
 
+/**
+* Called from app.js
+*/
 function refreshOs() {
     console.log("OS refresh call");
 }

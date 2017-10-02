@@ -17,6 +17,9 @@
 */
 "use strict";
 
+/**
+* Called once to initiate the page
+*/
 function initGpu() {
     si.graphics()
     .then(data => {
@@ -32,6 +35,9 @@ function initGpu() {
     });
 }
 
+/**
+* Called from app.js
+*/
 function refreshGpu() {
     console.log("GPU refresh call");
 }

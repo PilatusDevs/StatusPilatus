@@ -17,21 +17,22 @@
 */
 "use strict";
 
-/*
-* The following lines are for the global Charts settings.
-*/
+/* The following lines are for the global Charts settings. */
 Chart.defaults.global.animation = false;
 Chart.defaults.global.animationSteps = 0;
 Chart.defaults.global.elements.responsive = true;
 
+/* This variable is used in the loop */
 var functionName = "refreshDashboard";
 
+/* include all the libraries */
 const si = require("systeminformation");
 
 /*
 * Boot all the core things of the app
 */
 function init() {
+    /* this is the start page */
     window.initDashboard();
     $("#dashboard").addClass("active-tab")
     // set interval for loop()
@@ -91,13 +92,11 @@ function formatSize(bytes) {
 }
 
 /**
-* Set the width of the graphs
+* Set the width of ALL the graphs
 */
 function graph_width() {
-    return 30;
+    return 60;
 }
-
-
 
 $(function() {
     init();
