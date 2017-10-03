@@ -98,6 +98,6 @@ function graph_width() {
     return 60;
 }
 
-$(function() {
+$(() => {
     init();
-})
+});
