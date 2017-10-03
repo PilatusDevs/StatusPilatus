@@ -32,7 +32,7 @@ function initMemory() {
         * Config for the Usage chart
         */
         configMemUsage = {
-            type: 'line',
+            type: "line",
             data: {
                 datasets: [{
                     label: "Usage",
@@ -47,7 +47,7 @@ function initMemory() {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Time'
+                            labelString: "Time"
                         }
                     }],
                     yAxes: [{
@@ -59,7 +59,7 @@ function initMemory() {
                         display: true,
                         scaleLabel: {
                             display: false,
-                            labelString: 'Value'
+                            labelString: "Value"
                         }
                     }]
                 }

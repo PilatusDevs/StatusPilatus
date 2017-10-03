@@ -52,8 +52,8 @@ function initStorageUsage() {
             }
 
             /* generate the html and append it*/
-            html += `<div class='progress'>
-            <div class='progress-bar ${status} role='progressbar' aria-valuenow='${drive.use}' aria-valuemin='0' aria-valuemax='100' style='width: ${drive.use}%'>
+            html += `<div class="progress">
+            <div class="progress-bar ${status} role="progressbar" aria-valuenow="${drive.use}" aria-valuemin="0" aria-valuemax="100" style="width: ${drive.use}%">
             ${parseInt(drive.use)}%
             </div>
             </div>`;

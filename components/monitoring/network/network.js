@@ -17,7 +17,7 @@
 */
 "use strict";
 
-var currentAdapter = "";
+var currentAdapter = null;
 
 /**
 * Called once to initiate the page
@@ -54,9 +54,11 @@ function adapterHtml(adapter) {
 function initAdapters() {
     $("#adapters").html = "";
     si.networkInterfaces(data => {
-        currentAdapter = data[0].iface;
         data.forEach(adapter => {
             if (adapter.internal == false) {
+                if (!currentAdapter) {
+                    currentAdapter = adapter.iface;
+                }
                 $("#adapters").append(adapterHtml(adapter));
                 $("#networkAdapterSelect").append("<option value='"+adapter.iface+"'>"+adapter.iface+"</option>");
             }
@@ -86,7 +88,7 @@ function refreshNetworkUsage() {
     .then(data => {
         /* convert the bytes to Mb */
         var usage = ((data.rx_sec / (1024*1024)).toFixed(2));
-        console.log(usage);
+        console.log(data);
         /* update the graph - usage*/
         configNetworkUsage.data.labels.push("");
         configNetworkUsage.data.datasets[0].data.push(usage);

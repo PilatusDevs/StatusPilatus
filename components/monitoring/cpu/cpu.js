@@ -122,7 +122,7 @@ function refreshCpuTemperature(){
 * Config for the Usage chart
 */
 var configCpuUsage = {
-    type: 'line',
+    type: "line",
     data: {
         datasets: [{
             label: "Average",
@@ -137,7 +137,7 @@ var configCpuUsage = {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Usage'
+                    labelString: "Usage"
                 }
             }],
             yAxes: [{
@@ -149,7 +149,7 @@ var configCpuUsage = {
                 display: true,
                 scaleLabel: {
                     display: false,
-                    labelString: 'Value'
+                    labelString: "Value"
                 }
             }]
         }
@@ -160,7 +160,7 @@ var configCpuUsage = {
 * Config for the Temperature chart
 */
 var configCpuTemperature = {
-    type: 'line',
+    type: "line",
     data: {
         datasets: [{
             label: "Average",
@@ -175,7 +175,7 @@ var configCpuTemperature = {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Temperature'
+                    labelString: "Temperature"
                 }
             }],
             yAxes: [{
@@ -187,7 +187,7 @@ var configCpuTemperature = {
                 display: true,
                 scaleLabel: {
                     display: false,
-                    labelString: 'Value'
+                    labelString: "Value"
                 }
             }]
         }

@@ -54,7 +54,7 @@ function changePage(){
         $("#titles").removeClass();
         $("#titles").addClass($(this).text().toLowerCase());
         $("#dash-title").text($(this).text());
-        //clear subtitle so it can be set in component's init function
+        //clear subtitle so it can be set in components init function
         $("#subtitle").text("");
 
         var layer = $(this).attr("data-layer");
