@@ -111,6 +111,7 @@ function initCpu() {
     }
     console.log("initCpu");
 
+    // cpu usage
     si.currentLoad()
     .then(data => {
         if (configCpuUsage.data.datasets.length == 1) {
@@ -126,12 +127,22 @@ function initCpu() {
                 });
             });
         }
-        var ctx = document.getElementById("canvasCpuUsage").getContext("2d");
+        var ctx = document.getElementById("canvas-cpu-usage").getContext("2d");
         window.cpuUsage = new Chart(ctx, configCpuUsage);
     });
 
-    var ctx = document.getElementById("canvasCpuTemperature").getContext("2d");
+    // cpu temps
+    var ctx = document.getElementById("canvas-cpu-temperature").getContext("2d");
     window.cpuTemperature = new Chart(ctx, configCpuTemperature);
+
+    // cpu flags
+    si.cpuFlags()
+    .then(flags => {
+        document.getElementById("cpu-flags").innerHTML = "";
+        flags.split(" ").forEach((flag, count) => {
+            document.getElementById("cpu-flags").innerHTML += `<span title="${flag}" style="overflow: hidden;display: inline-block;width: 100px">${flag}</span>`;
+        });
+    });
 }
 
 /**

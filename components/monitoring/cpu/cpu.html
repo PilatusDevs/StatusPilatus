@@ -27,10 +27,29 @@ canvas{
 <!-- The charts -->
 <div class="row">
     <div class="col-md-6">
-        <canvas id="canvasCpuUsage"></canvas>
+        <canvas id="canvas-cpu-usage"></canvas>
     </div>
 
     <div class="col-md-6">
-        <canvas id="canvasCpuTemperature"></canvas>
+        <canvas id="canvas-cpu-temperature"></canvas>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">CPU Flags</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body" id="cpu-flags">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        
     </div>
 </div>
