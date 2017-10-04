@@ -38,7 +38,7 @@ function refreshNetwork() {
 }
 
 function adapterHtml(adapter) {
-    let body = `<div>
+    let body = `<div class="col-sm-6">
     <h3>${adapter.iface}</h3><br />
     <b>IPv4</b>: ${adapter.ip4}<br />
     <b>IPv6</b>: ${adapter.ip6}<br />
