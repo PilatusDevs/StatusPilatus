@@ -21,7 +21,11 @@
 * Called once to initiate the page
 */
 function initOs() {
-
+    si.osInfo()
+    .then(data => {
+        $("#subtitle").text(data.distro);
+        $("#os-container").append(osHtml(data));
+    });
 }
 
 /**
@@ -29,4 +33,17 @@ function initOs() {
 */
 function refreshOs() {
     console.log("OS refresh call");
+}
+
+function osHtml(os) {
+    let body = `<div>
+    <h3>${os.platform}</h3><br />
+    <b>Distro</b>: ${os.distro}<br />
+    <b>Codename</b>: ${os.codename}<br />
+    <b>Release</b>: ${os.release}<br />
+    <b>Kernel</b>: ${os.kernel}<br />
+    <b>Hostname</b>: ${os.hostname}<br />
+    <b>Architecture</b>: ${os.arch}<br />
+    </div>`;
+    return body;
 }
