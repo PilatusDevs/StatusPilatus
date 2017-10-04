@@ -26,6 +26,10 @@ function initOs() {
         $("#subtitle").text(data.distro);
         $("#os-container").append(osHtml(data));
     });
+    si.versions()
+    .then(data => {
+        $("#versions-container").append(versionsHtml(data));
+    });
 }
 
 /**
@@ -44,6 +48,23 @@ function osHtml(os) {
     <b>Kernel</b>: ${os.kernel}<br />
     <b>Hostname</b>: ${os.hostname}<br />
     <b>Architecture</b>: ${os.arch}<br />
+    </div>`;
+    return body;
+}
+
+function versionsHtml(versions) {
+    let body = `<div>
+    <h3>Program Versions</h3><br />
+    <b>Git</b>: ${versions.git}<br />
+    <b>Grunt</b>: ${versions.grunt}<br />
+    <b>Gulp</b>: ${versions.gulp}<br />
+    <b>Node</b>: ${versions.node}<br />
+    <b>npm</b>: ${versions.npm}<br />
+    <b>OpenSSL</b>: ${versions.openssl}<br />
+    <b>PM2</b>: ${versions.pm2}<br />
+    <b>TypeScript</b>: ${versions.tsc}<br />
+    <b>V8</b>: ${versions.v8}<br />
+    <b>Yarn</b>: ${versions.yarn}<br />
     </div>`;
     return body;
 }
