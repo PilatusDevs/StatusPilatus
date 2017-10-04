@@ -20,6 +20,7 @@
 // Storing static data to call si library less often
 var osData = {};
 var versionData = {};
+var userData = [];
 /**
 * Called once to initiate the page
 */
@@ -46,6 +47,16 @@ function initOs() {
     }else{
         $("#versions-container").html(versionsHtml(versionData));
     }
+    // Loads user data
+    if (userData.length === 0) {
+        si.users()
+        .then(data => {
+            userData = data;
+            $("#user-container").html(userHtml(userData));
+        });
+    }else{
+        $("#user-container").html(userHtml(userData));
+    }
 }
 
 /**
@@ -56,21 +67,18 @@ function refreshOs() {
 }
 
 function osHtml(os) {
-    let body = `<div>
-    <h3>${os.platform}</h3><br />
+    let body = `<h3>${os.platform}</h3><br />
     <b>Distro</b>: ${os.distro}<br />
     <b>Codename</b>: ${os.codename}<br />
     <b>Release</b>: ${os.release}<br />
     <b>Kernel</b>: ${os.kernel}<br />
     <b>Hostname</b>: ${os.hostname}<br />
-    <b>Architecture</b>: ${os.arch}<br />
-    </div>`;
+    <b>Architecture</b>: ${os.arch}<br />`;
     return body;
 }
 
 function versionsHtml(versions) {
-    let body = `<div>
-    <b>Git</b>: ${versions.git}<br />
+    let body = `<b>Git</b>: ${versions.git}<br />
     <b>Grunt</b>: ${versions.grunt}<br />
     <b>Gulp</b>: ${versions.gulp}<br />
     <b>Node</b>: ${versions.node}<br />
@@ -79,7 +87,14 @@ function versionsHtml(versions) {
     <b>PM2</b>: ${versions.pm2}<br />
     <b>TypeScript</b>: ${versions.tsc}<br />
     <b>V8</b>: ${versions.v8}<br />
-    <b>Yarn</b>: ${versions.yarn}<br />
-    </div>`;
+    <b>Yarn</b>: ${versions.yarn}<br />`;
+    return body;
+}
+
+function userHtml(users) {
+    let body = "";
+    users.forEach(user => {
+        body += `<b>${user.user}</b><br />`;
+    });
     return body;
 }
