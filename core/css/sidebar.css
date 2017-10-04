@@ -78,6 +78,10 @@ body {
     color: #999999;
 }
 
+#dashboard.active-tab {
+    color: #fff;
+}
+
 #cpu.active-tab {
     color: #f38b4a;
 }
