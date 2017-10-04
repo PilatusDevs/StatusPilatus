@@ -17,6 +17,8 @@
 */
 "use strict";
 
+
+var versiondata = {};
 /**
 * Called once to initiate the page
 */
@@ -26,10 +28,15 @@ function initOs() {
         $("#subtitle").text(data.distro);
         $("#os-container").append(osHtml(data));
     });
-    si.versions()
-    .then(data => {
-        $("#versions-container").append(versionsHtml(data));
-    });
+    if ($.isEmptyObject(versiondata)) {
+        si.versions()
+        .then(data => {
+            versiondata = data;
+            $("#versions-container").html(versionsHtml(versiondata));
+        });
+    }else{
+        $("#versions-container").html(versionsHtml(versiondata));
+    }
 }
 
 /**
@@ -54,7 +61,6 @@ function osHtml(os) {
 
 function versionsHtml(versions) {
     let body = `<div>
-    <h3>Program Versions</h3><br />
     <b>Git</b>: ${versions.git}<br />
     <b>Grunt</b>: ${versions.grunt}<br />
     <b>Gulp</b>: ${versions.gulp}<br />
