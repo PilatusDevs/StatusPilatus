@@ -34,7 +34,7 @@ const si = require("systeminformation");
 function init() {
     /* this is the start page */
     window.initDashboard();
-    $("#dashboard").addClass("active-tab")
+    $("#dashboard").addClass("active-tab");
     // set interval for loop()
     setTimeout(loop, 500, "");
 

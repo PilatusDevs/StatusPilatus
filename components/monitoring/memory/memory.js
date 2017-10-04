@@ -26,7 +26,7 @@ var configMemUsage = {};
 function initMemory() {
     si.mem()
     .then(data => {
-        $("#subtitle").text(formatSize(data.total)[0].toFixed(2)+"GB")
+        $("#subtitle").text(formatSize(data.total)[0].toFixed(2)+"GB");
         console.log(formatSize(data.total)[0]);
         /*
         * Config for the Usage chart

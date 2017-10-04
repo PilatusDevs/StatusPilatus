@@ -28,7 +28,7 @@ function initOs() {
     // Loads OS data
     if ($.isEmptyObject(osData)) {
         si.osInfo()
-        .then(data => {
+        .then((data) => {
             osData = data;
             $("#subtitle").text(osData.distro);
             $("#os-container").append(osHtml(osData));
@@ -40,7 +40,7 @@ function initOs() {
     // Loads version data
     if ($.isEmptyObject(versionData)) {
         si.versions()
-        .then(data => {
+        .then((data) => {
             versionData = data;
             $("#versions-container").html(versionsHtml(versionData));
         });
@@ -50,7 +50,7 @@ function initOs() {
     // Loads user data
     if (userData.length === 0) {
         si.users()
-        .then(data => {
+        .then((data) => {
             userData = data;
             $("#user-container").html(userHtml(userData));
         });
@@ -93,7 +93,7 @@ function versionsHtml(versions) {
 
 function userHtml(users) {
     let body = "";
-    users.forEach(user => {
+    users.forEach((user) => {
         body += `<b>${user.user}</b><br />`;
     });
     return body;

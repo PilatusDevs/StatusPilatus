@@ -3,9 +3,9 @@
   "version": "0.0.2",
   "dependencies": {
     "@types/node": {
-      "version": "7.0.43",
-      "from": "@types/node@>=7.0.18 <8.0.0",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-7.0.43.tgz"
+      "version": "8.0.32",
+      "from": "@types/node@>=8.0.24 <9.0.0",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-8.0.32.tgz"
     },
     "ajv": {
       "version": "5.2.3",
@@ -214,9 +214,9 @@
       "optional": true
     },
     "electron": {
-      "version": "1.7.8",
-      "from": "electron@>=1.7.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/electron/-/electron-1.7.8.tgz"
+      "version": "1.8.1",
+      "from": "electron@1.8.1",
+      "resolved": "https://registry.npmjs.org/electron/-/electron-1.8.1.tgz"
     },
     "electron-download": {
       "version": "3.3.0",
@@ -307,7 +307,7 @@
     },
     "glob": {
       "version": "7.1.2",
-      "from": "https://registry.npmjs.org/glob/-/glob-7.1.2.tgz",
+      "from": "glob@>=7.0.5 <8.0.0",
       "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.2.tgz"
     },
     "graceful-fs": {
@@ -759,9 +759,9 @@
       "resolved": "https://registry.npmjs.org/sumchecker/-/sumchecker-1.3.1.tgz"
     },
     "systeminformation": {
-      "version": "3.30.2",
-      "from": "systeminformation@>=3.30.2 <4.0.0",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-3.30.2.tgz"
+      "version": "3.30.4",
+      "from": "systeminformation@3.30.4",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-3.30.4.tgz"
     },
     "throttleit": {
       "version": "0.0.2",

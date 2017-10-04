@@ -20,7 +20,81 @@
 // Storing static CPU title
 var cpuTitle = "";
 
-/* set the config for the graph */
+/*
+* Config for the Usage chart
+*/
+var configCpuUsage = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Average",
+            backgroundColor: "#f38b4a",
+            borderColor: "#f38b4a",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    min : 0,
+                    max : 100,
+                    stepSize : 10,
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
+
+/*
+* Config for the Temperature chart
+*/
+var configCpuTemperature = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Average",
+            backgroundColor: "#f38b4a",
+            borderColor: "#f38b4a",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Temperature"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    min : 0,
+                    max : 100,
+                    stepSize : 10,
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
 
 /**
 * Called once to initiate the page
@@ -28,7 +102,7 @@ var cpuTitle = "";
 function initCpu() {
     if (!cpuTitle) {
         si.cpu()
-        .then(data => {
+        .then((data) => {
             cpuTitle = data.manufacturer+" "+data.brand;
             $("#subtitle").text(cpuTitle);
         });
@@ -125,79 +199,3 @@ function refreshCpuTemperature(){
         window.cpuTemperature.update();
     });
 }
-
-/*
-* Config for the Usage chart
-*/
-var configCpuUsage = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Average",
-            backgroundColor: "#f38b4a",
-            borderColor: "#f38b4a",
-            fill: false,
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Usage"
-                }
-            }],
-            yAxes: [{
-                ticks:{
-                    min : 0,
-                    max : 100,
-                    stepSize : 10,
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
-
-/*
-* Config for the Temperature chart
-*/
-var configCpuTemperature = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Average",
-            backgroundColor: "#f38b4a",
-            borderColor: "#f38b4a",
-            fill: false,
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Temperature"
-                }
-            }],
-            yAxes: [{
-                ticks:{
-                    min : 0,
-                    max : 100,
-                    stepSize : 10,
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};

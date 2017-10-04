@@ -19,6 +19,43 @@
 
 var currentAdapter = null;
 
+/*
+* Config for the usage chart
+*/
+var configNetworkUsage = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Usage down (Mb/sec)",
+            backgroundColor: "#a4cc99",
+            borderColor: "#a4cc99",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    suggestedMin: 0,
+                    beginAtZero: true
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
+
 /**
 * Called once to initiate the page
 */
@@ -53,7 +90,7 @@ function adapterHtml(adapter) {
 */
 function initAdapters() {
     $("#adapters").html = "";
-    si.networkInterfaces(data => {
+    si.networkInterfaces((data) => {
         data.forEach(adapter => {
             if (adapter.internal == false) {
                 if (!currentAdapter) {
@@ -99,40 +136,3 @@ function refreshNetworkUsage() {
         window.networkUsage.update();
     });
 }
-
-/*
-* Config for the usage chart
-*/
-var configNetworkUsage = {
-    type: 'line',
-    data: {
-        datasets: [{
-            label: "Usage down (Mb/sec)",
-            backgroundColor: "#a4cc99",
-            borderColor: "#a4cc99",
-            fill: false,
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Usage'
-                }
-            }],
-            yAxes: [{
-                ticks:{
-                    suggestedMin: 0,
-                    beginAtZero: true
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: 'Value'
-                }
-            }]
-        }
-    }
-};
