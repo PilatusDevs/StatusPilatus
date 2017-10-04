@@ -17,16 +17,24 @@
 */
 "use strict";
 
+// Storing static CPU title
+var cpuTitle = "";
+
 /* set the config for the graph */
 
 /**
 * Called once to initiate the page
 */
 function initCpu() {
-    si.cpu()
-    .then(data => {
-        $("#subtitle").text(data.manufacturer+" "+data.brand)
-    });
+    if (!cpuTitle) {
+        si.cpu()
+        .then(data => {
+            cpuTitle = data.manufacturer+" "+data.brand;
+            $("#subtitle").text(cpuTitle);
+        });
+    }else{
+        $("#subtitle").text(cpuTitle);
+    }
     console.log("initCpu");
 
     si.currentLoad()

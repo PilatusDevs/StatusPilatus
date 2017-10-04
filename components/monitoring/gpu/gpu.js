@@ -17,22 +17,30 @@
 */
 "use strict";
 
+// Storing static GPU title
+var gpuTitle = "";
+
 /**
 * Called once to initiate the page
 */
 function initGpu() {
-    si.graphics()
-    .then(data => {
-        let allGPUs = data.controllers;
-        let subtitle = allGPUs[0].model;
-        if(allGPUs.length > 1) {
-            allGPUs.shift();
-            allGPUs.forEach(gpu => {
-                subtitle += " + "+gpu.model;
-            });
-        }
-        $("#subtitle").text(subtitle);
-    });
+    if (!gpuTitle) {
+        si.graphics()
+        .then(data => {
+            let allGPUs = data.controllers;
+            let subtitle = allGPUs[0].model;
+            if(allGPUs.length > 1) {
+                allGPUs.shift();
+                allGPUs.forEach(gpu => {
+                    subtitle += " + "+gpu.model;
+                });
+            }
+            gpuTitle = subtitle;
+            $("#subtitle").text(gpuTitle);
+        });
+    }else{
+        $("#subtitle").text(gpuTitle);
+    }
 }
 
 /**

@@ -17,25 +17,34 @@
 */
 "use strict";
 
-
-var versiondata = {};
+// Storing static data to call si library less often
+var osData = {};
+var versionData = {};
 /**
 * Called once to initiate the page
 */
 function initOs() {
-    si.osInfo()
-    .then(data => {
-        $("#subtitle").text(data.distro);
-        $("#os-container").append(osHtml(data));
-    });
-    if ($.isEmptyObject(versiondata)) {
-        si.versions()
+    // Loads OS data
+    if ($.isEmptyObject(osData)) {
+        si.osInfo()
         .then(data => {
-            versiondata = data;
-            $("#versions-container").html(versionsHtml(versiondata));
+            osData = data;
+            $("#subtitle").text(osData.distro);
+            $("#os-container").append(osHtml(osData));
         });
     }else{
-        $("#versions-container").html(versionsHtml(versiondata));
+        $("#subtitle").text(osData.distro);
+        $("#os-container").append(osHtml(osData));
+    }
+    // Loads version data
+    if ($.isEmptyObject(versionData)) {
+        si.versions()
+        .then(data => {
+            versionData = data;
+            $("#versions-container").html(versionsHtml(versionData));
+        });
+    }else{
+        $("#versions-container").html(versionsHtml(versionData));
     }
 }
 
