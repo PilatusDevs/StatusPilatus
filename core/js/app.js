@@ -62,7 +62,7 @@ function changePage(){
         var name = $(this).attr("data-name");
         var path = `./components/${layer}/${folder}/${name}.html`;
         console.log(path);
-        $(".frame").load(path, function(){
+        $("#frame").load(path, function(){
             // Call the init function once so the function can set up the page (graphs etc..)
             var initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
             console.log(initFunction);
