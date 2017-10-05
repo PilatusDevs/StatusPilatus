@@ -57,7 +57,7 @@ function initStorageUsage() {
             ${parseInt(drive.use)}%
             </div>
             </div>`;
-            $(".frame").append(html);
+            $("#storage-bars").append(html);
         });
     });
 }
