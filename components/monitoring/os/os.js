@@ -21,6 +21,7 @@
 var osData = {};
 var versionData = {};
 var userData = [];
+var programData = "";
 /**
 * Called once to initiate the page
 */
