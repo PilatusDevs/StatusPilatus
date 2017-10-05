@@ -26,7 +26,7 @@ var configNetworkDownUsage = {
     type: "line",
     data: {
         datasets: [{
-            label: "Usage down (Mb/sec)",
+            label: "Download (MB/sec)",
             backgroundColor: "#a4cc99",
             borderColor: "#a4cc99",
             fill: false,
@@ -60,7 +60,7 @@ var configNetworkUpUsage = {
     type: "line",
     data: {
         datasets: [{
-            label: "Usage up (Mb/sec)",
+            label: "Upload (MB/sec)",
             backgroundColor: "#a4cc99",
             borderColor: "#a4cc99",
             fill: false,
