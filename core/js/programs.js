@@ -38,7 +38,7 @@ function getWindowsPrograms() {
     exec( parentDir + '/StatusPilatus/scripts/programs.bat',
     function (error, stdout, stderr) {
         var html = stdout.split("\n").join("<br>");
-        $("#programs").append(html);
+        $("#programs-container").append(html);
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
@@ -55,7 +55,7 @@ function getLinuxPrograms() {
     exec( parentDir + '/StatusPilatus/scripts/programs.sh',
     function (error, stdout, stderr) {
         var html = stdout.split("\n").join("<br>");
-        $("#programs").append(html);
+        $("#programs-container").append(html);
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
