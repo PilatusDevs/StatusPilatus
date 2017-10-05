@@ -97,7 +97,7 @@ function initNetwork() {
     initAdapters();
 
     /* make the chart */
-    var ctx = document.getElementById("canvasNetworDownkUsage").getContext("2d");
+    var ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
     window.networkDownUsage = new Chart(ctx, configNetworkDownUsage);
 
     /* make the chart */
@@ -153,9 +153,9 @@ function changeNetworkAdapter(){
     window.networkUpUsage.destroy();
     configNetworkDownUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
     configNetworkUpUsage.data = {datasets: [{label: "Usage up (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
-    var ctx1 = document.getElementById("canvasNetworDownkUsage").getContext("2d");
+    var ctx1 = document.getElementById("canvasNetworkDownUsage").getContext("2d");
     window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
-    var ctx2 = document.getElementById("canvasNetworUpUsage").getContext("2d");
+    var ctx2 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
     window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
 }
 
