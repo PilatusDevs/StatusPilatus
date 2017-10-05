@@ -129,7 +129,7 @@ function refreshNetworkUsage() {
         /* update the graph - usage*/
         configNetworkUsage.data.labels.push("");
         configNetworkUsage.data.datasets[0].data.push(usage);
-        if (configNetworkUsage.data.datasets[0].data.length > graph_width()) {
+        if (configNetworkUsage.data.datasets[0].data.length > graphWidth()) {
             configNetworkUsage.data.datasets[0].data.splice(0, 1);
             configNetworkUsage.data.labels.splice(0, 1);
         }

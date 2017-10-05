@@ -167,7 +167,7 @@ function refreshCpuUsage() {
         configCpuUsage.data.labels.push("");
         console.log(data.currentload);
         configCpuUsage.data.datasets[0].data.push(data.currentload);
-        if (configCpuUsage.data.datasets[0].data.length > graph_width()) {
+        if (configCpuUsage.data.datasets[0].data.length > graphWidth()) {
             configCpuUsage.data.datasets[0].data.splice(0, 1);
             configCpuUsage.data.labels.splice(0, 1);
         }
@@ -175,7 +175,7 @@ function refreshCpuUsage() {
         for (var s = 0; s < configCpuUsage.data.datasets.length - 1; s++) {
             console.log(data.cpus[s]);
             configCpuUsage.data.datasets[s+1].data.push(data.cpus[s].load);
-            if (configCpuUsage.data.datasets[s+1].data.length > graph_width()) {
+            if (configCpuUsage.data.datasets[s+1].data.length > graphWidth()) {
                 configCpuUsage.data.datasets[s+1].data.splice(0, 1);
             }
         }
@@ -202,7 +202,7 @@ function refreshCpuTemperature(){
         configCpuTemperature.data.datasets.forEach(function(dataset) {
             dataset.data.push(parseInt(temperature));
             /* Delete a value at the beginning of the graph to make it 30 items */
-            if (dataset.data.length > 31) {
+            if (dataset.data.length > graphWidth()) {
                 dataset.data.splice(0, 1);
                 configCpuTemperature.data.labels.splice(0, 1);
             }

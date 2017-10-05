@@ -93,7 +93,7 @@ function refreshMemUsage(){
         configMemUsage.data.datasets.forEach(function(dataset) {
             dataset.data.push(usageGB[0]);
             /* Delete a value at the beginning of the graph to make it 30 items */
-            if (dataset.data.length > graph_width()) {
+            if (dataset.data.length > graphWidth()) {
                 dataset.data.splice(0, 1);
                 configMemUsage.data.labels.splice(0, 1);
             }

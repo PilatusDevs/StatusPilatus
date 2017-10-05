@@ -94,7 +94,7 @@ function formatSize(bytes) {
 /**
 * Set the width of ALL the graphs
 */
-function graph_width() {
+function graphWidth() {
     return 60;
 }
 

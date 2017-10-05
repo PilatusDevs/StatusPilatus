@@ -57,6 +57,8 @@ function initOs() {
     }else{
         $("#user-container").html(userHtml(userData));
     }
+
+    getPrograms();
 }
 
 /**
