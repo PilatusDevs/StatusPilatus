@@ -18,33 +18,38 @@
 "use strict";
 
 function getPrograms() {
+    let html = "standard getPrograms() return value";
     /* Determine the os */
     if (/^win/.test(process.platform)) {
         console.log("Windows");
-        return getWindowsPrograms();
+        html = getWindowsPrograms();
+        console.log(html);
     } else if (/^darwin/.test(process.platform)) {
         console.log("MacOS");
     } else {
         console.log("Linux");
         return getLinuxPrograms();
     }
+    return html;
 }
 
 function getWindowsPrograms() {
     const exec = require('child_process').exec;
     var path = require('path')
     var parentDir = path.resolve(process.cwd(), '..');
+    let html = "standard getWindowsPrograms() return value";
 
     exec( parentDir + '/StatusPilatus/scripts/programs.bat',
     function (error, stdout, stderr) {
-        var html = stdout.split("\n").join("<br>");
+        html = stdout.split("\n").join("<br>");
         $("#programs-container").append(html);
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
+        // console.log('stdout: ' + stdout);
+        // console.log('stderr: ' + stderr);
         if (error !== null) {
             console.log('exec error: ' + error);
         }
     });
+    return html;
 }
 
 function getLinuxPrograms() {

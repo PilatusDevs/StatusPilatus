@@ -59,7 +59,9 @@ function initOs() {
         $("#user-container").html(userHtml(userData));
     }
 
-    getPrograms();
+    console.warn("CALLING GETPROGRAMS");
+    programData = getPrograms();
+    console.warn("programData value: "+programData);
 }
 
 /**
