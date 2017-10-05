@@ -21,12 +21,30 @@ function getPrograms() {
     /* Determine the os */
     if (/^win/.test(process.platform)) {
         console.log("Windows");
+        return getWindowsPrograms();
     } else if (/^darwin/.test(process.platform)) {
         console.log("MacOS");
     } else {
         console.log("Linux");
         return getLinuxPrograms();
     }
+}
+
+function getWindowsPrograms() {
+    const exec = require('child_process').exec;
+    var path = require('path')
+    var parentDir = path.resolve(process.cwd(), '..');
+
+    exec( parentDir + '/StatusPilatus/scripts/programs.bat',
+    function (error, stdout, stderr) {
+        var html = stdout.split(" ").join("<br>");
+        $("#programs").append(html);
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+    });
 }
 
 function getLinuxPrograms() {

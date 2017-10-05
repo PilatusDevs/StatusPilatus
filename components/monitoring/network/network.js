@@ -22,11 +22,45 @@ var currentAdapter = null;
 /*
 * Config for the usage chart
 */
-var configNetworkUsage = {
+var configNetworkDownUsage = {
     type: "line",
     data: {
         datasets: [{
             label: "Usage down (Mb/sec)",
+            backgroundColor: "#a4cc99",
+            borderColor: "#a4cc99",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    suggestedMin: 0,
+                    beginAtZero: true
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
+
+var configNetworkUpUsage = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Usage up (Mb/sec)",
             backgroundColor: "#a4cc99",
             borderColor: "#a4cc99",
             fill: false,
@@ -63,8 +97,12 @@ function initNetwork() {
     initAdapters();
 
     /* make the chart */
-    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
-    window.networkUsage = new Chart(ctx, configNetworkUsage);
+    var ctx = document.getElementById("canvasNetworDownkUsage").getContext("2d");
+    window.networkDownUsage = new Chart(ctx, configNetworkDownUsage);
+
+    /* make the chart */
+    var ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
+    window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
 }
 
 /**
@@ -111,10 +149,14 @@ function initAdapters() {
 function changeNetworkAdapter(){
     var e = document.getElementById("networkAdapterSelect");
     currentAdapter = e.options[e.selectedIndex].value;
-    window.networkUsage.destroy();
-    configNetworkUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
-    var ctx = document.getElementById("canvasNetworkUsage").getContext("2d");
-    window.networkUsage = new Chart(ctx, configNetworkUsage);
+    window.networkDownUsage.destroy();
+    window.networkUpUsage.destroy();
+    configNetworkDownUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
+    configNetworkUpUsage.data = {datasets: [{label: "Usage up (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
+    var ctx1 = document.getElementById("canvasNetworDownkUsage").getContext("2d");
+    window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
+    var ctx2 = document.getElementById("canvasNetworUpUsage").getContext("2d");
+    window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
 }
 
 /**
@@ -122,17 +164,26 @@ function changeNetworkAdapter(){
 */
 function refreshNetworkUsage() {
     si.networkStats(currentAdapter)
-    .then(data => {
+    .then((data) => {
         /* convert the bytes to Mb */
-        var usage = ((data.rx_sec / (1024*1024)).toFixed(2));
+        var downUsage = ((data.rx_sec / (1024*1024)).toFixed(2));
+        var upUsage = ((data.tx_sec / (1024*1024)).toFixed(2));
         console.log(data);
         /* update the graph - usage*/
-        configNetworkUsage.data.labels.push("");
-        configNetworkUsage.data.datasets[0].data.push(usage);
-        if (configNetworkUsage.data.datasets[0].data.length > graphWidth()) {
-            configNetworkUsage.data.datasets[0].data.splice(0, 1);
-            configNetworkUsage.data.labels.splice(0, 1);
+        configNetworkDownUsage.data.labels.push("");
+        configNetworkDownUsage.data.datasets[0].data.push(downUsage);
+        if (configNetworkDownUsage.data.datasets[0].data.length > graphWidth()) {
+            configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
+            configNetworkDownUsage.data.labels.splice(0, 1);
         }
-        window.networkUsage.update();
+        window.networkDownUsage.update();
+
+        configNetworkUpUsage.data.labels.push("");
+        configNetworkUpUsage.data.datasets[0].data.push(upUsage);
+        if (configNetworkUpUsage.data.datasets[0].data.length > graphWidth()) {
+            configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
+            configNetworkUpUsage.data.labels.splice(0, 1);
+        }
+        window.networkUpUsage.update();
     });
 }
