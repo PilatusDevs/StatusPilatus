@@ -1,3 +1,7 @@
+canvas {
+    -webkit-user-select: none;
+}
+
 #page-content-wrapper {
     margin-left: 200px;
 }
@@ -8,6 +12,7 @@
 
 #titles {
     border-bottom: solid 3px black;
+    -webkit-user-select: none;
 }
 
 #titles.cpu {
