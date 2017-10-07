@@ -42,7 +42,7 @@ function getWindowsPrograms() {
     exec( parentDir + '/StatusPilatus/scripts/programs.bat',
     function (error, stdout, stderr) {
         html = stdout.split("\n").join("<br>");
-        $("#programs-container").append(html);
+        $("#programs-container").html(html);
         // console.log('stdout: ' + stdout);
         // console.log('stderr: ' + stderr);
         if (error !== null) {
