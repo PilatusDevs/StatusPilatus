@@ -41,7 +41,8 @@ function getWindowsPrograms() {
 
     exec( parentDir + '/StatusPilatus/scripts/programs.bat',
     function (error, stdout, stderr) {
-        html = stdout.split("\n").join("<br>");
+        let programs = stdout.split("Version");
+        html = programs[1].split("\n").join("<br>");
         $("#programs-container").html(html);
         // console.log('stdout: ' + stdout);
         // console.log('stderr: ' + stderr);
