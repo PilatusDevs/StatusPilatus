@@ -42,7 +42,13 @@ function getWindowsPrograms() {
     exec( parentDir + '/StatusPilatus/scripts/programs.bat',
     function (error, stdout, stderr) {
         let programs = stdout.split("Version");
-        html = programs[1].split("\n").join("<br>");
+        let tableElements = programs[1].split("\n");
+        tableElements.shift();
+        tableElements.forEach((element) => {
+            html += `<tr><td>${element}</td></tr>`;
+        });
+        // html = programs[1].split("\n").join("<br>");
+        $("#loading").remove();
         $("#programs-container").html(html);
         // console.log('stdout: ' + stdout);
         // console.log('stderr: ' + stderr);
