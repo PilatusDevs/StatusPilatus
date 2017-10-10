@@ -67,7 +67,8 @@ function getLinuxPrograms() {
     exec( parentDir + '/StatusPilatus/scripts/programs.sh',
     function (error, stdout, stderr) {
         var html = stdout.split("\n").join("<br>");
-        $("#programs-container").append(html);
+        $("#loading").remove();
+        $("#programs-container").html(html);
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
