@@ -103,3 +103,18 @@ function userHtml(users) {
     });
     return body;
 }
+
+function searchPrograms() {
+    let query = document.querySelector("#search-field").value.toUpperCase();
+    let tableRows = document.querySelectorAll("#programs-container tr");
+    tableRows.forEach((row, index) => {
+        let td = row.querySelector("td");
+        if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(query) > -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    });
+}
