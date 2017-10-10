@@ -63,10 +63,14 @@ function getLinuxPrograms() {
     const exec = require('child_process').exec;
     var path = require('path')
     var parentDir = path.resolve(process.cwd(), '..');
+    let html = "standard getLinuxPrograms() return value";
 
     exec( parentDir + '/StatusPilatus/scripts/programs.sh',
     function (error, stdout, stderr) {
-        var html = stdout.split("\n").join("<br>");
+        let tableElements = stdout.split("\n");
+        tableElements.forEach((element) => {
+            html += `<tr><td>${element}</td></tr>`;
+        });
         $("#loading").remove();
         $("#programs-container").html(html);
         console.log('stdout: ' + stdout);
