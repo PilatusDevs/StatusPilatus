@@ -35,7 +35,7 @@ function getPrograms() {
 
 function getWindowsPrograms() {
     const exec = require('child_process').exec;
-    var path = require('path')
+    var path = require('path');
     var parentDir = path.resolve(process.cwd(), '..');
     let html = "standard getWindowsPrograms() return value";
 
@@ -61,7 +61,7 @@ function getWindowsPrograms() {
 
 function getLinuxPrograms() {
     const exec = require('child_process').exec;
-    var path = require('path')
+    var path = require('path');
     var parentDir = path.resolve(process.cwd(), '..');
     let html = "standard getLinuxPrograms() return value";
 
