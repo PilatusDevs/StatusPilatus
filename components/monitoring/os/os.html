@@ -38,8 +38,14 @@
 <div class="row">
     <div class="col-md-12">
         <h3>Installed Programs</h3>
-        <input type="text" id="search-field" onkeyup="searchPrograms()" placeholder="Program name">
+        <input type="text" id="search-field" class="form-control" onkeyup="searchPrograms()" placeholder="Program name">
         <table class="table table-hover">
+            <thead id="table-head" style="display: none">
+                <tr>
+                    <th>Name</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
             <div id="loading">
                 <p>loading...</p>
             </div>

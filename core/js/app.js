@@ -27,6 +27,7 @@ var functionName = "refreshDashboard";
 
 /* include all the libraries */
 const si = require("systeminformation");
+const plistr = require("proglistr");
 
 /*
 * Boot all the core things of the app

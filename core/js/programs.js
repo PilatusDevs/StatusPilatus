@@ -34,27 +34,16 @@ function getPrograms() {
 }
 
 function getWindowsPrograms() {
-    const exec = require('child_process').exec;
-    var path = require('path');
-    var parentDir = path.resolve(process.cwd(), '..');
     let html = "standard getWindowsPrograms() return value";
 
-    exec( parentDir + '/StatusPilatus/scripts/programs.bat',
-    function (error, stdout, stderr) {
-        let programs = stdout.split("Version");
-        let tableElements = programs[1].split("\n");
-        tableElements.shift();
-        tableElements.forEach((element) => {
-            html += `<tr><td>${element}</td></tr>`;
-        });
-        // html = programs[1].split("\n").join("<br>");
+    plistr.getProgs()
+    .then((data) => {
+      data.forEach((program) => {
+            html += `<tr><td>${program.name}</td><td>${program.version}</td></tr>`;
+      });
         $("#loading").remove();
+        document.querySelector("#table-head").style.display = "";
         $("#programs-container").html(html);
-        // console.log('stdout: ' + stdout);
-        // console.log('stderr: ' + stderr);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
     });
     return html;
 }
@@ -72,6 +61,7 @@ function getLinuxPrograms() {
             html += `<tr><td>${element}</td></tr>`;
         });
         $("#loading").remove();
+        document.querySelector("#table-head").style.display = "";
         $("#programs-container").html(html);
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);

@@ -8,6 +8,7 @@
     "chart.js": "^2.7.0",
     "electron": "^1.7.8",
     "jquery": "^3.2.1",
+    "proglistr": "^1.0.0",
     "systeminformation": "^3.30.4"
   },
   "devDependencies": {},
