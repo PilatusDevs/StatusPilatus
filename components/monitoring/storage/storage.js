@@ -17,11 +17,52 @@
 */
 "use strict";
 
+/*
+* Config for the usage chart
+*/
+var configDiskUsage = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Total disk usage (Mb/sec)",
+            backgroundColor: "#c1cc66",
+            borderColor: "#c1cc66",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    suggestedMin: 0,
+                    beginAtZero: true
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
+
 /**
 * Called once to initiate the page
 */
 function initStorage() {
     initStorageUsage();
+
+    /* make the chart */
+    var ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
+    window.diskUsage = new Chart(ctx1, configDiskUsage);
 }
 
 /**
@@ -29,6 +70,26 @@ function initStorage() {
 */
 function refreshStorage() {
     console.log("HDD refresh call");
+    refreshDiskUsage();
+}
+
+function refreshDiskUsage(){
+  si.fsStats()
+  .then((data) => {
+    var usageMb = ((data.tx_sec / (1024*1024)).toFixed(2));
+    console.log(data);
+    /* update the graph */
+    configDiskUsage.data.labels.push("");
+    configDiskUsage.data.datasets.forEach(function(dataset) {
+        dataset.data.push(usageMb);
+        /* Delete a value at the beginning of the graph to make it 30 items */
+        if (dataset.data.length > graphWidth()) {
+            dataset.data.splice(0, 1);
+            configDiskUsage.data.labels.splice(0, 1);
+        }
+    });
+    window.diskUsage.update();
+  });
 }
 
 /**
