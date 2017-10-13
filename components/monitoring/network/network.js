@@ -95,6 +95,7 @@ var configNetworkUpUsage = {
 */
 function initNetwork() {
     initAdapters();
+    initPing();
 
     /* make the chart */
     var ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
@@ -110,6 +111,13 @@ function initNetwork() {
 */
 function refreshNetwork() {
     refreshNetworkUsage();
+}
+
+function initPing() {
+  console.log("Init Ping");
+  // si.inetLatency((data) => {
+  //     console.log(data);
+  // });
 }
 
 function adapterHtml(adapter) {

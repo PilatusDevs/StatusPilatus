@@ -38,9 +38,9 @@ function getWindowsPrograms() {
 
     plistr.getProgs()
     .then((data) => {
-      data.forEach((program) => {
+        data.forEach((program) => {
             html += `<tr><td>${program.name}</td><td>${program.version}</td></tr>`;
-      });
+        });
         $("#loading").remove();
         document.querySelector("#table-head").style.display = "";
         $("#programs-container").html(html);
