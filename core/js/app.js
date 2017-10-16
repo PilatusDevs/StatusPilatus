@@ -90,6 +90,15 @@ function formatBytesToMb(bytes) {
     return  ((bytes / (1024*1024)).toFixed(2));
 }
 
+/*
+* Used to go from kb to GB
+*/
+var sizes = ["bytes", "KB", "MB", "GB", "TB"];
+function formatSize(bytes) {
+    var l = Math.min(sizes.length - 1, Math.log(bytes) / Math.LN2 / 10 | 0);
+    return [bytes / Math.pow(1024, l), sizes[l]];
+}
+
 /**
 * Set the width of ALL the graphs
 */
