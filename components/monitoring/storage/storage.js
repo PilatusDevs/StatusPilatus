@@ -76,7 +76,7 @@ function refreshStorage() {
 function refreshDiskUsage(){
   si.fsStats()
   .then((data) => {
-    var usageMb = ((data.tx_sec / (1024*1024)).toFixed(2));
+    var usageMb = formatBytesToMb(data.tx_sec);
     console.log(data);
     /* update the graph */
     configDiskUsage.data.labels.push("");

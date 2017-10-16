@@ -26,8 +26,8 @@ var configMemUsage = {};
 function initMemory() {
     si.mem()
     .then(data => {
-        $("#subtitle").text(formatSize(data.total)[0].toFixed(2)+"GB");
-        console.log(formatSize(data.total)[0]);
+        $("#subtitle").text(formatBytesToMb(data.total)+"Mb");
+        console.log(formatBytesToMb(data.total));
         /*
         * Config for the Usage chart
         */
@@ -53,7 +53,7 @@ function initMemory() {
                     yAxes: [{
                         ticks:{
                             min : 0,
-                            max : Math.ceil(formatSize(data.total)[0]),
+                            max : Math.ceil(formatBytesToMb(data.total)/1024),
                             stepSize : 1,
                         },
                         display: true,
@@ -87,7 +87,7 @@ function refreshMemUsage(){
 
     si.mem()
     .then(data => {
-        var usageGB = formatSize(data.active);
+        var usageGB = formatBytesToMb(data.active);
         /* update the graph */
         configMemUsage.data.labels.push("");
         configMemUsage.data.datasets.forEach(function(dataset) {

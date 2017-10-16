@@ -174,8 +174,8 @@ function refreshNetworkUsage() {
     si.networkStats(currentAdapter)
     .then((data) => {
         /* convert the bytes to Mb */
-        var downUsage = ((data.rx_sec / (1024*1024)).toFixed(2));
-        var upUsage = ((data.tx_sec / (1024*1024)).toFixed(2));
+        var downUsage = formatBytesToMb(data.rx_sec);
+        var upUsage = formatBytesToMb(data.tx_sec);
         console.log(data);
         /* update the graph - usage*/
         configNetworkDownUsage.data.labels.push("");
