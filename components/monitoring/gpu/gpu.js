@@ -63,8 +63,7 @@ function gpuHtml(gpuData) {
         <h3>GPU ${index+1}</h3>
         <b>Vendor</b>: ${gpu.vendor}<br />
         <b>Model</b>: ${gpu.model}<br />
-        <b>VRAM amount</b>: ${formatSize(gpu.vram)[0].toFixed()} GB<br />
-        <b>VRAM dynamic?</b>: ${gpu.vramDynamic}<br />
+        <b>VRAM</b>: ${formatSize(gpu.vram)[0].toFixed()} GB, ${(gpu.vramDynamic ? "dynamic" : "undynamic")}<br />
         <b>Bus</b>: ${gpu.bus}<br />
         </div>`
     });
