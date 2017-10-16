@@ -19,27 +19,29 @@
 
 // Storing static GPU title
 var gpuTitle = "";
+var gpuData = [];
 
 /**
 * Called once to initiate the page
 */
 function initGpu() {
-    if (!gpuTitle) {
+    if (gpuData.length === 0) {
         si.graphics()
-        .then(data => {
-            let allGPUs = data.controllers;
-            let subtitle = allGPUs[0].model;
-            if(allGPUs.length > 1) {
-                allGPUs.shift();
-                allGPUs.forEach(gpu => {
+        .then((data) => {
+            gpuData = data.controllers;
+            let subtitle = gpuData[0].model;
+            if(gpuData.length > 1) {
+                gpuData.shift();
+                gpuData.forEach(gpu => {
                     subtitle += " + "+gpu.model;
                 });
-            }
-            gpuTitle = subtitle;
+            }gpuTitle = subtitle;
             $("#subtitle").text(gpuTitle);
+            $("#gpu-container").html(gpuHtml(gpuData));
         });
-    }else{
+    } else {
         $("#subtitle").text(gpuTitle);
+        $("#gpu-container").html(gpuHtml(gpuData));
     }
 }
 
@@ -48,4 +50,19 @@ function initGpu() {
 */
 function refreshGpu() {
     console.log("GPU refresh call");
+}
+
+function gpuHtml(gpuData) {
+    let body = "";
+    gpuData.forEach((gpu, index) => {
+        body += `<div class="col-md-3 col-sm-6">
+        <h3>GPU ${index+1}</h3>
+        <b>Vendor</b>: ${gpu.vendor}<br />
+        <b>Model</b>: ${gpu.model}<br />
+        <b>VRAM amount</b>: ${formatSize(gpu.vram)[0].toFixed()} GB<br />
+        <b>VRAM dynamic?</b>: ${gpu.vramDynamic}<br />
+        <b>Bus</b>: ${gpu.bus}<br />
+        </div>`
+    });
+    return body;
 }

@@ -22,8 +22,7 @@ function getPrograms() {
     /* Determine the os */
     if (/^win/.test(process.platform)) {
         console.log("Windows");
-        html = getWindowsPrograms();
-        console.log(html);
+        getWindowsPrograms();
     } else if (/^darwin/.test(process.platform)) {
         console.log("MacOS");
     } else {
@@ -35,7 +34,9 @@ function getPrograms() {
 
 function getWindowsPrograms() {
     let html = "standard getWindowsPrograms() return value";
-
+    
+    // this code will eventually go into os.js once at least linux functionality
+    // is implemented in ProgListr.js
     plistr.getProgs()
     .then((data) => {
         data.forEach((program) => {
@@ -45,6 +46,7 @@ function getWindowsPrograms() {
         document.querySelector("#table-head").style.display = "";
         $("#programs-container").html(html);
     });
+
     return html;
 }
 
