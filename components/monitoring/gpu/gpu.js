@@ -28,14 +28,16 @@ function initGpu() {
     if (gpuData.length === 0) {
         si.graphics()
         .then((data) => {
-            gpuData = data.controllers;
-            let subtitle = gpuData[0].model;
-            if(gpuData.length > 1) {
-                gpuData.shift();
-                gpuData.forEach(gpu => {
+            let allGpus = data.controllers;
+            let subtitle = allGpus[0].model;
+            if(allGpus.length > 1) {
+                allGpus.shift();
+                allGpus.forEach(gpu => {
                     subtitle += " + "+gpu.model;
                 });
-            }gpuTitle = subtitle;
+            }
+            gpuTitle = subtitle;
+            gpuData = allGpus;
             $("#subtitle").text(gpuTitle);
             $("#gpu-container").html(gpuHtml(gpuData));
         });
@@ -43,6 +45,7 @@ function initGpu() {
         $("#subtitle").text(gpuTitle);
         $("#gpu-container").html(gpuHtml(gpuData));
     }
+    console.log(gpuData);
 }
 
 /**
