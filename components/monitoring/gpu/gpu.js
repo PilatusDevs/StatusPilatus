@@ -30,14 +30,15 @@ function initGpu() {
         .then((data) => {
             let allGpus = data.controllers;
             let subtitle = allGpus[0].model;
+            gpuData.push(allGpus[0]);
             if(allGpus.length > 1) {
                 allGpus.shift();
                 allGpus.forEach(gpu => {
                     subtitle += " + "+gpu.model;
+                    gpuData.push(gpu);
                 });
             }
             gpuTitle = subtitle;
-            gpuData = allGpus;
             $("#subtitle").text(gpuTitle);
             $("#gpu-container").html(gpuHtml(gpuData));
         });
@@ -58,7 +59,7 @@ function refreshGpu() {
 function gpuHtml(gpuData) {
     let body = "";
     gpuData.forEach((gpu, index) => {
-        body += `<div class="col-md-3 col-sm-6">
+        body += `<div class="col-md-4 col-sm-6">
         <h3>GPU ${index+1}</h3>
         <b>Vendor</b>: ${gpu.vendor}<br />
         <b>Model</b>: ${gpu.model}<br />
