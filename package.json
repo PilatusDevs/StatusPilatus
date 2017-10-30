@@ -9,7 +9,7 @@
     "electron": "^1.7.8",
     "jquery": "^3.2.1",
     "proglistr": "^1.0.0",
-    "systeminformation": "^3.31.2"
+    "systeminformation": "^3.32.1"
   },
   "devDependencies": {},
   "scripts": {
