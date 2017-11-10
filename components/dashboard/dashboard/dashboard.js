@@ -17,10 +17,50 @@
 */
 "use strict";
 
+// Stuff for settings
+
+const defaultSettings = {
+    a : true,
+    b : 300,
+    c : 600
+};
+
+let currentSettings;
+
 function initDashboard() {
-    
+    if (localStorage.getItem("settings") == null) {
+        currentSettings = Object.assign({},defaultSettings);
+        localStorage.setItem("settings", JSON.stringify(currentSettings));
+        renderSettings();
+    } else {
+        let data = localStorage.getItem("settings");
+        currentSettings = JSON.parse(data);
+        renderSettings();
+    }
 }
 
 function refreshDashboard() {
-    
+
+}
+
+function setData() {
+    let textfield = document.querySelector("#textData");
+    localStorage.setItem("data", textfield.value);
+}
+
+function getData() {
+    let dingetje = localStorage.getItem("data");
+    alert(dingetje);
+}
+
+function kData() {
+    console.log(currentSettings);
+}
+
+function renderSettings() {
+    let body = document.querySelector("#settings");
+    body.innerHTML =
+    `a: ${currentSettings.a}<br>
+    b: ${currentSettings.b}<br>
+    c: ${currentSettings.c}`
 }

@@ -34,7 +34,9 @@ const plistr = require("proglistr");
 */
 function init() {
     /* this is the start page */
-    window.initDashboard();
+    $("#frame").load("./components/dashboard/dashboard/dashboard.html", () => {
+        window.initDashboard();
+    });
     $("#dashboard").addClass("active-tab");
     // set interval for loop()
     setTimeout(loop, 500, "");
