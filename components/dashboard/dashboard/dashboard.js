@@ -17,10 +17,10 @@
 */
 "use strict";
 
-// Stuff for settings
+// Variables for settings
 
 const defaultSettings = {
-    a : true,
+    animations : false,
     b : 300,
     c : 600
 };
@@ -42,20 +42,8 @@ function initDashboard() {
 function refreshDashboard() {
 
 }
-//
-// function setData() {
-//     let textfield = document.querySelector("#textData");
-//     localStorage.setItem("data", textfield.value);
-// }
-//
-// function getData() {
-//     let dingetje = localStorage.getItem("data");
-//     alert(dingetje);
-// }
-//
-// function kData() {
-//     console.log(currentSettings);
-// }
+
+// Functions for settings
 
 function renderSettings() {
     let body = document.querySelector("#settings");
@@ -63,21 +51,70 @@ function renderSettings() {
     `<div class="row">
         <label class="control-label col-sm-3" for="a">Animations:</label>
         <div class="col-sm-2">
-            <input type="checkbox" id="a" class="slider" ${(currentSettings.a) ? "checked" : ""}>
+            <label class="switch">
+                <input type="checkbox" id="animations" class="setting-control slider" ${(currentSettings.a) ? "checked" : ""}>
+                <span class="slider"></span>
+            </label>
         </div>
     </div>
     <hr>
     <div class="row">
         <label class="control-label col-sm-3" for="b">b:</label>
         <div class="col-sm-2">
-            <input type="number" step="10" id="b" class="form-control" value="${currentSettings.b}">
+            <input type="number" min="1" id="b" class="setting-control form-control" value="${currentSettings.b}">
         </div>
     </div>
     <hr>
     <div class="row">
         <label class="control-label col-sm-3" for="c">c:</label>
         <div class="col-sm-2">
-            <input type="number" step="10" id="c" class="form-control" value="${currentSettings.c}">
+            <input type="number" min="1" id="c" class="setting-control form-control" value="${currentSettings.c}">
         </div>
-    </div>`
+    </div>`;
+    activateControls();
+}
+
+function activateControls() {
+    let toggleControls = document.querySelectorAll("[type='checkbox'].setting-control");
+    let numberControls = document.querySelectorAll("[type='number'].setting-control");
+    toggleControls.forEach((control) => {
+        control.addEventListener("change", (e) => {
+            let settingKey = e.target.id;
+            let settingValue = e.target.checked;
+            changeSetting(settingKey, settingValue);
+        });
+    });
+    numberControls.forEach((control) => {
+        control.addEventListener("input", (e) => {
+            if (validateNumber(e.target)) {
+                let settingKey = e.target.id;
+                let settingValue = parseInt(e.target.value);
+                changeSetting(settingKey, settingValue);
+            } else {
+                console.warn("invalid setting will not be saved");
+            }
+        });
+    });
+}
+
+function validateNumber(el) {
+    if (el.value == "") {
+        el.value = 0;
+    }
+    if (el.matches(":valid")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function changeSetting(key, value) {
+    currentSettings[key] = value;
+    localStorage.setItem("settings", JSON.stringify(currentSettings));
+}
+
+function resetSettings() {
+    currentSettings = Object.assign({},defaultSettings);
+    localStorage.setItem("settings", JSON.stringify(currentSettings));
+    renderSettings();
 }
