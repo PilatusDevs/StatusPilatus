@@ -52,7 +52,7 @@ function renderSettings() {
         <label class="control-label col-sm-3" for="a">Animations:</label>
         <div class="col-sm-2">
             <label class="switch">
-                <input type="checkbox" id="animations" class="setting-control slider" ${(currentSettings.a) ? "checked" : ""}>
+                <input type="checkbox" id="animations" class="setting-control slider" ${(currentSettings.animations) ? "checked" : ""}>
                 <span class="slider"></span>
             </label>
         </div>
