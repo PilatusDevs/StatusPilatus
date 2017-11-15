@@ -49,7 +49,7 @@ function renderSettings() {
     let body = document.querySelector("#settings");
     body.innerHTML =
     `<div class="row">
-        <label class="control-label col-sm-3" for="a">Animations:</label>
+        <label class="control-label col-sm-3" for="animations">Animations:</label>
         <div class="col-sm-2">
             <label class="switch">
                 <input type="checkbox" id="animations" class="setting-control slider" ${(currentSettings.animations) ? "checked" : ""}>
@@ -114,7 +114,9 @@ function changeSetting(key, value) {
 }
 
 function resetSettings() {
-    currentSettings = Object.assign({},defaultSettings);
-    localStorage.setItem("settings", JSON.stringify(currentSettings));
-    renderSettings();
+    if (confirm("Are you sure you want to reset your settings back to the defaults?")) {
+        currentSettings = Object.assign({},defaultSettings);
+        localStorage.setItem("settings", JSON.stringify(currentSettings));
+        renderSettings();
+    }
 }
