@@ -42,25 +42,42 @@ function initDashboard() {
 function refreshDashboard() {
 
 }
-
-function setData() {
-    let textfield = document.querySelector("#textData");
-    localStorage.setItem("data", textfield.value);
-}
-
-function getData() {
-    let dingetje = localStorage.getItem("data");
-    alert(dingetje);
-}
-
-function kData() {
-    console.log(currentSettings);
-}
+//
+// function setData() {
+//     let textfield = document.querySelector("#textData");
+//     localStorage.setItem("data", textfield.value);
+// }
+//
+// function getData() {
+//     let dingetje = localStorage.getItem("data");
+//     alert(dingetje);
+// }
+//
+// function kData() {
+//     console.log(currentSettings);
+// }
 
 function renderSettings() {
     let body = document.querySelector("#settings");
     body.innerHTML =
-    `a: ${currentSettings.a}<br>
-    b: ${currentSettings.b}<br>
-    c: ${currentSettings.c}`
+    `<div class="row">
+        <label class="control-label col-sm-3" for="a">Animations:</label>
+        <div class="col-sm-2">
+            <input type="checkbox" id="a" class="slider" ${(currentSettings.a) ? "checked" : ""}>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <label class="control-label col-sm-3" for="b">b:</label>
+        <div class="col-sm-2">
+            <input type="number" step="10" id="b" class="form-control" value="${currentSettings.b}">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <label class="control-label col-sm-3" for="c">c:</label>
+        <div class="col-sm-2">
+            <input type="number" step="10" id="c" class="form-control" value="${currentSettings.c}">
+        </div>
+    </div>`
 }
