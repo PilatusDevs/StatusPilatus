@@ -18,23 +18,21 @@
 "use strict";
 
 function getPrograms() {
-    let html = "standard getPrograms() return value";
     /* Determine the os */
     if (/^win/.test(process.platform)) {
         console.log("Windows");
-        getWindowsPrograms();
+        getProgramsList();
     } else if (/^darwin/.test(process.platform)) {
         console.log("MacOS");
     } else {
         console.log("Linux");
-        return getLinuxPrograms();
+        getProgramsList();
     }
-    return html;
 }
 
-function getWindowsPrograms() {
-    let html = "standard getWindowsPrograms() return value";
-    
+function getProgramsList() {
+    let html = "";
+
     // this code will eventually go into os.js once at least linux functionality
     // is implemented in ProgListr.js
     plistr.getProgs()
@@ -45,30 +43,5 @@ function getWindowsPrograms() {
         $("#loading").remove();
         document.querySelector("#table-head").style.display = "";
         $("#programs-container").html(html);
-    });
-
-    return html;
-}
-
-function getLinuxPrograms() {
-    const exec = require('child_process').exec;
-    var path = require('path');
-    var parentDir = path.resolve(process.cwd(), '..');
-    let html = "standard getLinuxPrograms() return value";
-
-    exec( parentDir + '/StatusPilatus/scripts/programs.sh',
-    function (error, stdout, stderr) {
-        let tableElements = stdout.split("\n");
-        tableElements.forEach((element) => {
-            html += `<tr><td>${element}</td></tr>`;
-        });
-        $("#loading").remove();
-        document.querySelector("#table-head").style.display = "";
-        $("#programs-container").html(html);
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
     });
 }
