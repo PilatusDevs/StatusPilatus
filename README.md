@@ -6,12 +6,18 @@ Monitor your PC like never before!
 
 ## Features
 
-- Check your CPU usage
-- Check your RAM usage
+- Cross-platform and free
 
-## How to use
+### Monitoring
 
-Currently there are no binary releases.
+- CPU usage, flags and temperature
+- GPU information, with support for multiple GPUs
+- RAM usage
+- Disk usage statistics and activity
+- General system information such as hostname, operating system, program list with versions and more
+- Network statistics with support for multiple network interfaces
+
+## Setup and running
 
 To run the project you need Node.js installed (with npm).  
 The steps to do so, are different for every operating system,  
@@ -29,48 +35,36 @@ Any errors that occur during the process can mean two things:
 * You downloaded the latest source from an unstable branch
 * Node.js, npm or you have configured something wrong
 
+When the time is right we will generate builds with one of the following commands:
+
+```
+npm run buildall
+npm run buildlinux
+npm run buildmac
+npm run buildwin
+```
+
 ## Structure
 
-We decided to structure our project like so:
-```
-.
-├── components
-│   ├── dashboard
-│   │   └── dashboard/
-│   └── monitoring
-│       ├── cpu/
-│       ├── gpu/
-│       ├── memory/
-│       ├── network/
-│       ├── os/
-│       └── storage/
-├── core
-│   ├── css/
-│   ├── img/
-│   └── js/
-├── index.html
-├── ISSUE_TEMPLATE.md
-├── LICENSE
-├── main.js
-├── npm-shrinkwrap.json
-├── package.json
-├── PULL_REQUEST_TEMPLATE.md
-└── README.md
-
-```
+In the root of the project, we store the README and LICENSE, among the other files that you would expect there. We have an app directory containing the core application parts. Another important folder is the components folder, which stores all the different parts of the application.
 
 ## Style guide
 
 We try to follow these suggestions when writing code:
 
-* Always add `"use strict";` to js files
-* Add the GPL license header to all js, css and html files
-* Always indent the js, css and html files with 4 spaces
-* For css classes, use names-like-this-one
-* For js, try to follow the [MDN Javascript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
-* In js, function names should be lowerCamelCase
-* In js, always declare strings with double quotes, unless there is a good reason not to
-* When you need to store complex structures, use JSON
+* Add the GPL license header to all javascript, css and html files
+* For css class and id names, use kebab-case-like-this
+* For javascript, try to follow the [MDN Javascript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+* For javscript we also have suggestions by eslint, with the included config
+* Indentation settings are done with editorconfig
+
+To check the javascript style suggestions:
+
+`eslint .`
+
+and fix them mostly automatically with:
+
+`eslint . --fix`
 
 ## Technologies
 
@@ -85,4 +79,4 @@ We made use of the following software to create StatusPilatus:
 
 ## License
 
-GPL-3.0+, see LICENSE for details.
+StatusPilatus is copyrighted software made by PilatusDevs in 2018. You can copy and modify it under the GNU GPL version 3 or later, see LICENSE for details.

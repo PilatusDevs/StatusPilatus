@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -18,10 +18,11 @@
 "use strict";
 
 // Storing static data to call si library less often
-var osData = {};
-var versionData = {};
-var userData = [];
-var programData = "";
+let osData = {};
+let versionData = {};
+let userData = [];
+const programData = "";
+
 /**
 * Called once to initiate the page
 */
@@ -29,38 +30,56 @@ function initOs() {
     // Loads OS data
     if ($.isEmptyObject(osData)) {
         si.osInfo()
-        .then((data) => {
-            osData = data;
-            $("#subtitle").text(osData.distro);
-            $("#os-container").append(osHtml(osData));
-        });
-    }else{
+            .then(data => {
+                osData = data;
+                $("#subtitle").text(osData.distro);
+                $("#os-container").append(osHtml(osData));
+            });
+    } else {
         $("#subtitle").text(osData.distro);
         $("#os-container").append(osHtml(osData));
     }
     // Loads version data
     if ($.isEmptyObject(versionData)) {
         si.versions()
-        .then((data) => {
-            versionData = data;
-            $("#versions-container").html(versionsHtml(versionData));
-        });
-    }else{
+            .then(data => {
+                versionData = data;
+                $("#versions-container").html(versionsHtml(versionData));
+            });
+    } else {
         $("#versions-container").html(versionsHtml(versionData));
     }
     // Loads user data
     if (userData.length === 0) {
         si.users()
-        .then((data) => {
-            userData = data;
-            $("#user-container").html(userHtml(userData));
-        });
-    }else{
+            .then(data => {
+                userData = data;
+                $("#user-container").html(userHtml(userData));
+            });
+    } else {
         $("#user-container").html(userHtml(userData));
     }
-
     getPrograms();
 }
+
+function getPrograms() {
+    let html = "";
+    plistr.getProgs()
+        .then(data => {
+            data.forEach(program => {
+                html += `<tr><td>${program.name}</td><td>${program.version}</td></tr>`;
+            });
+            $("#loading").remove();
+            document.querySelector("#table-head").style.display = "";
+            $("#programs-container").html(html);
+        })
+        .catch(error => {
+            $("#loading").remove();
+            document.querySelector("#table-head").style.display = "";
+            $("#programs-container").html(error);
+        });
+}
+
 
 /**
 * Called from app.js
@@ -70,7 +89,7 @@ function refreshOs() {
 }
 
 function osHtml(os) {
-    let body = `<h3>${os.platform}</h3><br />
+    const body = `<h3>${os.platform}</h3><br />
     <b>Distro</b>: ${os.distro}<br />
     <b>Codename</b>: ${os.codename}<br />
     <b>Release</b>: ${os.release}<br />
@@ -81,7 +100,7 @@ function osHtml(os) {
 }
 
 function versionsHtml(versions) {
-    let body = `<b>Git</b>: ${versions.git}<br />
+    const body = `<b>Git</b>: ${versions.git}<br />
     <b>Grunt</b>: ${versions.grunt}<br />
     <b>Gulp</b>: ${versions.gulp}<br />
     <b>Node</b>: ${versions.node}<br />
@@ -96,17 +115,17 @@ function versionsHtml(versions) {
 
 function userHtml(users) {
     let body = "";
-    users.forEach((user) => {
+    users.forEach(user => {
         body += `<b>${user.user}</b><br />`;
     });
     return body;
 }
 
 function searchPrograms() {
-    let query = document.querySelector("#search-field").value.toUpperCase();
-    let tableRows = document.querySelectorAll("#programs-container tr");
+    const query = document.querySelector("#search-field").value.toUpperCase();
+    const tableRows = document.querySelectorAll("#programs-container tr");
     tableRows.forEach((row, index) => {
-        let td = row.querySelector("td");
+        const td = row.querySelector("td");
         if (td) {
             if (td.innerHTML.toUpperCase().indexOf(query) > -1) {
                 row.style.display = "";

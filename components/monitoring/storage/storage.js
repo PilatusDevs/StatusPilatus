@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 /*
 * Config for the usage chart
 */
-var configDiskUsage = {
+const configDiskUsage = {
     type: "line",
     data: {
         datasets: [{
@@ -61,7 +61,7 @@ function initStorage() {
     initStorageUsage();
 
     /* make the chart */
-    var ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
+    const ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
     window.diskUsage = new Chart(ctx1, configDiskUsage);
 }
 
@@ -74,22 +74,22 @@ function refreshStorage() {
 }
 
 function refreshDiskUsage(){
-  si.fsStats()
-  .then((data) => {
-    var usageMb = formatBytesToMb(data.tx_sec);
-    console.log(data);
-    /* update the graph */
-    configDiskUsage.data.labels.push("");
-    configDiskUsage.data.datasets.forEach(function(dataset) {
-        dataset.data.push(usageMb);
-        /* Delete a value at the beginning of the graph to make it 30 items */
-        if (dataset.data.length > graphWidth()) {
-            dataset.data.splice(0, 1);
-            configDiskUsage.data.labels.splice(0, 1);
-        }
-    });
-    window.diskUsage.update();
-  });
+    si.fsStats()
+        .then(data => {
+            const usageMb = formatBytesToMb(data.tx_sec);
+            console.log(data);
+            /* update the graph */
+            configDiskUsage.data.labels.push("");
+            configDiskUsage.data.datasets.forEach(dataset => {
+                dataset.data.push(usageMb);
+                /* Delete a value at the beginning of the graph to make it 30 items */
+                if (dataset.data.length > graphWidth()) {
+                    dataset.data.splice(0, 1);
+                    configDiskUsage.data.labels.splice(0, 1);
+                }
+            });
+            window.diskUsage.update();
+        });
 }
 
 /**
@@ -98,27 +98,27 @@ function refreshDiskUsage(){
 */
 function initStorageUsage() {
     si.fsSize()
-    .then(data => {
-        data.forEach(drive => {
-            let size = formatSize(drive.size);
-            let used = formatSize(drive.size-drive.used);
-            let html = `<h3>Disk ${drive.mount}<small> ${used[0].toFixed(2)+used[1]} free of ${size[0].toFixed(2)+size[1]}</small></h3>`;
-            let status;
-            if(drive.use < 60){
-                status = "progress-bar-success";
-            }else if(drive.use > 60 && drive.use < 90){
-                status = "progress-bar-warning";
-            }else{
-                status = "progress-bar-danger";
-            }
+        .then(data => {
+            data.forEach(drive => {
+                const size = formatSize(drive.size);
+                const used = formatSize(drive.size-drive.used);
+                let html = `<h3>Disk ${drive.mount}<small> ${used[0].toFixed(2)+used[1]} free of ${size[0].toFixed(2)+size[1]}</small></h3>`;
+                let status;
+                if (drive.use < 60){
+                    status = "progress-bar-success";
+                } else if (drive.use > 60 && drive.use < 90){
+                    status = "progress-bar-warning";
+                } else {
+                    status = "progress-bar-danger";
+                }
 
-            /* generate the html and append it*/
-            html += `<div class="progress">
+                /* generate the html and append it*/
+                html += `<div class="progress">
             <div class="progress-bar ${status} role="progressbar" aria-valuenow="${drive.use}" aria-valuemin="0" aria-valuemax="100" style="width: ${drive.use}%">
             ${parseInt(drive.use)}%
             </div>
             </div>`;
-            $("#storage-bars").append(html);
+                $("#storage-bars").append(html);
+            });
         });
-    });
 }

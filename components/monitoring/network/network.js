@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
 */
 "use strict";
 
-var currentAdapter = null;
+let currentAdapter = null;
 
 /*
 * Config for the usage chart
 */
-var configNetworkDownUsage = {
+const configNetworkDownUsage = {
     type: "line",
     data: {
         datasets: [{
@@ -56,7 +56,7 @@ var configNetworkDownUsage = {
     }
 };
 
-var configNetworkUpUsage = {
+const configNetworkUpUsage = {
     type: "line",
     data: {
         datasets: [{
@@ -98,11 +98,11 @@ function initNetwork() {
     initPing();
 
     /* make the chart */
-    var ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
+    const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
     window.networkDownUsage = new Chart(ctx, configNetworkDownUsage);
 
     /* make the chart */
-    var ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
+    const ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
     window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
 }
 
@@ -114,19 +114,19 @@ function refreshNetwork() {
 }
 
 function initPing() {
-  console.log("Init Ping");
-  // si.inetLatency((data) => {
-  //     console.log(data);
-  // });
+    console.log("Init Ping");
+    // si.inetLatency((data) => {
+    //     console.log(data);
+    // });
 }
 
 function adapterHtml(adapter) {
-    let body = `<div class="col-sm-6">
+    const body = `<div class="col-sm-6">
     <h3>${adapter.iface}</h3><br />
     <b>IPv4</b>: ${adapter.ip4}<br />
     <b>IPv6</b>: ${adapter.ip6}<br />
     <b>MAC</b>: ${adapter.mac}<br />
-    </div>`
+    </div>`;
     return body;
 }
 
@@ -136,7 +136,7 @@ function adapterHtml(adapter) {
 */
 function initAdapters() {
     $("#adapters").html = "";
-    si.networkInterfaces((data) => {
+    si.networkInterfaces(data => {
         data.forEach(adapter => {
             if (adapter.internal == false) {
                 if (!currentAdapter) {
@@ -155,15 +155,15 @@ function initAdapters() {
 * the graph.
 */
 function changeNetworkAdapter(){
-    var e = document.getElementById("networkAdapterSelect");
+    const e = document.getElementById("networkAdapterSelect");
     currentAdapter = e.options[e.selectedIndex].value;
     window.networkDownUsage.destroy();
     window.networkUpUsage.destroy();
-    configNetworkDownUsage.data = {datasets: [{label: "Usage down (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
-    configNetworkUpUsage.data = {datasets: [{label: "Usage up (Mb/sec)",backgroundColor: "#a4cc99",borderColor: "#a4cc99",fill: false,}]};
-    var ctx1 = document.getElementById("canvasNetworkDownUsage").getContext("2d");
+    configNetworkDownUsage.data = {datasets: [{label: "Usage down (Mb/sec)", backgroundColor: "#a4cc99", borderColor: "#a4cc99", fill: false, }]};
+    configNetworkUpUsage.data = {datasets: [{label: "Usage up (Mb/sec)", backgroundColor: "#a4cc99", borderColor: "#a4cc99", fill: false, }]};
+    const ctx1 = document.getElementById("canvasNetworkDownUsage").getContext("2d");
     window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
-    var ctx2 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
+    const ctx2 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
     window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
 }
 
@@ -172,26 +172,26 @@ function changeNetworkAdapter(){
 */
 function refreshNetworkUsage() {
     si.networkStats(currentAdapter)
-    .then((data) => {
+        .then(data => {
         /* convert the bytes to Mb */
-        var downUsage = formatBytesToMb(data.rx_sec);
-        var upUsage = formatBytesToMb(data.tx_sec);
-        console.log(data);
-        /* update the graph - usage*/
-        configNetworkDownUsage.data.labels.push("");
-        configNetworkDownUsage.data.datasets[0].data.push(downUsage);
-        if (configNetworkDownUsage.data.datasets[0].data.length > graphWidth()) {
-            configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
-            configNetworkDownUsage.data.labels.splice(0, 1);
-        }
-        window.networkDownUsage.update();
+            const downUsage = formatBytesToMb(data.rx_sec);
+            const upUsage = formatBytesToMb(data.tx_sec);
+            console.log(data);
+            /* update the graph - usage*/
+            configNetworkDownUsage.data.labels.push("");
+            configNetworkDownUsage.data.datasets[0].data.push(downUsage);
+            if (configNetworkDownUsage.data.datasets[0].data.length > graphWidth()) {
+                configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
+                configNetworkDownUsage.data.labels.splice(0, 1);
+            }
+            window.networkDownUsage.update();
 
-        configNetworkUpUsage.data.labels.push("");
-        configNetworkUpUsage.data.datasets[0].data.push(upUsage);
-        if (configNetworkUpUsage.data.datasets[0].data.length > graphWidth()) {
-            configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
-            configNetworkUpUsage.data.labels.splice(0, 1);
-        }
-        window.networkUpUsage.update();
-    });
+            configNetworkUpUsage.data.labels.push("");
+            configNetworkUpUsage.data.datasets[0].data.push(upUsage);
+            if (configNetworkUpUsage.data.datasets[0].data.length > graphWidth()) {
+                configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
+                configNetworkUpUsage.data.labels.splice(0, 1);
+            }
+            window.networkUpUsage.update();
+        });
 }

@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 "use strict";
 
 // Storing static GPU title
-var gpuTitle = "";
-var gpuData = [];
+let gpuTitle = "";
+const gpuData = [];
 
 /**
 * Called once to initiate the page
@@ -27,21 +27,21 @@ var gpuData = [];
 function initGpu() {
     if (gpuData.length === 0) {
         si.graphics()
-        .then((data) => {
-            let allGpus = data.controllers;
-            let subtitle = allGpus[0].model;
-            gpuData.push(allGpus[0]);
-            if(allGpus.length > 1) {
-                allGpus.shift();
-                allGpus.forEach(gpu => {
-                    subtitle += " + "+gpu.model;
-                    gpuData.push(gpu);
-                });
-            }
-            gpuTitle = subtitle;
-            $("#subtitle").text(gpuTitle);
-            $("#gpu-container").html(gpuHtml(gpuData));
-        });
+            .then(data => {
+                const allGpus = data.controllers;
+                let subtitle = allGpus[0].model;
+                gpuData.push(allGpus[0]);
+                if (allGpus.length > 1) {
+                    allGpus.shift();
+                    allGpus.forEach(gpu => {
+                        subtitle += " + "+gpu.model;
+                        gpuData.push(gpu);
+                    });
+                }
+                gpuTitle = subtitle;
+                $("#subtitle").text(gpuTitle);
+                $("#gpu-container").html(gpuHtml(gpuData));
+            });
     } else {
         $("#subtitle").text(gpuTitle);
         $("#gpu-container").html(gpuHtml(gpuData));
@@ -65,7 +65,7 @@ function gpuHtml(gpuData) {
         <b>Model</b>: ${gpu.model}<br />
         <b>VRAM</b>: ${gpu.vram} MB, ${(gpu.vramDynamic ? "dynamic" : "undynamic")}<br />
         <b>Bus</b>: ${gpu.bus}<br />
-        </div>`
+        </div>`;
     });
     return body;
 }

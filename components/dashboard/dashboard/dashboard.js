@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@ let currentSettings;
 
 function initDashboard() {
     if (localStorage.getItem("settings") == null) {
-        currentSettings = Object.assign({},defaultSettings);
+        currentSettings = Object.assign({}, defaultSettings);
         localStorage.setItem("settings", JSON.stringify(currentSettings));
         renderSettings();
     } else {
-        let data = localStorage.getItem("settings");
+        const data = localStorage.getItem("settings");
         currentSettings = JSON.parse(data);
         renderSettings();
     }
@@ -46,7 +46,7 @@ function refreshDashboard() {
 // Functions for settings
 
 function renderSettings() {
-    let body = document.querySelector("#settings");
+    const body = document.querySelector("#settings");
     body.innerHTML =
     `<div class="row">
         <label class="control-label col-sm-3" for="animations">Animations:</label>
@@ -75,20 +75,20 @@ function renderSettings() {
 }
 
 function activateControls() {
-    let toggleControls = document.querySelectorAll("[type='checkbox'].setting-control");
-    let numberControls = document.querySelectorAll("[type='number'].setting-control");
-    toggleControls.forEach((control) => {
-        control.addEventListener("change", (e) => {
-            let settingKey = e.target.id;
-            let settingValue = e.target.checked;
+    const toggleControls = document.querySelectorAll("[type='checkbox'].setting-control");
+    const numberControls = document.querySelectorAll("[type='number'].setting-control");
+    toggleControls.forEach(control => {
+        control.addEventListener("change", e => {
+            const settingKey = e.target.id;
+            const settingValue = e.target.checked;
             changeSetting(settingKey, settingValue);
         });
     });
-    numberControls.forEach((control) => {
-        control.addEventListener("input", (e) => {
+    numberControls.forEach(control => {
+        control.addEventListener("input", e => {
             if (validateNumber(e.target)) {
-                let settingKey = e.target.id;
-                let settingValue = parseInt(e.target.value);
+                const settingKey = e.target.id;
+                const settingValue = parseInt(e.target.value);
                 changeSetting(settingKey, settingValue);
             } else {
                 console.warn("invalid setting will not be saved");
@@ -115,7 +115,7 @@ function changeSetting(key, value) {
 
 function resetSettings() {
     if (confirm("Are you sure you want to reset your settings back to the defaults?")) {
-        currentSettings = Object.assign({},defaultSettings);
+        currentSettings = Object.assign({}, defaultSettings);
         localStorage.setItem("settings", JSON.stringify(currentSettings));
         renderSettings();
     }

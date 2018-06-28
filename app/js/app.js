@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ Chart.defaults.global.animationSteps = 0;
 Chart.defaults.global.elements.responsive = true;
 
 /* This variable is used in the loop */
-var functionName = "refreshDashboard";
+let functionName = "refreshDashboard";
 
 /* include all the libraries */
 const si = require("systeminformation");
@@ -34,7 +34,7 @@ const plistr = require("proglistr");
 */
 function init() {
     /* this is the start page */
-    $("#frame").load("./components/dashboard/dashboard/dashboard.html", () => {
+    $("#frame").load("../components/dashboard/dashboard/dashboard.html", () => {
         window.initDashboard();
     });
     $("#dashboard").addClass("active-tab");
@@ -60,14 +60,14 @@ function changePage(){
         //clear subtitle so it can be set in components init function
         $("#subtitle").text("");
 
-        var layer = $(this).attr("data-layer");
-        var folder = $(this).attr("data-folder");
-        var name = $(this).attr("data-name");
-        var path = `./components/${layer}/${folder}/${name}.html`;
+        const layer = $(this).attr("data-layer");
+        const folder = $(this).attr("data-folder");
+        const name = $(this).attr("data-name");
+        const path = `../components/${layer}/${folder}/${name}.html`;
         console.log(path);
-        $("#frame").load(path, function(){
+        $("#frame").load(path, () => {
             // Call the init function once so the function can set up the page (graphs etc..)
-            var initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            const initFunction = "init" + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
             console.log(initFunction);
             window[initFunction]();
 
@@ -95,9 +95,9 @@ function formatBytesToMb(bytes) {
 /*
 * Used to go from kb to GB
 */
-var sizes = ["bytes", "KB", "MB", "GB", "TB"];
+const sizes = ["bytes", "KB", "MB", "GB", "TB"];
 function formatSize(bytes) {
-    var l = Math.min(sizes.length - 1, Math.log(bytes) / Math.LN2 / 10 | 0);
+    const l = Math.min(sizes.length - 1, Math.log(bytes) / Math.LN2 / 10 | 0);
     return [bytes / Math.pow(1024, l), sizes[l]];
 }
 
