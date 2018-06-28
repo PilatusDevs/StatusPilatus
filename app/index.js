@@ -31,7 +31,7 @@ function createWindow () {
         minHeight: 600,
         minWidth: 800,
         show: false,
-        icon: path.join(__dirname, "core/img/logo_256x256.png"),
+        icon: path.join(__dirname, "img/logo.png"),
         webPreferences: {
             nodeIntegrationInWorker: true
         }

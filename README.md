@@ -42,39 +42,11 @@ npm run buildall
 npm run buildlinux
 npm run buildmac
 npm run buildwin
+```
 
 ## Structure
 
-We decided to structure our project like so:
-
-```
-.
-├── components
-│   ├── dashboard
-│   │   └── dashboard/
-│   └── monitoring
-│       ├── cpu/
-│       ├── gpu/
-│       ├── memory/
-│       ├── network/
-│       ├── os/
-│       └── storage/
-├── core
-│   ├── css/
-│   ├── img/
-│   └── js/
-├── .editorconfig
-├── .eslintrc.json
-├── index.html
-├── ISSUE_TEMPLATE.md
-├── LICENSE
-├── main.js
-├── package.json
-├── package-lock.json
-├── PULL_REQUEST_TEMPLATE.md
-└── README.md
-
-```
+In the root of the project, we store the README and LICENSE, among the other files that you would expect there. We have an app directory containing the core application parts. Another important folder is the components folder, which stores all the different parts of the application.
 
 ## Style guide
 
