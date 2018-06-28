@@ -17,61 +17,36 @@
 */
 "use strict";
 
-// Storing static data to call si library less often
-let osData = {};
-let versionData = {};
-let userData = [];
-const programData = "";
+// Storing static data to call libraries less often
+// change to let if we add user refresh functionality
+const osData = si.osInfo();
+const versionData = si.versions();
+const userData = si.users();
+const programData = plistr.getProgs();
 
 /**
 * Called once to initiate the page
 */
 function initOs() {
-    // Loads OS data
-    if ($.isEmptyObject(osData)) {
-        si.osInfo()
-            .then(data => {
-                osData = data;
-                $("#subtitle").text(osData.distro);
-                $("#os-container").append(osHtml(osData));
-            });
-    } else {
-        $("#subtitle").text(osData.distro);
-        $("#os-container").append(osHtml(osData));
-    }
-    // Loads version data
-    if ($.isEmptyObject(versionData)) {
-        si.versions()
-            .then(data => {
-                versionData = data;
-                $("#versions-container").html(versionsHtml(versionData));
-            });
-    } else {
-        $("#versions-container").html(versionsHtml(versionData));
-    }
-    // Loads user data
-    if (userData.length === 0) {
-        si.users()
-            .then(data => {
-                userData = data;
-                $("#user-container").html(userHtml(userData));
-            });
-    } else {
-        $("#user-container").html(userHtml(userData));
-    }
-    getPrograms();
-}
-
-function getPrograms() {
-    let html = "";
-    plistr.getProgs()
+    // Renders OS data once ready
+    osData.then(data => {
+        $("#subtitle").text(data.distro);
+        $("#os-container").append(osHtml(data));
+    });
+    // Renders version data once ready
+    versionData.then(data => {
+        $("#versions-container").html(versionHtml(data));
+    });
+    // Renders user data once ready
+    userData.then(data => {
+        $("#user-container").html(userHtml(data));
+    });
+    // Renders program data once ready
+    programData
         .then(data => {
-            data.forEach(program => {
-                html += `<tr><td>${program.name}</td><td>${program.version}</td></tr>`;
-            });
             $("#loading").remove();
             document.querySelector("#table-head").style.display = "";
-            $("#programs-container").html(html);
+            $("#programs-container").html(programHtml(data));
         })
         .catch(error => {
             $("#loading").remove();
@@ -79,7 +54,6 @@ function getPrograms() {
             $("#programs-container").html(error);
         });
 }
-
 
 /**
 * Called from app.js
@@ -99,7 +73,7 @@ function osHtml(os) {
     return body;
 }
 
-function versionsHtml(versions) {
+function versionHtml(versions) {
     const body = `<b>Git</b>: ${versions.git}<br />
     <b>Grunt</b>: ${versions.grunt}<br />
     <b>Gulp</b>: ${versions.gulp}<br />
@@ -117,6 +91,14 @@ function userHtml(users) {
     let body = "";
     users.forEach(user => {
         body += `<b>${user.user}</b><br />`;
+    });
+    return body;
+}
+
+function programHtml(programs) {
+    let body = "";
+    programs.forEach(program => {
+        body += `<tr><td>${program.name}</td><td>${program.version}</td></tr>`;
     });
     return body;
 }
