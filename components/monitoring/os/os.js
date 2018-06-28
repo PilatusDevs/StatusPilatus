@@ -42,11 +42,17 @@ function initOs() {
         $("#user-container").html(userHtml(data));
     });
     // Renders program data once ready
-    programData.then(data => {
-        $("#loading").remove();
-        document.querySelector("#table-head").style.display = "";
-        $("#programs-container").html(programHtml(data));
-    });
+    programData
+        .then(data => {
+            $("#loading").remove();
+            document.querySelector("#table-head").style.display = "";
+            $("#programs-container").html(programHtml(data));
+        })
+        .catch(error => {
+            $("#loading").remove();
+            document.querySelector("#table-head").style.display = "";
+            $("#programs-container").html(error);
+        });
 }
 
 /**
