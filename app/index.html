@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 -    StatusPilatus: Monitor your PC like never before!
--    Copyright (C) 2017 PilatusDevs
+-    Copyright (C) 2018 PilatusDevs
 -
 -    This program is free software: you can redistribute it and/or modify
 -    it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
     <meta charset="utf-8">
     <title>StatusPilatus</title>
 
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./core/css/sidebar.css" rel="stylesheet">
-    <link href="./core/css/content.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/sidebar.css" rel="stylesheet">
+    <link href="./css/content.css" rel="stylesheet">
 </head>
 <body>
     <div id="wrapper">
@@ -32,7 +32,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li>
-                    <img src="./core/img/logo.png" id="logo">
+                    <img src="./img/logo.png" id="logo">
                 </li>
                 <li>
                     <a href="#tab" id="dashboard" class="active-tab" data-layer="dashboard" data-folder="dashboard" data-name="dashboard">Dashboard</a>
@@ -84,23 +84,22 @@
 <!-- wrapper -->
 
 <!-- Insert this line above script imports  -->
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script>if (typeof module === "object") {window.module = module; module = undefined;}</script>
 
 <!-- Javascripts-->
-<script src="./node_modules/jquery/dist/jquery.min.js"></script>
-<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="./node_modules/chart.js/dist/Chart.bundle.min.js"></script>
-<script src="./core/js/app.js"></script>
-<script src="./core/js/programs.js"></script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.bundle.min.js"></script>
+<script src="./js/app.js"></script>
 
 <!-- all the components -->
-<script src="./components/dashboard/dashboard/dashboard.js"></script>
-<script src="./components/monitoring/cpu/cpu.js"></script>
-<script src="./components/monitoring/gpu/gpu.js"></script>
-<script src="./components/monitoring/memory/memory.js"></script>
-<script src="./components/monitoring/storage/storage.js"></script>
-<script src="./components/monitoring/network/network.js"></script>
-<script src="./components/monitoring/os/os.js"></script>
+<script src="../components/dashboard/dashboard/dashboard.js"></script>
+<script src="../components/monitoring/cpu/cpu.js"></script>
+<script src="../components/monitoring/gpu/gpu.js"></script>
+<script src="../components/monitoring/memory/memory.js"></script>
+<script src="../components/monitoring/storage/storage.js"></script>
+<script src="../components/monitoring/network/network.js"></script>
+<script src="../components/monitoring/os/os.js"></script>
 
 <!-- Insert this line after script imports -->
 <script>if (window.module) module = window.module;</script>

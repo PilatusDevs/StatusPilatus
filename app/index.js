@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -16,13 +16,14 @@
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 "use strict";
+
 const {app, BrowserWindow} = require("electron");
 const path = require("path");
 const url = require("url");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win;
 
 function createWindow () {
     // Create the browser window.
@@ -30,7 +31,7 @@ function createWindow () {
         minHeight: 600,
         minWidth: 800,
         show: false,
-        icon: path.join(__dirname, 'core/img/logo_256x256.png'),
+        icon: path.join(__dirname, "core/img/logo_256x256.png"),
         webPreferences: {
             nodeIntegrationInWorker: true
         }
@@ -46,6 +47,7 @@ function createWindow () {
     }));
 
     // Open the DevTools.
+    //TODO remove this by default, but have an option to enable this
     win.webContents.openDevTools();
 
     // Emitted when the window is closed.
