@@ -15,9 +15,42 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global $ si Chart formatBytesToMb graphWidth */
 "use strict";
 
-let configMemUsage = {};
+const configMemUsage = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Usage",
+            backgroundColor: "#cc576e",
+            borderColor: "#cc576e",
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Time"
+                }
+            }],
+            yAxes: [{
+                ticks:{
+                    min : 0,
+                    stepSize : 1,
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
 
 /*
 * Build the canvas etc...
@@ -28,45 +61,9 @@ function initMemory() {
         .then(data => {
             $("#subtitle").text(formatBytesToMb(data.total)+"Mb");
             console.log(formatBytesToMb(data.total));
-            /*
-        * Config for the Usage chart
-        */
-            configMemUsage = {
-                type: "line",
-                data: {
-                    datasets: [{
-                        label: "Usage",
-                        backgroundColor: "#cc576e",
-                        borderColor: "#cc576e",
-                        fill: false,
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: "Time"
-                            }
-                        }],
-                        yAxes: [{
-                            ticks:{
-                                min : 0,
-                                max : Math.ceil(formatBytesToMb(data.total)/1024),
-                                stepSize : 1,
-                            },
-                            display: true,
-                            scaleLabel: {
-                                display: false,
-                                labelString: "Value"
-                            }
-                        }]
-                    }
-                }
-            };
-
             const ctx = document.getElementById("canvasMemUsage").getContext("2d");
+            const max = Math.ceil(formatBytesToMb(data.total)/1024);
+            configMemUsage.options.scales.yAxes[0].ticks.max = max;
             window.memUsage = new Chart(ctx, configMemUsage);
         });
 }
