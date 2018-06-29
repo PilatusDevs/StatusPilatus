@@ -1,6 +1,6 @@
 <!--
 -    StatusPilatus: Monitor your PC like never before!
--    Copyright (C) 2017 PilatusDevs
+-    Copyright (C) 2018 PilatusDevs
 -
 -    This program is free software: you can redistribute it and/or modify
 -    it under the terms of the GNU General Public License as published by
@@ -16,10 +16,22 @@
 -    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <style>
-::selection {
-    background: #9c86cc;
-    color: #ffffff;
-}
+    ::selection {
+        background: #9c86cc;
+        color: #ffffff;
+    }
+    #program-header {
+        display: flex;
+        align-items: center;
+    }
+    h3 {
+        margin: 0;
+        padding: 1em 0;
+    }
+    #program-header > span {
+        margin-left: auto;
+        font-size: 25px;
+    }
 </style>
 <div class="row">
     <div class="col-md-5 col-sm-6" id="os-container">
@@ -36,8 +48,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" id="program-header">
         <h3>Installed Programs</h3>
+        <span class="glyphicon glyphicon-refresh" onclick="updateAndRefreshData()"></span>
+    </div>
+    <div class="col-md-12">
         <input type="text" id="search-field" class="form-control" onkeyup="searchPrograms()" placeholder="Program name">
         <table class="table table-hover">
             <thead id="table-head" style="display: none">
