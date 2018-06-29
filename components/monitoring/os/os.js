@@ -15,23 +15,44 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global si plistr $ */
 "use strict";
 
 // Storing static data to call libraries less often
 // change to let if we add user refresh functionality
-const osData = si.osInfo();
-const versionData = si.versions();
-const userData = si.users();
-const programData = plistr.getProgs();
+let osData = si.osInfo();
+let versionData = si.versions();
+let userData = si.users();
+let programData = plistr.getProgs();
+let isRefreshing = false;
+
+function updateAndRefreshData() {
+    if (isRefreshing) {
+        return;
+    }
+    document.querySelector("#search-field").value = "";
+    searchPrograms();
+    isRefreshing = true;
+    const refreshButton = document.querySelector("#program-header > span");
+    refreshButton.style.color = "#777";
+    osData = si.osInfo();
+    versionData = si.versions();
+    userData = si.users();
+    programData = plistr.getProgs();
+    insertData();
+}
 
 /**
 * Called once to initiate the page
 */
 function initOs() {
+    insertData();
+}
+function insertData() {
     // Renders OS data once ready
     osData.then(data => {
         $("#subtitle").text(data.distro);
-        $("#os-container").append(osHtml(data));
+        $("#os-container").html(osHtml(data));
     });
     // Renders version data once ready
     versionData.then(data => {
@@ -42,16 +63,21 @@ function initOs() {
         $("#user-container").html(userHtml(data));
     });
     // Renders program data once ready
+    const refreshButton = document.querySelector("#program-header > span");
     programData
         .then(data => {
             $("#loading").remove();
             document.querySelector("#table-head").style.display = "";
             $("#programs-container").html(programHtml(data));
+            refreshButton.style.color = "";
+            isRefreshing = false;
         })
         .catch(error => {
             $("#loading").remove();
             document.querySelector("#table-head").style.display = "";
             $("#programs-container").html(error);
+            refreshButton.style.color = "";
+            isRefreshing = false;
         });
 }
 
@@ -106,7 +132,7 @@ function programHtml(programs) {
 function searchPrograms() {
     const query = document.querySelector("#search-field").value.toUpperCase();
     const tableRows = document.querySelectorAll("#programs-container tr");
-    tableRows.forEach((row, index) => {
+    tableRows.forEach(row => {
         const td = row.querySelector("td");
         if (td) {
             if (td.innerHTML.toUpperCase().indexOf(query) > -1) {
