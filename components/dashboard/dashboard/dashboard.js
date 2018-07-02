@@ -17,106 +17,20 @@
 */
 "use strict";
 
-// Variables for settings
-
-const defaultSettings = {
-    animations : false,
-    b : 300,
-    c : 600
+module.exports = {
+    init: initDashboard,
+    refresh: refreshDashboard,
+    activate: activateDashboard
 };
 
-let currentSettings;
-
 function initDashboard() {
-    if (localStorage.getItem("settings") == null) {
-        currentSettings = Object.assign({}, defaultSettings);
-        localStorage.setItem("settings", JSON.stringify(currentSettings));
-        renderSettings();
-    } else {
-        const data = localStorage.getItem("settings");
-        currentSettings = JSON.parse(data);
-        renderSettings();
-    }
+    //TODO
 }
 
 function refreshDashboard() {
-
+    //TODO
 }
 
-// Functions for settings
-
-function renderSettings() {
-    const body = document.querySelector("#settings");
-    body.innerHTML =
-    `<div class="row">
-        <label class="control-label col-sm-3" for="animations">Animations:</label>
-        <div class="col-sm-2">
-            <label class="switch">
-                <input type="checkbox" id="animations" class="setting-control slider" ${(currentSettings.animations) ? "checked" : ""}>
-                <span class="slider"></span>
-            </label>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <label class="control-label col-sm-3" for="b">b:</label>
-        <div class="col-sm-2">
-            <input type="number" min="1" id="b" class="setting-control form-control" value="${currentSettings.b}">
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <label class="control-label col-sm-3" for="c">c:</label>
-        <div class="col-sm-2">
-            <input type="number" min="1" id="c" class="setting-control form-control" value="${currentSettings.c}">
-        </div>
-    </div>`;
-    activateControls();
-}
-
-function activateControls() {
-    const toggleControls = document.querySelectorAll("[type='checkbox'].setting-control");
-    const numberControls = document.querySelectorAll("[type='number'].setting-control");
-    toggleControls.forEach(control => {
-        control.addEventListener("change", e => {
-            const settingKey = e.target.id;
-            const settingValue = e.target.checked;
-            changeSetting(settingKey, settingValue);
-        });
-    });
-    numberControls.forEach(control => {
-        control.addEventListener("input", e => {
-            if (validateNumber(e.target)) {
-                const settingKey = e.target.id;
-                const settingValue = parseInt(e.target.value);
-                changeSetting(settingKey, settingValue);
-            } else {
-                console.warn("invalid setting will not be saved");
-            }
-        });
-    });
-}
-
-function validateNumber(el) {
-    if (el.value == "") {
-        el.value = 0;
-    }
-    if (el.matches(":valid")) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function changeSetting(key, value) {
-    currentSettings[key] = value;
-    localStorage.setItem("settings", JSON.stringify(currentSettings));
-}
-
-function resetSettings() {
-    if (confirm("Are you sure you want to reset your settings back to the defaults?")) {
-        currentSettings = Object.assign({}, defaultSettings);
-        localStorage.setItem("settings", JSON.stringify(currentSettings));
-        renderSettings();
-    }
+function activateDashboard() {
+    //TODO
 }

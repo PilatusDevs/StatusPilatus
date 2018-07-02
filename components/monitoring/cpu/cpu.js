@@ -15,7 +15,14 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global $ si Chart settings */
 "use strict";
+
+module.exports = {
+    init: initCpu,
+    refresh: refreshCpu,
+    activate: activateCpu
+};
 
 // Storing static CPU title
 let cpuTitle = "";
@@ -96,25 +103,11 @@ const configCpuTemperature = {
     }
 };
 
-/**
-* Called once to initiate the page
-*/
 function initCpu() {
-    if (!cpuTitle) {
-        si.cpu()
-            .then(data => {
-                cpuTitle = data.manufacturer+" "+data.brand;
-                $("#subtitle").text(cpuTitle);
-            });
-    } else {
-        $("#subtitle").text(cpuTitle);
-    }
-    console.log("initCpu");
-
     // cpu usage
     si.currentLoad()
         .then(data => {
-            if (configCpuUsage.data.datasets.length == 1) {
+            if (configCpuUsage.data.datasets.length === 1) {
                 const allThreads = data.cpus;
                 allThreads.forEach((thread, index) => {
                     configCpuUsage.data.datasets.push({
@@ -139,24 +132,29 @@ function initCpu() {
     si.cpuFlags()
         .then(flags => {
             document.getElementById("cpu-flags").innerHTML = "";
-            flags.split(" ").forEach((flag, count) => {
+            flags.split(" ").forEach(flag => {
                 document.getElementById("cpu-flags").innerHTML += `<span title="${flag}" style="overflow: hidden;display: inline-block;width: 100px">${flag}</span>`;
             });
         });
 }
 
-/**
-* Called in app.js
-*/
+function activateCpu() {
+    if (!cpuTitle) {
+        si.cpu()
+            .then(data => {
+                cpuTitle = data.manufacturer + " " + data.brand;
+                $("#subtitle").text(cpuTitle);
+            });
+    } else {
+        $("#subtitle").text(cpuTitle);
+    }
+}
+
 function refreshCpu() {
-    console.log("CPU refresh call");
     refreshCpuUsage();
     refreshCpuTemperature();
 }
 
-/**
-* Update the cpu temperature chart
-*/
 function refreshCpuUsage() {
     /* get the cpu information */
     let usage;
@@ -165,44 +163,32 @@ function refreshCpuUsage() {
         .then(data => {
         /* update the graph - average*/
             configCpuUsage.data.labels.push("");
-            console.log(data.currentload);
             configCpuUsage.data.datasets[0].data.push(data.currentload);
-            if (configCpuUsage.data.datasets[0].data.length > graphWidth()) {
+            while (configCpuUsage.data.datasets[0].data.length > settings.graphs.width) {
                 configCpuUsage.data.datasets[0].data.splice(0, 1);
                 configCpuUsage.data.labels.splice(0, 1);
             }
             /* update the graph - per thread */
             for (let s = 0; s < configCpuUsage.data.datasets.length - 1; s++) {
-                console.log(data.cpus[s]);
                 configCpuUsage.data.datasets[s+1].data.push(data.cpus[s].load);
-                if (configCpuUsage.data.datasets[s+1].data.length > graphWidth()) {
+                while (configCpuUsage.data.datasets[s+1].data.length > settings.graphs.width) {
                     configCpuUsage.data.datasets[s+1].data.splice(0, 1);
                 }
             }
-            console.log(configCpuUsage);
             window.cpuUsage.update();
         });
 }
 
-/*
-* Update the cpu Temperature chart
-* TODO: On windows the temperature aint right
-*/
-function refreshCpuTemperature(){
-    console.log("temperature");
+function refreshCpuTemperature() {
     let temperature;
-
     si.cpuTemperature()
         .then(data => {
             temperature = data.max;
-
-            console.log(data);
             /* update the graph */
             configCpuTemperature.data.labels.push("");
             configCpuTemperature.data.datasets.forEach(dataset => {
                 dataset.data.push(parseInt(temperature));
-                /* Delete a value at the beginning of the graph to make it 30 items */
-                if (dataset.data.length > graphWidth()) {
+                while (dataset.data.length > settings.graphs.width) {
                     dataset.data.splice(0, 1);
                     configCpuTemperature.data.labels.splice(0, 1);
                 }

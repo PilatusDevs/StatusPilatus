@@ -15,8 +15,14 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* global $ si Chart formatBytesToMb graphWidth */
+/* global $ si Chart formatBytesToMb settings */
 "use strict";
+
+module.exports = {
+    init: initMemory,
+    refresh: refreshMemory,
+    activate: activateMemory
+};
 
 const configMemUsage = {
     type: "line",
@@ -40,7 +46,7 @@ const configMemUsage = {
             yAxes: [{
                 ticks:{
                     min : 0,
-                    stepSize : 1,
+                    stepSize : 1
                 },
                 display: true,
                 scaleLabel: {
@@ -52,15 +58,9 @@ const configMemUsage = {
     }
 };
 
-/*
-* Build the canvas etc...
-* TODO: prettify
-*/
 function initMemory() {
     si.mem()
         .then(data => {
-            $("#subtitle").text(formatBytesToMb(data.total)+"Mb");
-            console.log(formatBytesToMb(data.total));
             const ctx = document.getElementById("canvasMemUsage").getContext("2d");
             const max = Math.ceil(formatBytesToMb(data.total)/1024);
             configMemUsage.options.scales.yAxes[0].ticks.max = max;
@@ -68,29 +68,26 @@ function initMemory() {
         });
 }
 
-/*
-* Function called by app.js
-*/
+function activateMemory() {
+    si.mem()
+        .then(data => {
+            $("#subtitle").text(formatBytesToMb(data.total)+"Mb");
+        });
+}
+
 function refreshMemory() {
-    console.log("Memory refresh call");
     refreshMemUsage();
 }
 
-/*
-* Update the memory usage chart
-*/
 function refreshMemUsage(){
-    console.log("temperature");
-
     si.mem()
         .then(data => {
             const usageGB = formatBytesToMb(data.active);
             /* update the graph */
             configMemUsage.data.labels.push("");
             configMemUsage.data.datasets.forEach(dataset => {
-                dataset.data.push(usageGB[0]);
-                /* Delete a value at the beginning of the graph to make it 30 items */
-                if (dataset.data.length > graphWidth()) {
+                dataset.data.push(usageGB / 1024);
+                while (dataset.data.length > settings.graphs.width) {
                     dataset.data.splice(0, 1);
                     configMemUsage.data.labels.splice(0, 1);
                 }

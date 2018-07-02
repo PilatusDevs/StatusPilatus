@@ -15,7 +15,14 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global Chart $ si formatBytesToMb settings formatSize */
 "use strict";
+
+module.exports = {
+    init: initStorage,
+    refresh: refreshStorage,
+    activate: activateStorage
+};
 
 /*
 * Config for the usage chart
@@ -54,9 +61,6 @@ const configDiskUsage = {
     }
 };
 
-/**
-* Called once to initiate the page
-*/
 function initStorage() {
     initStorageUsage();
 
@@ -65,25 +69,23 @@ function initStorage() {
     window.diskUsage = new Chart(ctx1, configDiskUsage);
 }
 
-/**
-* Called from app.js
-*/
-function refreshStorage() {
-    console.log("HDD refresh call");
-    refreshDiskUsage();
+function activateStorage() {
+    // Nothing
 }
 
-function refreshDiskUsage(){
+function refreshStorage() {
+    updateDiskUsage();
+}
+
+function updateDiskUsage(){
     si.fsStats()
         .then(data => {
             const usageMb = formatBytesToMb(data.tx_sec);
-            console.log(data);
             /* update the graph */
             configDiskUsage.data.labels.push("");
             configDiskUsage.data.datasets.forEach(dataset => {
                 dataset.data.push(usageMb);
-                /* Delete a value at the beginning of the graph to make it 30 items */
-                if (dataset.data.length > graphWidth()) {
+                while (dataset.data.length > settings.graphs.width) {
                     dataset.data.splice(0, 1);
                     configDiskUsage.data.labels.splice(0, 1);
                 }
