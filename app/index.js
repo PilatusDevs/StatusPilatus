@@ -45,7 +45,7 @@ function createWindow () {
 
     // Open the DevTools.
     //TODO remove this by default, but have an option to enable this
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on("closed", () => {
