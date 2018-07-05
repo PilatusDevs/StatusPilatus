@@ -18,8 +18,15 @@
 /* global si plistr $ */
 "use strict";
 
+module.exports = {
+    init: initOs,
+    refresh: refreshOs,
+    activate: activateOs,
+    updateData: updateAndRefreshData,
+    search: searchPrograms
+};
+
 // Storing static data to call libraries less often
-// change to let if we add user refresh functionality
 let osData = si.osInfo();
 let versionData = si.versions();
 let userData = si.users();
@@ -42,16 +49,13 @@ function updateAndRefreshData() {
     insertData();
 }
 
-/**
-* Called once to initiate the page
-*/
 function initOs() {
     insertData();
 }
+
 function insertData() {
     // Renders OS data once ready
     osData.then(data => {
-        $("#subtitle").text(data.distro);
         $("#os-container").html(osHtml(data));
     });
     // Renders version data once ready
@@ -81,11 +85,14 @@ function insertData() {
         });
 }
 
-/**
-* Called from app.js
-*/
+function activateOs() {
+    osData.then(data => {
+        $("#subtitle").text(data.distro);
+    });
+}
+
 function refreshOs() {
-    console.log("OS refresh call");
+    // Nothing
 }
 
 function osHtml(os) {

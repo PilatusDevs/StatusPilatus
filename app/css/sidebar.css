@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2017 PilatusDevs
+*    Copyright (C) 2018 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
     overflow-y: auto;
     background: #212529;
     -webkit-user-select: none;
+    color: #999;
 }
 
 /* Sidebar Styles */
@@ -37,6 +38,7 @@
     padding: 0;
     list-style: none;
     font-size: 17px;
+    text-decoration: none;
 }
 
 .sidebar-nav li {
@@ -44,10 +46,9 @@
     line-height: 40px;
 }
 
-.sidebar-nav li a {
+.sidebar-nav li a:not(.active-tab) {
     display: block;
-    text-decoration: none;
-    color: #999999;
+    color: #999;
 }
 
 .sidebar-subitem li a {
@@ -55,28 +56,20 @@
 }
 
 .sidebar-nav li a:hover {
-    text-decoration: none;
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
 }
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
     text-decoration: none;
 }
 
-/*custom colours for sidebar items*/
+/* Custom colours for sidebar items */
 
 #logo {
     width: 150px;
     height: 150px;
-}
-
-#monitoring {
-    color: #999999;
-}
-
-#dashboard.active-tab {
-    color: #fff;
 }
 
 #cpu.active-tab {
@@ -103,7 +96,10 @@
     color: #a4cc99;
 }
 
-.active-tab {
+.active-tab, .active-tab:active, .active-tab:focus {
     font-weight: bolder;
     background: #333;
+    color: #fff;
+    text-decoration: none;
+    display: block;
 }

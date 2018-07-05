@@ -31,10 +31,7 @@ function createWindow () {
         minHeight: 600,
         minWidth: 800,
         show: false,
-        icon: path.join(__dirname, "img/logo.png"),
-        webPreferences: {
-            nodeIntegrationInWorker: true
-        }
+        icon: path.join(__dirname, "img/logo.png")
     });
     win.maximize();
     win.show();
@@ -48,7 +45,7 @@ function createWindow () {
 
     // Open the DevTools.
     //TODO remove this by default, but have an option to enable this
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on("closed", () => {

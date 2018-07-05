@@ -48,6 +48,14 @@ npm run buildwin
 
 In the root of the project, we store the README and LICENSE, among the other files that you would expect there. We have an app directory containing the core application parts. Another important folder is the components folder, which stores all the different parts of the application.
 
+### App
+
+Inside the app folder the container for all components is stored. It starts with the index.js file, which loads the index.html file. From there, all the stylesheets and scripts are loaded. The core components like the settings are also created and managed there. Inside the index.html the sidebar shows a list of all the components. This list will be used to start the components as described below.
+
+### Components
+
+The first function that is called is the init function. This generates the charts and other things that should be available at all times. Aside from that, each module has a refresh function, which is called once every half a second (can be changed in the settings). This updates the data inside the charts and other places. This is one of the reasons why all components are loaded on startup. All components will be updated on the background using this refresh function, but this functionality can be disabled in the settings. Lastly, each module has an activate function, which is called when the user switches to this component. This is for example used to update the subtitle. There is no hard-coded list of components, instead a list is generated based on the sidebar menu. From there all the init, refresh and activate functions will be called for each component when needed. Each component exports only these three functions, unless there is other interaction required (such as refresh buttons).
+
 ## Style guide
 
 We try to follow these suggestions when writing code:

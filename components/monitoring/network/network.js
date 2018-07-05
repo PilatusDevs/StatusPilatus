@@ -15,7 +15,15 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global settings formatBytesToMb $ si Chart */
 "use strict";
+
+module.exports = {
+    init: initNetwork,
+    refresh: refreshNetwork,
+    activate: activateNetwork,
+    changeAdapter: changeNetworkAdapter
+};
 
 let currentAdapter = null;
 
@@ -90,12 +98,9 @@ const configNetworkUpUsage = {
     }
 };
 
-/**
-* Called once to initiate the page
-*/
 function initNetwork() {
-    initAdapters();
-    initPing();
+    startAdapters();
+    startPing();
 
     /* make the chart */
     const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
@@ -106,15 +111,16 @@ function initNetwork() {
     window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
 }
 
-/**
-* Called from app.js
-*/
-function refreshNetwork() {
-    refreshNetworkUsage();
+function activateNetwork() {
+    // Nothing
 }
 
-function initPing() {
-    console.log("Init Ping");
+function refreshNetwork() {
+    updateNetworkUsage();
+}
+
+function startPing() {
+    //TODO
     // si.inetLatency((data) => {
     //     console.log(data);
     // });
@@ -134,11 +140,11 @@ function adapterHtml(adapter) {
 * This function is called from initNetwork()
 * so all the adapters are listed on the page
 */
-function initAdapters() {
+function startAdapters() {
     $("#adapters").html = "";
     si.networkInterfaces(data => {
         data.forEach(adapter => {
-            if (adapter.internal == false) {
+            if (adapter.internal === false) {
                 if (!currentAdapter) {
                     currentAdapter = adapter.iface;
                 }
@@ -168,19 +174,18 @@ function changeNetworkAdapter(){
 }
 
 /**
-* Refresh the network usage for the chosen adapter.
+* Update the network usage for the chosen adapter.
 */
-function refreshNetworkUsage() {
+function updateNetworkUsage() {
     si.networkStats(currentAdapter)
         .then(data => {
-        /* convert the bytes to Mb */
+            /* convert the bytes to Mb */
             const downUsage = formatBytesToMb(data.rx_sec);
             const upUsage = formatBytesToMb(data.tx_sec);
-            console.log(data);
             /* update the graph - usage*/
             configNetworkDownUsage.data.labels.push("");
             configNetworkDownUsage.data.datasets[0].data.push(downUsage);
-            if (configNetworkDownUsage.data.datasets[0].data.length > graphWidth()) {
+            while (configNetworkDownUsage.data.datasets[0].data.length > settings.graphs.width) {
                 configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
                 configNetworkDownUsage.data.labels.splice(0, 1);
             }
@@ -188,7 +193,7 @@ function refreshNetworkUsage() {
 
             configNetworkUpUsage.data.labels.push("");
             configNetworkUpUsage.data.datasets[0].data.push(upUsage);
-            if (configNetworkUpUsage.data.datasets[0].data.length > graphWidth()) {
+            while (configNetworkUpUsage.data.datasets[0].data.length > settings.graphs.width) {
                 configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
                 configNetworkUpUsage.data.labels.splice(0, 1);
             }

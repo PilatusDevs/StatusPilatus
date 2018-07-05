@@ -15,16 +15,24 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global si $ */
 "use strict";
+
+module.exports = {
+    init: initGpu,
+    refresh: refreshGpu,
+    activate: activateGpu
+};
 
 // Storing static GPU title
 let gpuTitle = "";
 const gpuData = [];
 
-/**
-* Called once to initiate the page
-*/
 function initGpu() {
+    // Nothing
+}
+
+function activateGpu() {
     if (gpuData.length === 0) {
         si.graphics()
             .then(data => {
@@ -46,14 +54,10 @@ function initGpu() {
         $("#subtitle").text(gpuTitle);
         $("#gpu-container").html(gpuHtml(gpuData));
     }
-    console.log(gpuData);
 }
 
-/**
-* Called from app.js
-*/
 function refreshGpu() {
-    console.log("GPU refresh call");
+    // Nothing
 }
 
 function gpuHtml(gpuData) {
