@@ -1,6 +1,6 @@
 {
   "name": "statuspilatus",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Monitor your PC like never before!",
   "main": "app/index.js",
   "build": {

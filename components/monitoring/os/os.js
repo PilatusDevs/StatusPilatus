@@ -29,18 +29,19 @@ let osData = si.osInfo();
 let versionData = si.versions();
 let userData = si.users();
 let programData = plistr.getProgs();
-let isRefreshing = true;
+let isLoading = true;
 
-function updateAndRefreshData() {
-    if (isRefreshing) {
+function refreshData() {
+    if (isLoading) {
         return;
     }
     document.querySelector("#search-field").value = "";
     searchPrograms();
-    isRefreshing = true;
+    isLoading = true;
     const refreshButton = document.querySelector("#os-program-refresh-button");
     refreshButton.style.color = "";
     refreshButton.style.animation = "";
+    refreshButton.style.cursor = "";
     document.querySelector("#table-head").style.display = "none";
     $("#programs-container").empty();
     $("#loading").show();
@@ -55,7 +56,7 @@ function initOs() {
     insertData();
     const refreshButton = document.querySelector("#os-program-refresh-button");
     refreshButton.onclick = () => {
-        updateAndRefreshData();
+        refreshData();
     };
     const searchField = document.querySelector("#search-field");
     searchField.onkeyup = () => {
@@ -85,7 +86,8 @@ function insertData() {
             $("#programs-container").html(programHtml(data));
             refreshButton.style.color = "#000";
             refreshButton.style.animation = "none";
-            isRefreshing = false;
+            refreshButton.style.cursor = "pointer";
+            isLoading = false;
         })
         .catch(error => {
             $("#loading").hide();
@@ -93,7 +95,8 @@ function insertData() {
             $("#programs-container").html(error);
             refreshButton.style.color = "#000";
             refreshButton.style.animation = "none";
-            isRefreshing = false;
+            refreshButton.style.cursor = "pointer";
+            isLoading = false;
         });
 }
 
