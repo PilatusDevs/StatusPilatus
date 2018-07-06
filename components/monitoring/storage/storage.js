@@ -15,7 +15,7 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* global Chart $ si formatBytesToMb settings formatSize */
+/* global Chart $ si settings util */
 "use strict";
 
 module.exports = {
@@ -80,7 +80,7 @@ function refreshStorage() {
 function updateDiskUsage(){
     si.fsStats()
         .then(data => {
-            const usageMb = formatBytesToMb(data.tx_sec);
+            const usageMb = util.formatBytesToMb(data.tx_sec);
             /* update the graph */
             configDiskUsage.data.labels.push("");
             configDiskUsage.data.datasets.forEach(dataset => {
@@ -91,7 +91,8 @@ function updateDiskUsage(){
                 }
             });
             window.diskUsage.update();
-        });
+        })
+        .catch(() => {});
 }
 
 /**
@@ -102,8 +103,8 @@ function initStorageUsage() {
     si.fsSize()
         .then(data => {
             data.forEach(drive => {
-                const size = formatSize(drive.size);
-                const used = formatSize(drive.size-drive.used);
+                const size = util.formatSize(drive.size);
+                const used = util.formatSize(drive.size-drive.used);
                 let html = `<h3>Disk ${drive.mount}<small> ${used[0].toFixed(2)+used[1]} free of ${size[0].toFixed(2)+size[1]}</small></h3>`;
                 let status;
                 if (drive.use < 60){

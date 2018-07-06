@@ -28,9 +28,19 @@
         margin: 0;
         padding: 1em 0;
     }
-    #program-header > span {
+    #os-program-refresh-button {
         margin-left: auto;
         font-size: 25px;
+        color: #777;
+        animation: spin 1s infinite;
+    }
+    #loading {
+        text-align: center;
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 </style>
 <div class="row">
@@ -50,10 +60,10 @@
 <div class="row">
     <div class="col-md-12" id="program-header">
         <h3>Installed Programs</h3>
-        <span class="glyphicon glyphicon-refresh" onclick="components.os.updateData()"></span>
+        <span id="os-program-refresh-button" class="glyphicon glyphicon-refresh"></span>
     </div>
     <div class="col-md-12">
-        <input type="text" id="search-field" class="form-control" onkeyup="components.os.search()" placeholder="Program name">
+        <input type="text" id="search-field" class="form-control" placeholder="Program name">
         <table class="table table-hover">
             <thead id="table-head" style="display: none">
                 <tr>
@@ -61,9 +71,7 @@
                     <th>Version</th>
                 </tr>
             </thead>
-            <div id="loading">
-                <p>loading...</p>
-            </div>
+            <h4 id="loading">loading...</h4>
             <tbody id="programs-container">
             </tbody>
         </table>

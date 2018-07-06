@@ -15,7 +15,7 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* global settings formatBytesToMb $ si Chart */
+/* global settings $ si Chart util */
 "use strict";
 
 module.exports = {
@@ -165,11 +165,31 @@ function changeNetworkAdapter(){
     currentAdapter = e.options[e.selectedIndex].value;
     window.networkDownUsage.destroy();
     window.networkUpUsage.destroy();
-    configNetworkDownUsage.data = {datasets: [{label: "Usage down (Mb/sec)", backgroundColor: "#a4cc99", borderColor: "#a4cc99", fill: false, }]};
-    configNetworkUpUsage.data = {datasets: [{label: "Usage up (Mb/sec)", backgroundColor: "#a4cc99", borderColor: "#a4cc99", fill: false, }]};
-    const ctx1 = document.getElementById("canvasNetworkDownUsage").getContext("2d");
+    configNetworkDownUsage.data = {
+        datasets: [
+            {
+                label: "Usage down (Mb/sec)",
+                backgroundColor: "#a4cc99",
+                borderColor: "#a4cc99",
+                fill: false
+            }
+        ]
+    };
+    configNetworkUpUsage.data = {
+        datasets: [
+            {
+                label: "Usage up (Mb/sec)",
+                backgroundColor: "#a4cc99",
+                borderColor: "#a4cc99",
+                fill: false
+            }
+        ]
+    };
+    const ctx1 = document.getElementById("canvasNetworkDownUsage")
+        .getContext("2d");
     window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
-    const ctx2 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
+    const ctx2 = document.getElementById("canvasNetworkUpUsage")
+        .getContext("2d");
     window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
 }
 
@@ -180,8 +200,8 @@ function updateNetworkUsage() {
     si.networkStats(currentAdapter)
         .then(data => {
             /* convert the bytes to Mb */
-            const downUsage = formatBytesToMb(data.rx_sec);
-            const upUsage = formatBytesToMb(data.tx_sec);
+            const downUsage = util.formatBytesToMb(data.rx_sec);
+            const upUsage = util.formatBytesToMb(data.tx_sec);
             /* update the graph - usage*/
             configNetworkDownUsage.data.labels.push("");
             configNetworkDownUsage.data.datasets[0].data.push(downUsage);

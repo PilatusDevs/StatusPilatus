@@ -17,6 +17,12 @@
 */
 "use strict";
 
+module.exports = {
+    formatBytesToMb: formatBytesToMb,
+    formatSize: formatSize,
+    title: title
+};
+
 /*
 * Used to go from bytes to MB
 */
@@ -38,21 +44,4 @@ function formatSize(bytes) {
 */
 function title(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function functionName(prefix, string) {
-    const dashesReplaced = string.replace(/-(.)/g, letter => {
-        return letter.replace("-", "").toUpperCase();
-    });
-    return prefix + string.charAt(0).toUpperCase() + dashesReplaced.slice(1);
-}
-
-function kebabName(string) {
-    const name = string.replace(/[A-Z]/g, letter => {
-        return "-" + letter.toLowerCase();
-    });
-    if (name.startsWith("-")) {
-        return name.slice(1);
-    }
-    return name;
 }
