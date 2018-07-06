@@ -48,7 +48,8 @@
         "camelcase": "error",
         "comma-spacing": "error",
         "keyword-spacing": "error",
-        "max-len": "error",
+        "max-len": "warn",
+        "comma-dangle": "error",
         "no-lonely-if": "error",
         "no-trailing-spaces": "error",
         "prefer-arrow-callback": "error"

@@ -60,13 +60,13 @@ The first function that is called is the init function. This generates the chart
 
 We try to follow these suggestions when writing code:
 
-* Add the GPL license header to all javascript, css and html files
-* For css class and id names, use kebab-case-like-this
-* For javascript, try to follow the [MDN Javascript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
-* For javscript we also have suggestions by eslint, with the included config
+* Add the GPL license header to all JavaScript, CSS and HTML files
+* For CSS class and id names, use kebab-case-like-this
+* For JavaScript, try to follow the [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+* For JavaScript we also have suggestions by eslint, with the included config
 * Indentation settings are done with editorconfig
 
-To check the javascript style suggestions:
+To check the JavaScript style suggestions:
 
 `eslint .`
 

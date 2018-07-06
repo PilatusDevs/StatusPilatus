@@ -32,6 +32,7 @@ Chart.defaults.global.elements.responsive = true;
 /* Include all the libraries */
 const si = require("systeminformation");
 const plistr = require("proglistr");
+const util = require("./js/util.js");
 
 // Store the component name of the visible page
 // The refresh function will be called when background updates are disabled

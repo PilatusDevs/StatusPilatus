@@ -15,7 +15,7 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* global $ si Chart formatBytesToMb settings */
+/* global $ si Chart settings util */
 "use strict";
 
 module.exports = {
@@ -62,7 +62,7 @@ function initMemory() {
     si.mem()
         .then(data => {
             const ctx = document.getElementById("canvasMemUsage").getContext("2d");
-            const max = Math.ceil(formatBytesToMb(data.total)/1024);
+            const max = Math.ceil(util.formatBytesToMb(data.total)/1024);
             configMemUsage.options.scales.yAxes[0].ticks.max = max;
             window.memUsage = new Chart(ctx, configMemUsage);
         });
@@ -71,7 +71,7 @@ function initMemory() {
 function activateMemory() {
     si.mem()
         .then(data => {
-            $("#subtitle").text(formatBytesToMb(data.total)+"Mb");
+            $("#subtitle").text(util.formatBytesToMb(data.total)+"Mb");
         });
 }
 
@@ -82,7 +82,7 @@ function refreshMemory() {
 function refreshMemUsage(){
     si.mem()
         .then(data => {
-            const usageGB = formatBytesToMb(data.active);
+            const usageGB = util.formatBytesToMb(data.active);
             /* update the graph */
             configMemUsage.data.labels.push("");
             configMemUsage.data.datasets.forEach(dataset => {
