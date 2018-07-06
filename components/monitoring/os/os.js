@@ -21,9 +21,7 @@
 module.exports = {
     init: initOs,
     refresh: refreshOs,
-    activate: activateOs,
-    updateData: updateAndRefreshData,
-    search: searchPrograms
+    activate: activateOs
 };
 
 // Storing static data to call libraries less often
@@ -31,7 +29,7 @@ let osData = si.osInfo();
 let versionData = si.versions();
 let userData = si.users();
 let programData = plistr.getProgs();
-let isRefreshing = false;
+let isRefreshing = true;
 
 function updateAndRefreshData() {
     if (isRefreshing) {
@@ -40,8 +38,12 @@ function updateAndRefreshData() {
     document.querySelector("#search-field").value = "";
     searchPrograms();
     isRefreshing = true;
-    const refreshButton = document.querySelector("#program-header > span");
-    refreshButton.style.color = "#777";
+    const refreshButton = document.querySelector("#os-program-refresh-button");
+    refreshButton.style.color = "";
+    refreshButton.style.animation = "";
+    document.querySelector("#table-head").style.display = "none";
+    $("#programs-container").empty();
+    $("#loading").show();
     osData = si.osInfo();
     versionData = si.versions();
     userData = si.users();
@@ -51,6 +53,14 @@ function updateAndRefreshData() {
 
 function initOs() {
     insertData();
+    const refreshButton = document.querySelector("#os-program-refresh-button");
+    refreshButton.onclick = () => {
+        updateAndRefreshData();
+    };
+    const searchField = document.querySelector("#search-field");
+    searchField.onkeyup = () => {
+        searchPrograms();
+    };
 }
 
 function insertData() {
@@ -67,20 +77,22 @@ function insertData() {
         $("#user-container").html(userHtml(data));
     });
     // Renders program data once ready
-    const refreshButton = document.querySelector("#program-header > span");
+    const refreshButton = document.querySelector("#os-program-refresh-button");
     programData
         .then(data => {
-            $("#loading").remove();
+            $("#loading").hide();
             document.querySelector("#table-head").style.display = "";
             $("#programs-container").html(programHtml(data));
-            refreshButton.style.color = "";
+            refreshButton.style.color = "#000";
+            refreshButton.style.animation = "none";
             isRefreshing = false;
         })
         .catch(error => {
-            $("#loading").remove();
+            $("#loading").hide();
             document.querySelector("#table-head").style.display = "";
             $("#programs-container").html(error);
-            refreshButton.style.color = "";
+            refreshButton.style.color = "#000";
+            refreshButton.style.animation = "none";
             isRefreshing = false;
         });
 }
