@@ -25,9 +25,10 @@ module.exports = {
 };
 
 // Storing static data to call libraries less often
-let driveData = si.fsSize();
+let driveSizes = si.fsSize();
+let driveTypes = si.blockDevices();
+// TODO: test if indices always match up
 let isLoading = true;
-// TODO: actually make refreshing mechanism (like in os.js)
 
 /*
 * Config for the usage chart
@@ -66,9 +67,27 @@ const configDiskUsage = {
     }
 };
 
+function refreshData() {
+    if (isLoading) {
+        return;
+    }
+    isLoading = true;
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    refreshButton.style.color = "";
+    refreshButton.style.animation = "";
+    refreshButton.style.cursor = "";
+    $("#storage-bars").empty();
+    driveSizes = si.fsSize();
+    driveTypes = si.blockDevices();
+    insertData();
+}
+
 function initStorage() {
     insertData();
-
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    refreshButton.onclick = () => {
+        refreshData();
+    };
     /* make the chart */
     const ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
     window.diskUsage = new Chart(ctx1, configDiskUsage);
@@ -100,23 +119,26 @@ function updateDiskUsage(){
         .catch(() => {});
 }
 
-/**
-* Make all the progess-bars for all the drives.
-* it explains itself
-*/
 function insertData() {
-    driveData.then(data => {
-        $("#storage-bars").html(driveHtml(data));
+    // Renders drive data once ready
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    Promise.all([driveSizes, driveTypes]).then(data => {
+        $("#storage-bars").html(driveHtml(...data));
+        refreshButton.style.color = "#000";
+        refreshButton.style.animation = "none";
+        refreshButton.style.cursor = "pointer";
+        isLoading = false;
     });
 }
 
-function driveHtml(drives) {
+function driveHtml(sizes, types) {
     let body = "";
-    drives.forEach(drive => {
+    sizes.forEach((drive, index) => {
         const hasData = drive.size !== undefined;
         const size = util.formatSize(drive.size);
         const used = util.formatSize(drive.size - drive.used);
-        body += `<h3>Disk ${drive.mount}<small> `;
+        const type = types[index].physical;
+        body += `<h3>Disk ${drive.mount} (${type})<small> `;
         if (!hasData) {
             body += `No media found</small></h3>`;
         } else {
