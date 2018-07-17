@@ -24,6 +24,11 @@ module.exports = {
     activate: activateStorage
 };
 
+// Storing static data to call libraries less often
+let driveSizes = si.fsSize();
+let driveTypes = si.blockDevices();
+let isLoading = true;
+
 /*
 * Config for the usage chart
 */
@@ -34,7 +39,7 @@ const configDiskUsage = {
             label: "Total disk usage (Mb/sec)",
             backgroundColor: "#c1cc66",
             borderColor: "#c1cc66",
-            fill: false,
+            fill: false
         }]
     },
     options: {
@@ -61,9 +66,27 @@ const configDiskUsage = {
     }
 };
 
-function initStorage() {
-    initStorageUsage();
+function refreshData() {
+    if (isLoading) {
+        return;
+    }
+    isLoading = true;
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    refreshButton.style.color = "";
+    refreshButton.style.animation = "";
+    refreshButton.style.cursor = "";
+    $("#storage-bars").empty();
+    driveSizes = si.fsSize();
+    driveTypes = si.blockDevices();
+    insertData();
+}
 
+function initStorage() {
+    insertData();
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    refreshButton.onclick = () => {
+        refreshData();
+    };
     /* make the chart */
     const ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
     window.diskUsage = new Chart(ctx1, configDiskUsage);
@@ -95,33 +118,58 @@ function updateDiskUsage(){
         .catch(() => {});
 }
 
-/**
-* Make all the progess-bars for all the drives.
-* it explains itself
-*/
-function initStorageUsage() {
-    si.fsSize()
-        .then(data => {
-            data.forEach(drive => {
-                const size = util.formatSize(drive.size);
-                const used = util.formatSize(drive.size-drive.used);
-                let html = `<h3>Disk ${drive.mount}<small> ${used[0].toFixed(2)+used[1]} free of ${size[0].toFixed(2)+size[1]}</small></h3>`;
-                let status;
-                if (drive.use < 60){
-                    status = "progress-bar-success";
-                } else if (drive.use > 60 && drive.use < 90){
-                    status = "progress-bar-warning";
-                } else {
-                    status = "progress-bar-danger";
-                }
+function insertData() {
+    // Renders drive data once ready
+    const refreshButton = document.querySelector("#storage-devices-refresh-button");
+    Promise.all([driveSizes, driveTypes]).then(data => {
+        const drives = addTypesToDrives(...data);
+        $("#storage-bars").html(driveHtml(drives));
+        refreshButton.style.color = "#000";
+        refreshButton.style.animation = "none";
+        refreshButton.style.cursor = "pointer";
+        isLoading = false;
+    });
+}
 
-                /* generate the html and append it*/
-                html += `<div class="progress">
-            <div class="progress-bar ${status} role="progressbar" aria-valuenow="${drive.use}" aria-valuemin="0" aria-valuemax="100" style="width: ${drive.use}%">
-            ${parseInt(drive.use)}%
-            </div>
+function addTypesToDrives(drives, types) {
+    const newDrives = drives.map(drive => {
+        const fs = drive.fs;
+        // Only 1 item from the other array should match this
+        const match = types.filter(drive => fs.includes(drive.name))[0];
+        drive.physical = match.physical;
+        return drive;
+    });
+    return newDrives;
+}
+
+function driveHtml(drives) {
+    let body = "";
+    drives.forEach(drive => {
+        const hasData = drive.size !== undefined;
+        const size = util.formatSize(drive.size);
+        const used = util.formatSize(drive.size - drive.used);
+        body += `<h3>Disk ${drive.mount} (${drive.physical})<small> `;
+        if (!hasData) {
+            body += `No media found</small></h3>`;
+        } else {
+            body += `${used[0].toFixed(2)+used[1]} free of
+            ${size[0].toFixed(2)+size[1]}</small></h3>`;
+            let status;
+            if (drive.use < 60){
+                status = "progress-bar-success";
+            } else if (drive.use > 60 && drive.use < 90){
+                status = "progress-bar-warning";
+            } else {
+                status = "progress-bar-danger";
+            }
+            body += `<div class="progress">
+                <div class="progress-bar ${status} role="progressbar"
+                aria-valuenow="${drive.use}" aria-valuemin="0"
+                aria-valuemax="100" style="width: ${drive.use}%">
+                    ${parseInt(drive.use)}%
+                </div>
             </div>`;
-                $("#storage-bars").append(html);
-            });
-        });
+        }
+    });
+    return body;
 }

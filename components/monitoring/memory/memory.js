@@ -31,7 +31,7 @@ const configMemUsage = {
             label: "Usage",
             backgroundColor: "#cc576e",
             borderColor: "#cc576e",
-            fill: false,
+            fill: false
         }]
     },
     options: {
