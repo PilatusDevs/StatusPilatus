@@ -123,7 +123,8 @@ function insertData() {
     // Renders drive data once ready
     const refreshButton = document.querySelector("#storage-devices-refresh-button");
     Promise.all([driveSizes, driveTypes]).then(data => {
-        $("#storage-bars").html(driveHtml(...data));
+        const drives = addTypesToDrives(...data);
+        $("#storage-bars").html(driveHtml(drives));
         refreshButton.style.color = "#000";
         refreshButton.style.animation = "none";
         refreshButton.style.cursor = "pointer";
@@ -131,14 +132,24 @@ function insertData() {
     });
 }
 
-function driveHtml(sizes, types) {
+function addTypesToDrives(drives, types) {
+    const newDrives = drives.map(drive => {
+        const fs = drive.fs;
+        // Only 1 item from the other array should match this
+        const match = types.filter(drive => fs.includes(drive.name))[0];
+        drive.physical = match.physical;
+        return drive;
+    });
+    return newDrives;
+}
+
+function driveHtml(drives) {
     let body = "";
-    sizes.forEach((drive, index) => {
+    drives.forEach(drive => {
         const hasData = drive.size !== undefined;
         const size = util.formatSize(drive.size);
         const used = util.formatSize(drive.size - drive.used);
-        const type = types[index].physical;
-        body += `<h3>Disk ${drive.mount} (${type})<small> `;
+        body += `<h3>Disk ${drive.mount} (${drive.physical})<small> `;
         if (!hasData) {
             body += `No media found</small></h3>`;
         } else {
