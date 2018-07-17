@@ -37,7 +37,7 @@ const configNetworkDownUsage = {
             label: "Download (MB/sec)",
             backgroundColor: "#a4cc99",
             borderColor: "#a4cc99",
-            fill: false,
+            fill: false
         }]
     },
     options: {
@@ -71,7 +71,7 @@ const configNetworkUpUsage = {
             label: "Upload (MB/sec)",
             backgroundColor: "#a4cc99",
             borderColor: "#a4cc99",
-            fill: false,
+            fill: false
         }]
     },
     options: {

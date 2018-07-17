@@ -27,7 +27,6 @@ module.exports = {
 // Storing static data to call libraries less often
 let driveSizes = si.fsSize();
 let driveTypes = si.blockDevices();
-// TODO: test if indices always match up
 let isLoading = true;
 
 /*

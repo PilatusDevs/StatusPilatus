@@ -22,7 +22,7 @@
 if (settings.graphs.animations) {
     Chart.defaults.global.animation = {
         easing: "easeInOutCubic",
-        duration: 200,
+        duration: 200
     };
 } else {
     Chart.defaults.global.animation = false;

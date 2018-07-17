@@ -37,7 +37,7 @@ const configCpuUsage = {
             label: "Average",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
-            fill: false,
+            fill: false
         }]
     },
     options: {
@@ -53,7 +53,7 @@ const configCpuUsage = {
                 ticks:{
                     min : 0,
                     max : 100,
-                    stepSize : 10,
+                    stepSize : 10
                 },
                 display: true,
                 scaleLabel: {
@@ -75,7 +75,7 @@ const configCpuTemperature = {
             label: "Average",
             backgroundColor: "#f38b4a",
             borderColor: "#f38b4a",
-            fill: false,
+            fill: false
         }]
     },
     options: {
@@ -91,7 +91,7 @@ const configCpuTemperature = {
                 ticks:{
                     min : 0,
                     max : 100,
-                    stepSize : 10,
+                    stepSize : 10
                 },
                 display: true,
                 scaleLabel: {
