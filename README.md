@@ -83,7 +83,7 @@ We made use of the following software to create StatusPilatus:
 * [JQuery](https://github.com/jquery/jquery) (MIT)
 * [Chart.js](https://github.com/chartjs/Chart.js) (MIT)
 * [Systeminformation](https://github.com/sebhildebrandt/systeminformation) (MIT)
-* [ProgListr.js](https://github.com/fabiaant/ProgListr.js) (MIT)
+* [ProgListr.js](https://github.com/M4Yt/ProgListr.js) (MIT)
 
 ## License
 
