@@ -23,6 +23,7 @@
     height: 100%;
     margin-left: -200px;
     overflow-y: auto;
+    overflow-x: hidden;
     background: #212529;
     -webkit-user-select: none;
     color: #999;
