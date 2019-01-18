@@ -113,7 +113,13 @@ function memoryHtml(memData) {
         <b>Type</b>: ${bank.type}<br />
         <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
         <b>Form factor</b>: ${bank.formFactor}<br />
-        <b>Part number</b>: ${bank.partNum}MHz<br />
+        <b>Manufacturer</b>: ${bank.manufacturer}<br />
+        <b>Part number</b>: ${bank.partNum}<br />
+        <b>Serial number</b>: ${bank.serialNum}<br />
+        <h4>Voltage</h4>
+        <b>Minimum</b>: ${bank.voltageMin}V<br />
+        <b>Maximum</b>: ${bank.voltageMax}V<br />
+        <b>Configured</b>: ${bank.voltageConfigured}V<br />
         </div>`;
     });
     return body;
