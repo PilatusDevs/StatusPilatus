@@ -107,7 +107,7 @@ function refreshMemory() {
 function memoryHtml(memData) {
     let body = "";
     memData.forEach(bank => {
-        body += `<div class="col-md-4 col-sm-6">
+        body += `<div class="col-md-3 col-sm-6">
         <h3>${bank.bank}</h3>
         <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
         <b>Type</b>: ${bank.type}<br />
