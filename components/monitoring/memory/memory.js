@@ -24,6 +24,9 @@ module.exports = {
     activate: activateMemory
 };
 
+// Storing static memory layout
+let memLayout = [];
+
 const configMemUsage = {
     type: "line",
     data: {
@@ -73,13 +76,18 @@ function activateMemory() {
         .then(data => {
             $("#subtitle").text(util.formatBytesToMb(data.total)+"Mb");
         });
+    if (memLayout.length === 0) {
+        si.memLayout()
+            .then(data => {
+                memLayout = data;
+                $("#mem-layout").html(memoryHtml(memLayout));
+            });
+    } else {
+        $("#mem-layout").html(memoryHtml(memLayout));
+    }
 }
 
 function refreshMemory() {
-    refreshMemUsage();
-}
-
-function refreshMemUsage(){
     si.mem()
         .then(data => {
             const usageGB = util.formatBytesToMb(data.active);
@@ -94,4 +102,19 @@ function refreshMemUsage(){
             });
             window.memUsage.update();
         });
+}
+
+function memoryHtml(memData) {
+    let body = "";
+    memData.forEach(bank => {
+        body += `<div class="col-md-4 col-sm-6">
+        <h3>${bank.bank}</h3>
+        <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
+        <b>Type</b>: ${bank.type}<br />
+        <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
+        <b>Form factor</b>: ${bank.formFactor}<br />
+        <b>Part number</b>: ${bank.partNum}MHz<br />
+        </div>`;
+    });
+    return body;
 }
