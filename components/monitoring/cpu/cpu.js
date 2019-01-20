@@ -136,6 +136,29 @@ function initCpu() {
                 document.getElementById("cpu-flags").innerHTML += `<span title="${flag}" style="overflow: hidden;display: inline-block;width: 100px">${flag}</span>`;
             });
         });
+
+    loadCpuProcesses();
+    loadCpuInformation();
+}
+
+function loadCpuInformation(){
+    document.getElementById("cpu-information").innerHTML = "";
+
+    si.cpu()
+        .then(data => {
+            $("#cpu-information").append("Manufacturer: " + data.manufacturer + "</br>");
+            $("#cpu-information").append("Brand: " + data.brand + "</br>");
+            $("#cpu-information").append("Family: " + data.family + "</br>");
+            $("#cpu-information").append("Socket: " + data.socket + "</br>");
+            $("#cpu-information").append("Speed: " + data.speed + "</br>");
+            $("#cpu-information").append("Cores: " + data.cores + "</br>");
+            $("#cpu-information").append("</br>");
+            $("#cpu-information").append("Cache: </br>");
+            $("#cpu-information").append("l1d: " + data.cache.l1d + "</br>");
+            $("#cpu-information").append("l1i: " + data.cache.l1i + "</br>");
+            $("#cpu-information").append("l2: " + data.cache.l2 + "</br>");
+            $("#cpu-information").append("l3: " + data.cache.l3 + "</br>");
+        });
 }
 
 function activateCpu() {
@@ -153,6 +176,22 @@ function activateCpu() {
 function refreshCpu() {
     refreshCpuUsage();
     refreshCpuTemperature();
+}
+
+function loadCpuProcesses(){
+    si.processes()
+        .then(data => {
+            for (let i = 0; i < data.list.length; i++) {
+                document.getElementById("process-table-body").innerHTML += `
+                  <tr>
+                    <th scope='row'>${data.list[i].pid}</th>
+                    <td>${data.list[i].name}</td>
+                    <td>${data.list[i].pcpu.toFixed(4)}</td>
+                    <td>${data.list[i].pmem.toFixed(4)}</td>
+                  </tr>`;
+                //                console.log(data.list[i]);
+            }
+        });
 }
 
 function refreshCpuUsage() {
