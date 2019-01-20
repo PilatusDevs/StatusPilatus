@@ -77,19 +77,16 @@ function activateMemory() {
             $("#subtitle").text(util.formatBytesToMb(data.total)+"Mb");
         });
     if (memLayout.length === 0) {
-        console.log("In de if");
         si.memLayout()
             .then(data => {
                 memLayout = data;
+                if (data === undefined || data.length === 0) {
+                    $("#mem-header").hide();
+                }
                 $("#mem-layout").html(memoryHtml(memLayout));
             });
     } else {
-        console.log("In de else");
         $("#mem-layout").html(memoryHtml(memLayout));
-    }
-
-    if (memLayout.length === 0) {
-        $("#mem-header").hide();
     }
 }
 
@@ -142,3 +139,4 @@ function memoryHtml(memData) {
     });
     return body;
 }
+
