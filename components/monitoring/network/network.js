@@ -131,7 +131,7 @@ function refreshNetwork() {
 }
 
 function checkConnectivity(){
-    if(navigator.onLine) { // true|false
+    if (navigator.onLine) {
         $("#internet-connected").show();
         $("#internet-disconnected").hide();
     } else {
@@ -143,26 +143,32 @@ function checkConnectivity(){
 function doAPing() {
     $("#ping-well").show();
     $("#clearButton").show();
-    $("#pingButton").prop('disabled', true);
-    var ip = $("#pingTarget").val();
-    if (ip == undefined || ip == null || ip == "") {
-        $("#pingButton").prop('disabled', false);
+    $("#pingButton").prop("disabled", true);
+    $("#clearButton").prop("disabled", true);
+    const ip = $("#pingTarget").val();
+    if (ip === undefined || ip === null || ip === "") {
+        $("#pingButton").prop("disabled", false);
+        $("#clearButton").prop("disabled", false);
         return;
     }
-    for (var i = 0; i < 4; i++) {
-        util.sleep(1000).then(() => {
+    const numberOfPings = 4;
+    for (let i = 0; i < numberOfPings; i++) {
+        util.sleep(1000 * i).then(() => {
             si.inetLatency(ip)
-            	.then(data => {
+                .then(data => {
                     $("#ping-well").append(data + "<br>");
-            	})
-            	.catch(error => console.error(error));
+                })
+                .catch(error => console.error(error));
         });
     }
-    $("#pingButton").prop('disabled', false);
+    util.sleep(1000 * numberOfPings).then(() => {
+        $("#pingButton").prop("disabled", false);
+        $("#clearButton").prop("disabled", false);
+    });
 }
 
 function adapterHtml(adapter) {
-    const body = `<div class="col-sm-6 col-md-3">
+    const body = `<div class="col-sm-6 col-lg-3">
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
