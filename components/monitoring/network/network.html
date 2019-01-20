@@ -42,11 +42,7 @@
 <br>
 
 <div class="row">
-    <div id="adapters"></div>
-</div>
-
-<div class="row">
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3">
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -61,6 +57,8 @@
 
                         <button type="button" name="button" id="pingButton" class="btn btn-primary">Test ping</button>
                         <button type="button" name="button" id="clearButton" class="btn btn-secondary" style="display: none;">Clear</button>
+                        <input type="text" name="" value="8.8.4.4" id="pingTarget" class="form-control" style="margin-top: 20px;">
+                        <p>Note: pinging only works with ip adresses at the moment</p>
 
                         <div class="well" id="ping-well" style="display: none; margin-top: 20px;"></div>
                     </div>
@@ -68,4 +66,5 @@
             </div>
         </div>
     </div>
+    <div class="col-md-9" id="adapters"></div>
 </div>

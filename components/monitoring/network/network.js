@@ -131,32 +131,33 @@ function refreshNetwork() {
 }
 
 function checkConnectivity(){
-    si.inetChecksite('https://google.com')
-	.then(data => {
-        console.log(data);
-		if (data.ms == -1) {
-            $("#internet-connected").hide();
-            $("#internet-disconnected").show();
-        } else {
-            $("#internet-connected").show();
-            $("#internet-disconnected").hide();
-        }
-	})
-	.catch(error => console.error(error));
+    if(navigator.onLine) { // true|false
+        $("#internet-connected").show();
+        $("#internet-disconnected").hide();
+    } else {
+        $("#internet-connected").hide();
+        $("#internet-disconnected").show();
+    }
 }
 
 function doAPing() {
     $("#ping-well").show();
     $("#clearButton").show();
     $("#pingButton").prop('disabled', true);
+    var ip = $("#pingTarget").val();
+    if (ip == undefined || ip == null || ip == "") {
+        $("#pingButton").prop('disabled', false);
+        return;
+    }
     for (var i = 0; i < 4; i++) {
-        sleep(1000).then(() => {
-            si.inetLatency((data) => {
-                $("#ping-well").append(data + "<br>");
-            });
+        util.sleep(1000).then(() => {
+            si.inetLatency(ip)
+            	.then(data => {
+                    $("#ping-well").append(data + "<br>");
+            	})
+            	.catch(error => console.error(error));
         });
     }
-
     $("#pingButton").prop('disabled', false);
 }
 
@@ -180,13 +181,6 @@ function adapterHtml(adapter) {
     </div>
     </div>`;
     return body;
-}
-
-/*
-* Take a break
-*/
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**

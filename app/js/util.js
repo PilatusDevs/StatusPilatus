@@ -20,7 +20,8 @@
 module.exports = {
     formatBytesToMb: formatBytesToMb,
     formatSize: formatSize,
-    title: title
+    title: title,
+    sleep: sleep
 };
 
 /*
@@ -44,4 +45,11 @@ function formatSize(bytes) {
 */
 function title(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+/*
+* Take a break
+*/
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
