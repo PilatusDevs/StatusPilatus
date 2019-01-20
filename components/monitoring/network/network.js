@@ -100,7 +100,6 @@ const configNetworkUpUsage = {
 
 function initNetwork() {
     startAdapters();
-    startPing();
 
     /* make the chart */
     const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
@@ -109,6 +108,17 @@ function initNetwork() {
     /* make the chart */
     const ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
     window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
+
+    const pingButton = document.querySelector("#pingButton");
+    pingButton.onclick = () => {
+        doAPing();
+    };
+
+    const clearButton = document.querySelector("#clearButton");
+    clearButton.onclick = () => {
+        $("#ping-well").text("");
+        $("#ping-well").hide();
+    };
 }
 
 function activateNetwork() {
@@ -117,13 +127,37 @@ function activateNetwork() {
 
 function refreshNetwork() {
     updateNetworkUsage();
+    checkConnectivity();
 }
 
-function startPing() {
-    //TODO
-    // si.inetLatency((data) => {
-    //     console.log(data);
-    // });
+function checkConnectivity(){
+    si.inetChecksite('https://google.com')
+	.then(data => {
+        console.log(data);
+		if (data.ms == -1) {
+            $("#internet-connected").hide();
+            $("#internet-disconnected").show();
+        } else {
+            $("#internet-connected").show();
+            $("#internet-disconnected").hide();
+        }
+	})
+	.catch(error => console.error(error));
+}
+
+function doAPing() {
+    $("#ping-well").show();
+    $("#clearButton").show();
+    $("#pingButton").prop('disabled', true);
+    for (var i = 0; i < 4; i++) {
+        sleep(1000).then(() => {
+            si.inetLatency((data) => {
+                $("#ping-well").append(data + "<br>");
+            });
+        });
+    }
+
+    $("#pingButton").prop('disabled', false);
 }
 
 function adapterHtml(adapter) {
@@ -146,6 +180,13 @@ function adapterHtml(adapter) {
     </div>
     </div>`;
     return body;
+}
+
+/*
+* Take a break
+*/
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
