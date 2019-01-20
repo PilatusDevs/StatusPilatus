@@ -15,6 +15,7 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global util si */
 "use strict";
 
 module.exports = {
@@ -23,7 +24,6 @@ module.exports = {
     activate: activateProcesses
 };
 
-let isLoading = true;
 
 function initProcesses(){
     const refreshButton = document.querySelector("#processes-refresh-button");
@@ -41,7 +41,6 @@ function activateProcesses() {
 }
 
 function loadCpuProcesses(){
-    isLoading = true;
     const refreshButton = document.querySelector("#processes-refresh-button");
     refreshButton.style.color = "";
     refreshButton.style.animation = "";
@@ -50,6 +49,7 @@ function loadCpuProcesses(){
     // Do something after the sleep!
         si.processes()
             .then(data => {
+                document.getElementById("processes-container").innerHTML = "";
                 for (let i = 0; i < data.list.length; i++) {
                     document.getElementById("processes-container").innerHTML += `
                   <tr>
@@ -60,10 +60,8 @@ function loadCpuProcesses(){
                   </tr>`;
                 }
             });
-        isLoading = false;
         refreshButton.style.color = "#000";
         refreshButton.style.animation = "none";
         refreshButton.style.cursor = "pointer";
     });
-
 }
