@@ -60,10 +60,10 @@ function loadCpuProcesses(){
                 for (let i = 0; i < data.list.length; i++) {
                     document.getElementById("processes-container").innerHTML += `
                   <tr>
-                    <th scope='row'>${data.list[i].pid}</th>
                     <td>${data.list[i].name}</td>
                     <td>${data.list[i].pcpu.toFixed(4)}</td>
                     <td>${data.list[i].pmem.toFixed(4)}</td>
+                    <td>${data.list[i].pid}</td>
                   </tr>`;
                 }
             });
