@@ -1,0 +1,68 @@
+<!--
+-    StatusPilatus: Monitor your PC like never before!
+-    Copyright (C) 2018 PilatusDevs
+-
+-    This program is free software: you can redistribute it and/or modify
+-    it under the terms of the GNU General Public License as published by
+-    the Free Software Foundation, either version 3 of the License, or
+-    (at your option) any later version.
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU General Public License for more details.
+-
+-    You should have received a copy of the GNU General Public License
+-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<style>
+    ::selection {
+        background: #f38b4a;
+        color: #ffffff;
+    }
+    #processes-header {
+        display: flex;
+        align-items: center;
+    }
+    h3 {
+        margin: 0;
+        padding: 1em 0;
+    }
+    #processes-refresh-button {
+        margin-left: auto;
+        font-size: 25px;
+        color: #777;
+        cursor: not-allowed;
+        animation: spin 1s infinite;
+    }
+    #loading {
+        text-align: center;
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12" id="processes-header">
+        <h3>Running processes</h3>
+        <span id="processes-refresh-button" class="glyphicon glyphicon-refresh"></span>
+    </div>
+    <div class="col-md-12">
+        <!-- <input type="text" id="search-field" class="form-control" placeholder="Program name"> -->
+        <table class="table table-hover">
+            <thead id="table-head">
+                <tr>
+                    <th>Name</th>
+                    <th>CPU Usage</th>
+                    <th>Memory Usage</th>
+                    <th>ProcessID</th>
+                </tr>
+            </thead>
+            <tbody id="processes-container">
+            </tbody>
+        </table>
+    </div>
+</div>

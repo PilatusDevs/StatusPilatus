@@ -137,7 +137,6 @@ function initCpu() {
             });
         });
 
-    loadCpuProcesses();
     loadCpuInformation();
 }
 
@@ -176,22 +175,6 @@ function activateCpu() {
 function refreshCpu() {
     refreshCpuUsage();
     refreshCpuTemperature();
-}
-
-function loadCpuProcesses(){
-    si.processes()
-        .then(data => {
-            for (let i = 0; i < data.list.length; i++) {
-                document.getElementById("process-table-body").innerHTML += `
-                  <tr>
-                    <th scope='row'>${data.list[i].pid}</th>
-                    <td>${data.list[i].name}</td>
-                    <td>${data.list[i].pcpu.toFixed(4)}</td>
-                    <td>${data.list[i].pmem.toFixed(4)}</td>
-                  </tr>`;
-                //                console.log(data.list[i]);
-            }
-        });
 }
 
 function refreshCpuUsage() {
