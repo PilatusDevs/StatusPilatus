@@ -127,11 +127,23 @@ function startPing() {
 }
 
 function adapterHtml(adapter) {
-    const body = `<div class="col-sm-6">
-    <h3>${adapter.iface}</h3><br />
-    <b>IPv4</b>: ${adapter.ip4}<br />
-    <b>IPv6</b>: ${adapter.ip6}<br />
-    <b>MAC</b>: ${adapter.mac}<br />
+    const body = `<div class="col-sm-6 col-md-3">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    ${adapter.iface}
+                </h4>
+            </div>
+            <div class="panel-collapse in">
+                <div class="panel-body" id="cpu-flags">
+                    <b>IPv4</b>: ${adapter.ip4}<br />
+                    <b>IPv6</b>: ${adapter.ip6}<br />
+                    <b>MAC</b>: ${adapter.mac}<br />
+                </div>
+            </div>
+        </div>
+    </div>
     </div>`;
     return body;
 }

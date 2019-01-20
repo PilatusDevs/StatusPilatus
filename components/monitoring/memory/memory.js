@@ -80,6 +80,9 @@ function activateMemory() {
         si.memLayout()
             .then(data => {
                 memLayout = data;
+                if (data === undefined || data.length === 0) {
+                    $("#mem-header").hide();
+                }
                 $("#mem-layout").html(memoryHtml(memLayout));
             });
     } else {
@@ -108,19 +111,32 @@ function memoryHtml(memData) {
     let body = "";
     memData.forEach(bank => {
         body += `<div class="col-md-3 col-sm-6">
-        <h3>${bank.bank}</h3>
-        <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
-        <b>Type</b>: ${bank.type}<br />
-        <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
-        <b>Form factor</b>: ${bank.formFactor}<br />
-        <b>Manufacturer</b>: ${bank.manufacturer}<br />
-        <b>Part number</b>: ${bank.partNum}<br />
-        <b>Serial number</b>: ${bank.serialNum}<br />
-        <h4>Voltage</h4>
-        <b>Minimum</b>: ${bank.voltageMin}V<br />
-        <b>Maximum</b>: ${bank.voltageMax}V<br />
-        <b>Configured</b>: ${bank.voltageConfigured}V<br />
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        ${bank.bank}
+                    </h4>
+                </div>
+                <div class="panel-collapse in">
+                    <div class="panel-body"">
+                    <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
+                    <b>Type</b>: ${bank.type}<br />
+                    <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
+                    <b>Form factor</b>: ${bank.formFactor}<br />
+                    <b>Manufacturer</b>: ${bank.manufacturer}<br />
+                    <b>Part number</b>: ${bank.partNum}<br />
+                    <b>Serial number</b>: ${bank.serialNum}<br />
+                    <h4>Voltage</h4>
+                    <b>Minimum</b>: ${bank.voltageMin}V<br />
+                    <b>Maximum</b>: ${bank.voltageMax}V<br />
+                    <b>Configured</b>: ${bank.voltageConfigured}V<br />
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>`;
     });
     return body;
 }
+
