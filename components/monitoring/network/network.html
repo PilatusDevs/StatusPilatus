@@ -42,5 +42,29 @@
 <br>
 
 <div class="row">
-    <div id="adapters"></div>
+    <div class="col-md-3">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Internet Connectivity
+                    </h4>
+                </div>
+                <div class="panel-collapse in">
+                    <div class="panel-body" id="internet-connectivity">
+                        <h3 style="color: green; padding-top: 0" id="internet-connected">Connected</h3>
+                        <h3 style="color: red; padding-top: 0" id="internet-disconnected">Disconnected</h3>
+
+                        <button type="button" name="button" id="pingButton" class="btn btn-primary">Test ping</button>
+                        <button type="button" name="button" id="clearButton" class="btn btn-secondary" style="display: none;">Clear</button>
+                        <input type="text" name="" value="8.8.4.4" id="pingTarget" class="form-control" style="margin-top: 20px;">
+                        <p>Note: pinging only works with ip adresses at the moment</p>
+
+                        <div class="well" id="ping-well" style="display: none; margin-top: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9" id="adapters"></div>
 </div>

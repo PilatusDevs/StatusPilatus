@@ -100,7 +100,6 @@ const configNetworkUpUsage = {
 
 function initNetwork() {
     startAdapters();
-    startPing();
 
     /* make the chart */
     const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
@@ -109,6 +108,17 @@ function initNetwork() {
     /* make the chart */
     const ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
     window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
+
+    const pingButton = document.querySelector("#pingButton");
+    pingButton.onclick = () => {
+        doAPing();
+    };
+
+    const clearButton = document.querySelector("#clearButton");
+    clearButton.onclick = () => {
+        $("#ping-well").text("");
+        $("#ping-well").hide();
+    };
 }
 
 function activateNetwork() {
@@ -117,17 +127,48 @@ function activateNetwork() {
 
 function refreshNetwork() {
     updateNetworkUsage();
+    checkConnectivity();
 }
 
-function startPing() {
-    //TODO
-    // si.inetLatency((data) => {
-    //     console.log(data);
-    // });
+function checkConnectivity(){
+    if (navigator.onLine) {
+        $("#internet-connected").show();
+        $("#internet-disconnected").hide();
+    } else {
+        $("#internet-connected").hide();
+        $("#internet-disconnected").show();
+    }
+}
+
+function doAPing() {
+    $("#ping-well").show();
+    $("#clearButton").show();
+    $("#pingButton").prop("disabled", true);
+    $("#clearButton").prop("disabled", true);
+    const ip = $("#pingTarget").val();
+    if (ip === undefined || ip === null || ip === "") {
+        $("#pingButton").prop("disabled", false);
+        $("#clearButton").prop("disabled", false);
+        return;
+    }
+    const numberOfPings = 4;
+    for (let i = 0; i < numberOfPings; i++) {
+        util.sleep(1000 * i).then(() => {
+            si.inetLatency(ip)
+                .then(data => {
+                    $("#ping-well").append(data + "<br>");
+                })
+                .catch(error => console.error(error));
+        });
+    }
+    util.sleep(1000 * numberOfPings).then(() => {
+        $("#pingButton").prop("disabled", false);
+        $("#clearButton").prop("disabled", false);
+    });
 }
 
 function adapterHtml(adapter) {
-    const body = `<div class="col-sm-6 col-md-3">
+    const body = `<div class="col-sm-6 col-lg-3">
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">

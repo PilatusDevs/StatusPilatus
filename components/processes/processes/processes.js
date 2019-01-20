@@ -40,20 +40,13 @@ function activateProcesses() {
 
 }
 
-/*
-* Take a break
-*/
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function loadCpuProcesses(){
     isLoading = true;
     const refreshButton = document.querySelector("#processes-refresh-button");
     refreshButton.style.color = "";
     refreshButton.style.animation = "";
     refreshButton.style.cursor = "";
-    sleep(2000).then(() => {
+    util.sleep(2000).then(() => {
     // Do something after the sleep!
         si.processes()
             .then(data => {
