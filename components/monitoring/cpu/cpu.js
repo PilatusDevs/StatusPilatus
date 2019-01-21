@@ -145,18 +145,22 @@ function loadCpuInformation(){
 
     si.cpu()
         .then(data => {
-            $("#cpu-information").append("Manufacturer: " + data.manufacturer + "</br>");
-            $("#cpu-information").append("Brand: " + data.brand + "</br>");
-            $("#cpu-information").append("Family: " + data.family + "</br>");
-            $("#cpu-information").append("Socket: " + data.socket + "</br>");
-            $("#cpu-information").append("Speed: " + data.speed + "</br>");
-            $("#cpu-information").append("Cores: " + data.cores + "</br>");
-            $("#cpu-information").append("</br>");
-            $("#cpu-information").append("Cache: </br>");
-            $("#cpu-information").append("l1d: " + data.cache.l1d + "</br>");
-            $("#cpu-information").append("l1i: " + data.cache.l1i + "</br>");
-            $("#cpu-information").append("l2: " + data.cache.l2 + "</br>");
-            $("#cpu-information").append("l3: " + data.cache.l3 + "</br>");
+            let text = `
+                Manufacturer: ${data.manufacturer} </br>
+                Brand: ${data.brand} </br>
+                Family: ${data.family} </br>
+                Socket: ${data.socket} </br>
+                Speed: ${data.speed} </br>
+                Cores: ${data.cores} </br>
+                </br>
+                Cache: </br>
+                l1d: ${data.cache.l1d} </br>
+                l1i: ${data.cache.l1i} </br>
+                l2: ${data.cache.l2} </br>
+                l3: ${data.cache.l3} </br>
+            `;
+
+            $("#cpu-information").append(text);
         });
 }
 

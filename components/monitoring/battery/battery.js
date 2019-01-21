@@ -24,6 +24,8 @@ module.exports = {
     activate: activateBattery
 };
 
+let loading = false;
+
 function initBattery() {
     si.battery()
 	.then(data => {
@@ -41,6 +43,10 @@ function refreshBattery() {
 }
 
 function activateBattery() {
+    if (loading) {
+        return;
+    }
+    loading = true;
     document.getElementById("battery-info").innerHTML = "";
 
     si.battery()
@@ -57,11 +63,16 @@ function activateBattery() {
             let maxcapacity;
             data.maxcapacity == "" ? maxcapacity = "unknown" : maxcapacity = data.maxcapacity;
 
-            $("#battery-info").append("IsCharging: " + data.ischarging + "</br>");
-            $("#battery-info").append("Percentage: " + data.percent + "</br>");
-            $("#battery-info").append("Manufacturer: " + manufacturer + "</br>");
-            $("#battery-info").append("Model: " + model + "</br>");
-            $("#battery-info").append("Type: " + type + "</br>");
-            $("#battery-info").append("Max Capacity: " + maxcapacity + "</br>");
+            let text = `
+                IsCharging: ${data.charging} </br>
+                Percentage: ${data.ischarging} </br>
+                Manufacturer: ${manufacturer} </br>
+                Model: ${model} </br>
+                Type: ${type} </br>
+                Max Capacity: ${maxcapacity} </br>
+            `;
+            $("#battery-info").append(text);
+            
+            loading = false;
         });
 }
