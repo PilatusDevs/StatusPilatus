@@ -97,6 +97,10 @@
     color: #a4cc99;
 }
 
+#battery.active-tab {
+    color: #588fad;
+}
+
 .active-tab, .active-tab:active, .active-tab:focus {
     font-weight: bolder;
     background: #333;
