@@ -26,7 +26,7 @@ module.exports = {
 
 // Storing static GPU title
 let gpuTitle = "";
-const gpuData = [];
+let gpuData = [];
 
 function initGpu() {
     // Nothing
@@ -37,13 +37,12 @@ function activateGpu() {
         si.graphics()
             .then(data => {
                 const allGpus = data.controllers;
+                gpuData = allGpus;
                 let subtitle = allGpus[0].model;
-                gpuData.push(allGpus[0]);
                 if (allGpus.length > 1) {
                     allGpus.shift();
                     allGpus.forEach(gpu => {
                         subtitle += " + "+gpu.model;
-                        gpuData.push(gpu);
                     });
                 }
                 gpuTitle = subtitle;
