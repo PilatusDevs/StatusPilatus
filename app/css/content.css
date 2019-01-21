@@ -56,6 +56,10 @@ canvas {
     border-bottom-color: #a4cc99;
 }
 
+#titles.battery {
+    border-bottom-color: #588fad;
+}
+
 /*Rendering a toggle switch*/
 .switch {
     position: relative;
