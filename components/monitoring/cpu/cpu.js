@@ -41,14 +41,10 @@ const configCpuUsage = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Usage"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     min : 0,
@@ -79,14 +75,10 @@ const configCpuTemperature = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Temperature"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     min : 0,
@@ -145,19 +137,18 @@ function loadCpuInformation(){
 
     si.cpu()
         .then(data => {
-            let text = `
-                Manufacturer: ${data.manufacturer} </br>
-                Brand: ${data.brand} </br>
-                Family: ${data.family} </br>
-                Socket: ${data.socket} </br>
-                Speed: ${data.speed} </br>
-                Cores: ${data.cores} </br>
-                </br>
-                Cache: </br>
-                l1d: ${data.cache.l1d} </br>
-                l1i: ${data.cache.l1i} </br>
-                l2: ${data.cache.l2} </br>
-                l3: ${data.cache.l3} </br>
+            const text = `
+                <b>Manufacturer</b>: ${data.manufacturer} </br>
+                <b>Brand</b>: ${data.brand} </br>
+                <b>Family</b>: ${data.family} </br>
+                <b>Socket</b>: ${data.socket} </br>
+                <b>Speed</b>: ${data.speed}GHz </br>
+                <b>Cores</b>: ${data.cores} </br>
+                <h6>Cache</h6>
+                <b>L1D</b>: ${data.cache.l1d} </br>
+                <b>L1I</b>: ${data.cache.l1i} </br>
+                <b>L2</b>: ${data.cache.l2} </br>
+                <b>L3</b>: ${data.cache.l3} </br>
             `;
 
             $("#cpu-information").append(text);
@@ -183,8 +174,6 @@ function refreshCpu() {
 
 function refreshCpuUsage() {
     /* get the cpu information */
-    let usage;
-
     si.currentLoad()
         .then(data => {
         /* update the graph - average*/

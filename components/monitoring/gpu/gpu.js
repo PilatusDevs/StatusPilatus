@@ -62,22 +62,14 @@ function refreshGpu() {
 function gpuHtml(gpuData) {
     let body = "";
     gpuData.forEach((gpu, index) => {
-        body += `<div class="col-md-3 col-sm-6">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        GPU ${index+1}
-                    </h4>
-                </div>
-                <div class="panel-collapse in">
-                    <div class="panel-body" id="cpu-flags">
-                    <b>Vendor</b>: ${gpu.vendor}<br />
-                    <b>Model</b>: ${gpu.model}<br />
-                    <b>VRAM</b>: ${gpu.vram} MB, ${(gpu.vramDynamic ? "dynamic" : "static")}<br />
-                    <b>Bus</b>: ${gpu.bus}<br />
-                    </div>
-                </div>
+        body += `<div class="col m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">GPU ${index+1}</span>
+                <b>Vendor</b>: ${gpu.vendor}<br />
+                <b>Model</b>: ${gpu.model}<br />
+                <b>VRAM</b>: ${gpu.vram} MB, ${(gpu.vramDynamic ? "dynamic" : "static")}<br />
+                <b>Bus</b>: ${gpu.bus}<br />
             </div>
         </div>
         </div>`;

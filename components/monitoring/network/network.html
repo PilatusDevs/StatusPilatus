@@ -23,48 +23,52 @@
 </style>
 
 <div class="row">
-    <div class="col-md-12">
-        <br />
-        <select class="form-control" id="networkAdapterSelect" onchange="components.network.changeAdapter();"></select>
-    </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
-        <canvas id="canvasNetworkDownUsage"></canvas>
+    <div class="input-field col m12">
+        <select class="form-control" id="networkAdapterSelect" onchange="components.network.changeAdapter();">
+        </select>
+    </div>
+    <div class="col l6 m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Download (MB/sec)</span>
+                <canvas id="canvasNetworkDownUsage"></canvas>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-6">
-        <canvas id="canvasNetworkUpUsage"></canvas>
+    <div class="col l6 m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Upload (MB/sec)</span>
+                <canvas id="canvasNetworkUpUsage"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 
 <br>
 
 <div class="row">
-    <div class="col-md-3">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        Internet Connectivity
-                    </h4>
-                </div>
-                <div class="panel-collapse in">
-                    <div class="panel-body" id="internet-connectivity">
-                        <h3 style="color: green; padding-top: 0" id="internet-connected">Connected</h3>
-                        <h3 style="color: red; padding-top: 0" id="internet-disconnected">Disconnected</h3>
+    <div class="col l3">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Internet Connectivity</span>
+                <div id="internet-connectivity">
+                    <h4 style="color: green; padding-top: 0" id="internet-connected">Connected</h4>
+                    <h4 style="color: red; padding-top: 0" id="internet-disconnected">Disconnected</h4>
 
-                        <button type="button" name="button" id="pingButton" class="btn btn-primary">Test ping</button>
-                        <button type="button" name="button" id="clearButton" class="btn btn-secondary" style="display: none;">Clear</button>
-                        <input type="text" name="" value="8.8.4.4" id="pingTarget" class="form-control" style="margin-top: 20px;">
-                        <p>Note: pinging only works with ip adresses at the moment</p>
+                    <button type="button" name="button" id="pingButton" class="btn btn-primary">Test ping</button>
+                    <button type="button" name="button" id="clearButton" class="btn btn-secondary" style="display: none;">Clear</button>
+                    <input type="text" name="" value="8.8.4.4" id="pingTarget" class="form-control" style="margin-top: 20px;">
+                    <p>Note: pinging only works with ip adresses at the moment</p>
 
-                        <div class="well" id="ping-well" style="display: none; margin-top: 20px;"></div>
-                    </div>
+                    <div class="well" id="ping-well" style="display: none; margin-top: 20px;"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-9" id="adapters"></div>
+    <div class="col l9 m6" id="adapters"></div>
 </div>

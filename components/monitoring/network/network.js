@@ -41,14 +41,10 @@ const configNetworkDownUsage = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Usage"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     suggestedMin: 0,
@@ -75,14 +71,10 @@ const configNetworkUpUsage = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Usage"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     suggestedMin: 0,
@@ -122,7 +114,8 @@ function initNetwork() {
 }
 
 function activateNetwork() {
-    // Nothing
+    // Activate Materialize control
+    $("select").formSelect();
 }
 
 function refreshNetwork() {
@@ -168,23 +161,14 @@ function doAPing() {
 }
 
 function adapterHtml(adapter) {
-    const body = `<div class="col-sm-6 col-lg-3">
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    ${adapter.iface}
-                </h4>
-            </div>
-            <div class="panel-collapse in">
-                <div class="panel-body" id="cpu-flags">
-                    <b>IPv4</b>: ${adapter.ip4}<br />
-                    <b>IPv6</b>: ${adapter.ip6}<br />
-                    <b>MAC</b>: ${adapter.mac}<br />
-                </div>
-            </div>
+    const body = `
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">${adapter.iface}</span>
+            <b>IPv4</b>: ${adapter.ip4}<br />
+            <b>IPv6</b>: ${adapter.ip6}<br />
+            <b>MAC</b>: ${adapter.mac}<br />
         </div>
-    </div>
     </div>`;
     return body;
 }

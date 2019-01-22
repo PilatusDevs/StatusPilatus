@@ -17,22 +17,25 @@
 -->
 
 <div class="row">
-    <div class="col-md-12">
-        <h3>General <small><a href="#" onclick="resetSettings('general')">(reset)</a></small></h3>
+    <div class="col m12">
+        <h5>General <small><a href="#" onclick="resetSettings('general')">(reset)</a></small></h5>
         <form id="settings" class="form-horizontal">
             <div class="row">
-                <label class="control-label col-sm-3" for="background-updates">Background updates:</label>
-                <div class="col-sm-2">
-                    <label class="switch">
-                        <input type="checkbox" id="background-updates" class="setting-control slider">
-                        <span class="slider"></span>
-                    </label>
+                <span class="col s3">Background updates:</span>
+                <div class="col s3">
+                    <div class="switch">
+                        <label>
+                            Off
+                            <input type="checkbox" id="background-updates">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
                 </div>
             </div>
-            <hr>
             <div class="row">
-                <label class="control-label col-sm-3" for="update-interval">Update interval:</label>
-                <div class="col-sm-2">
+                <span class="col s3">Update interval:</span>
+                <div class="col s3">
                     <input type="range" min="50" max="5000" value="500" id="update-interval">
                     <span id="update-interval-feedback">500</span>
                 </div>

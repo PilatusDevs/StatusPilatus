@@ -38,14 +38,10 @@ const configMemUsage = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Time"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     min : 0,
@@ -110,16 +106,10 @@ function refreshMemory() {
 function memoryHtml(memData) {
     let body = "";
     memData.forEach(bank => {
-        body += `<div class="col-md-3 col-sm-6">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        ${bank.bank}
-                    </h4>
-                </div>
-                <div class="panel-collapse in">
-                    <div class="panel-body"">
+        body += `<div class="col l4 m6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">${bank.bank}</span>
                     <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
                     <b>Type</b>: ${bank.type}<br />
                     <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
@@ -127,16 +117,13 @@ function memoryHtml(memData) {
                     <b>Manufacturer</b>: ${bank.manufacturer}<br />
                     <b>Part number</b>: ${bank.partNum}<br />
                     <b>Serial number</b>: ${bank.serialNum}<br />
-                    <h4>Voltage</h4>
+                    <h6>Voltage</h6>
                     <b>Minimum</b>: ${bank.voltageMin}V<br />
                     <b>Maximum</b>: ${bank.voltageMax}V<br />
                     <b>Configured</b>: ${bank.voltageConfigured}V<br />
-                    </div>
                 </div>
             </div>
-        </div>
         </div>`;
     });
     return body;
 }
-

@@ -20,10 +20,10 @@
         background: #9c86cc;
         color: #ffffff;
     }
-    #program-header {
+    /* #program-header {
         display: flex;
         align-items: center;
-    }
+    } */
     h3 {
         margin: 0;
         padding: 1em 0;
@@ -45,36 +45,51 @@
     }
 </style>
 <div class="row">
-    <div class="col-md-5 col-sm-6" id="os-container">
-
+    <div class="col l5 m6">
+        <div class="card">
+            <div class="card-content" id="os-container">
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 col-sm-6">
-        <h3>Program Versions</h3><br />
-        <div id="versions-container">loading...</div>
+    <div class="col l4 m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Program Versions</span>
+                <div id="versions-container">loading...</div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3 col-sm-6">
-        <h3>Users</h3><br />
-        <div id="user-container"></div>
+    <div class="col l3 m6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Users</span>
+                <div id="user-container"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12" id="program-header">
-        <h3>Installed Programs</h3>
-        <span id="os-program-refresh-button" class="glyphicon glyphicon-refresh"></span>
-    </div>
-    <div class="col-md-12">
-        <input type="text" id="search-field" class="form-control" placeholder="Program name">
-        <table class="table table-hover">
-            <thead id="table-head" style="display: none">
-                <tr>
-                    <th>Name</th>
-                    <th>Version</th>
-                </tr>
-            </thead>
-            <h4 id="loading">loading...</h4>
-            <tbody id="programs-container">
-            </tbody>
-        </table>
+    <div class="col m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    Installed Programs
+                    <span id="os-program-refresh-button" class="material-icons right">refresh</span>
+                </span>
+                <input type="text" id="search-field" placeholder="Program name">
+                <table class="highlight responsive-table">
+                    <thead id="table-head" style="display: none">
+                        <tr>
+                            <th>Name</th>
+                            <th>Version</th>
+                        </tr>
+                    </thead>
+                    <h6 id="loading">loading...</h6>
+                    <tbody id="programs-container">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

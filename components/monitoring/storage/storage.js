@@ -43,14 +43,10 @@ const configDiskUsage = {
         }]
     },
     options: {
+        legend: {
+            display: false
+        },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: "Usage"
-                }
-            }],
             yAxes: [{
                 ticks:{
                     suggestedMin: 0,
@@ -148,12 +144,12 @@ function driveHtml(drives) {
         const hasData = drive.size !== undefined;
         const size = util.formatSize(drive.size);
         const used = util.formatSize(drive.size - drive.used);
-        body += `<h3>Disk ${drive.mount} (${drive.physical})<small> `;
+        body += `<h6>Disk ${drive.mount} (${drive.physical})<small> `;
         if (!hasData) {
-            body += `No media found</small></h3>`;
+            body += `No media found</small></h6>`;
         } else {
             body += `${used[0].toFixed(2)+used[1]} free of
-            ${size[0].toFixed(2)+size[1]}</small></h3>`;
+            ${size[0].toFixed(2)+size[1]}</small></h6>`;
             let status;
             if (drive.use < 60){
                 status = "progress-bar-success";
@@ -162,7 +158,7 @@ function driveHtml(drives) {
             } else {
                 status = "progress-bar-danger";
             }
-            body += `<div class="progress">
+            body += `<div class="progress grey lighten-2">
                 <div class="progress-bar ${status} role="progressbar"
                 aria-valuenow="${drive.use}" aria-valuemin="0"
                 aria-valuemax="100" style="width: ${drive.use}%">

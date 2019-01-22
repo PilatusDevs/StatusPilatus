@@ -111,7 +111,7 @@ function refreshOs() {
 }
 
 function osHtml(os) {
-    const body = `<h3>${os.platform}</h3><br />
+    const body = `<span class="card-title">${os.platform}</span>
     <b>Distro</b>: ${os.distro}<br />
     <b>Codename</b>: ${os.codename}<br />
     <b>Release</b>: ${os.release}<br />
