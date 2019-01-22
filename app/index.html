@@ -20,7 +20,8 @@
 <head>
     <meta charset="utf-8">
     <title>StatusPilatus</title>
-    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/materialize-css/dist/css/materialize.min.css" rel="stylesheet">
+    <link href="../node_modules/material-icons/iconfont/material-icons.css" rel="stylesheet">
     <link href="./css/sidebar.css" rel="stylesheet">
     <link href="./css/content.css" rel="stylesheet">
 </head>
@@ -28,10 +29,10 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
+            <div id="logo-container" class="z-depth-2">
+                <img src="./img/logo.png" id="logo">
+            </div>
             <ul class="sidebar-nav">
-                <li>
-                    <img src="./img/logo.png" id="logo">
-                </li>
                 <li>
                     <a href="#tab" id="dashboard" class="active-tab" data-layer="dashboard" data-folder="dashboard" data-name="dashboard">Dashboard</a>
                 </li>
@@ -80,10 +81,14 @@
     </div>
 
     <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
+    <div id="page-content-wrapper" class="row">
+        <div class="col s12">
             <div id="titles">
-                <h1><span id="dash-title">Dashboard</span><span class="space"> </span><span id="subtitle" class="small"></span></h1>
+                <h3>
+                    <span id="dash-title">Dashboard</span>
+                    <span class="space"></span>
+                    <span id="subtitle" class="small"></span>
+                </h3>
             </div>
             <div id="frame"></div>
         </div>
@@ -94,7 +99,7 @@
 
 <!-- Libraries -->
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
 <script src="../node_modules/chart.js/dist/Chart.bundle.min.js"></script>
 
 <!-- Core -->

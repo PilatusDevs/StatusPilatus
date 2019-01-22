@@ -33,7 +33,7 @@
 
 .sidebar-nav {
     position: absolute;
-    top: 0;
+    top: 175px;
     width: 200px;
     margin: 0;
     padding: 0;
@@ -68,9 +68,18 @@
 
 /* Custom colours for sidebar items */
 
+#logo-container {
+    height: 175px;
+    width: 200px;
+    background: #212529;
+    z-index: 2;
+    position: fixed;
+}
+
 #logo {
     width: 150px;
     height: 150px;
+    margin-left: 25px;
 }
 
 #cpu.active-tab {

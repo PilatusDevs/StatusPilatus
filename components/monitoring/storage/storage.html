@@ -29,10 +29,6 @@
         background: #c1cc66;
         color: #ffffff;
     }
-    #storage-devices-header {
-        display: flex;
-        align-items: center;
-    }
     #storage-devices-refresh-button {
         margin-left: auto;
         font-size: 25px;
@@ -41,19 +37,25 @@
         animation: spin 1s infinite;
     }
 </style>
-<div class="row">
-    <div class="col-md-12" id="storage-devices-header">
-        <h3>Devices</h3>
-        <span id="storage-devices-refresh-button" class="glyphicon glyphicon-refresh"></span>
-    </div>
-    <div class="col-md-12" id="storage-bars"></div>
-</div>
 
 <div class="row">
-    <div class="col-md-12" id="storage-usage-header">
-        <h3>Usage</h3>
+    <div class="col l6 m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    Devices
+                    <i id="storage-devices-refresh-button" class="material-icons right">refresh</i>
+                </span>
+                <div id="storage-bars"></div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <canvas id="canvasDiskUsage"></canvas>
+    <div class="col l6 m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Disk Usage (Mb/sec)</span>
+                <canvas id="canvasDiskUsage"></canvas>
+            </div>
+        </div>
     </div>
 </div>
