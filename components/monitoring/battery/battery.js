@@ -28,14 +28,14 @@ let loading = false;
 
 function initBattery() {
     si.battery()
-	.then(data => {
-		if (data.hasbattery) {
-            $("#batteryRow").show();
-        } else {
-            $("#noBatteryText").show();
-        }
-	})
-	.catch(error => console.error(error));
+        .then(data => {
+            if (data.hasbattery) {
+                $("#batteryRow").show();
+            } else {
+                $("#noBatteryText").show();
+            }
+        })
+        .catch(error => console.error(error));
 }
 
 function refreshBattery() {
@@ -51,25 +51,14 @@ function activateBattery() {
 
     si.battery()
         .then(data => {
-            let manufacturer;
-            data.manufacturer == "" ? manufacturer = "unknown" : manufacturer = data.manufacturer;
-
-            let model;
-            data.model == "" ? model = "unknown" : model = data.model;
-
-            let type;
-            data.type == "" ? type = "unknown" : type = data.type;
-
-            let maxcapacity;
-            data.maxcapacity == "" ? maxcapacity = "unknown" : maxcapacity = data.maxcapacity;
-
-            let text = `
-                IsCharging: ${data.charging} </br>
-                Percentage: ${data.ischarging} </br>
-                Manufacturer: ${manufacturer} </br>
-                Model: ${model} </br>
-                Type: ${type} </br>
-                Max Capacity: ${maxcapacity} </br>
+            const text = `
+                <b>Charging</b>: ${data.ischarging ? "Yes" : "No"} </br>
+                <b>Percentage</b>: ${data.percent}% </br>
+                <b>Manufacturer</b>: ${data.manufacturer || "unknown"} </br>
+                <b>Model</b>: ${data.model || "unknown"} </br>
+                <b>Type</b>: ${data.type || "unknown"} </br>
+                <b>Max Capacity</b>: ${data.maxcapacity || "unknown"} </br>
+                <b>Current Capacity</b>: ${data.currentcapacity || "unknown"}
             `;
             $("#battery-info").append(text);
 

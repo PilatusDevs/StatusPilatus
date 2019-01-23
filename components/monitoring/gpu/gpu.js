@@ -37,15 +37,8 @@ function activateGpu() {
         si.graphics()
             .then(data => {
                 const allGpus = data.controllers;
-                gpuData = allGpus;
-                let subtitle = allGpus[0].model;
-                if (allGpus.length > 1) {
-                    allGpus.shift();
-                    allGpus.forEach(gpu => {
-                        subtitle += " + "+gpu.model;
-                    });
-                }
-                gpuTitle = subtitle;
+                gpuData = allGpus.filter(g => g.model !== "");
+                gpuTitle = gpuData.map(g => g.model).join(" + ");
                 $("#subtitle").text(gpuTitle);
                 $("#gpu-container").html(gpuHtml(gpuData));
             });
