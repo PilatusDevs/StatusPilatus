@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ function activateBattery() {
                 Max Capacity: ${maxcapacity} </br>
             `;
             $("#battery-info").append(text);
-            
+
             loading = false;
         });
 }
