@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ function initMemory() {
 function activateMemory() {
     si.mem()
         .then(data => {
-            $("#subtitle").text(util.formatBytesToMb(data.total)+"Mb");
+            $("#subtitle").text(util.formatBytesToMb(data.total)+" MB");
         });
     if (memLayout.length === 0) {
         si.memLayout()
@@ -110,17 +110,17 @@ function memoryHtml(memData) {
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">${bank.bank}</span>
-                    <b>Size</b>: ${util.formatBytesToMb(bank.size)}Mb<br />
+                    <b>Size</b>: ${util.formatBytesToMb(bank.size)} MB<br />
                     <b>Type</b>: ${bank.type}<br />
-                    <b>Frequency</b>: ${bank.clockSpeed}MHz<br />
+                    <b>Frequency</b>: ${bank.clockSpeed} MHz<br />
                     <b>Form factor</b>: ${bank.formFactor}<br />
                     <b>Manufacturer</b>: ${bank.manufacturer}<br />
                     <b>Part number</b>: ${bank.partNum}<br />
                     <b>Serial number</b>: ${bank.serialNum}<br />
                     <h6>Voltage</h6>
-                    <b>Minimum</b>: ${bank.voltageMin}V<br />
-                    <b>Maximum</b>: ${bank.voltageMax}V<br />
-                    <b>Configured</b>: ${bank.voltageConfigured}V<br />
+                    <b>Minimum</b>: ${bank.voltageMin} V<br />
+                    <b>Maximum</b>: ${bank.voltageMax} V<br />
+                    <b>Configured</b>: ${bank.voltageConfigured} V<br />
                 </div>
             </div>
         </div>`;

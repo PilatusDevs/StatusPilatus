@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -37,15 +37,8 @@ function activateGpu() {
         si.graphics()
             .then(data => {
                 const allGpus = data.controllers;
-                gpuData = allGpus;
-                let subtitle = allGpus[0].model;
-                if (allGpus.length > 1) {
-                    allGpus.shift();
-                    allGpus.forEach(gpu => {
-                        subtitle += " + "+gpu.model;
-                    });
-                }
-                gpuTitle = subtitle;
+                gpuData = allGpus.filter(g => g.model !== "");
+                gpuTitle = gpuData.map(g => g.model).join(" + ");
                 $("#subtitle").text(gpuTitle);
                 $("#gpu-container").html(gpuHtml(gpuData));
             });
@@ -62,7 +55,7 @@ function refreshGpu() {
 function gpuHtml(gpuData) {
     let body = "";
     gpuData.forEach((gpu, index) => {
-        body += `<div class="col m6">
+        body += `<div class="col l6 xl4">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">GPU ${index+1}</span>

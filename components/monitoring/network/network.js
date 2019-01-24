@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -205,7 +205,7 @@ function changeNetworkAdapter(){
     configNetworkDownUsage.data = {
         datasets: [
             {
-                label: "Usage down (Mb/sec)",
+                label: "Usage down (MB/sec)",
                 backgroundColor: "#a4cc99",
                 borderColor: "#a4cc99",
                 fill: false
@@ -215,7 +215,7 @@ function changeNetworkAdapter(){
     configNetworkUpUsage.data = {
         datasets: [
             {
-                label: "Usage up (Mb/sec)",
+                label: "Usage up (MB/sec)",
                 backgroundColor: "#a4cc99",
                 borderColor: "#a4cc99",
                 fill: false

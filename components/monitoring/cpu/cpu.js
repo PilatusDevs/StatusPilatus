@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -140,10 +140,10 @@ function loadCpuInformation(){
             const text = `
                 <b>Manufacturer</b>: ${data.manufacturer} </br>
                 <b>Brand</b>: ${data.brand} </br>
-                <b>Family</b>: ${data.family} </br>
+                <b>Cores/Threads</b>: ${data.physicalCores}/${data.cores} </br>
+                <b>Speed</b>: ${data.speed} GHz </br>
                 <b>Socket</b>: ${data.socket} </br>
-                <b>Speed</b>: ${data.speed}GHz </br>
-                <b>Cores</b>: ${data.cores} </br>
+                <b>Family</b>: ${data.family} </br>
                 <h6>Cache</h6>
                 <b>L1D</b>: ${data.cache.l1d} </br>
                 <b>L1I</b>: ${data.cache.l1i} </br>

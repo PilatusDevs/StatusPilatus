@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -62,4 +62,56 @@ canvas {
 
 #titles.battery {
     border-bottom-color: #588fad;
+}
+
+/* Monitoring selection colours */
+
+#frame-cpu ::selection {
+    background: #f38b4a;
+    color: #ffffff;
+}
+
+#frame-gpu ::selection {
+    background: #aa2f3a;
+    color: #ffffff;
+}
+
+#frame-memory ::selection {
+    background: #cc576e;
+    color: #ffffff;
+}
+
+#frame-storage ::selection {
+    background: #c1cc66;
+    color: #ffffff;
+}
+
+#frame-os ::selection {
+    background: #9c86cc;
+    color: #ffffff;
+}
+
+#frame-network ::selection {
+    background: #a4cc99;
+    color: #ffffff;
+}
+
+#frame-battery ::selection {
+    background: #588fad;
+    color: #ffffff;
+}
+
+/* Custom scrollbars */
+/* ::-webkit-scrollbar-track {
+    background-color: transparent;
+} */
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #777;
 }

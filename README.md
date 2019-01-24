@@ -10,16 +10,27 @@ Monitor your PC like never before!
 
 ### Monitoring
 
-- CPU usage, flags and temperature
+- CPU information, usage, flags and temperature
 - GPU information, with support for multiple GPUs
-- RAM usage
+- RAM information and usage
 - Disk usage statistics and activity
 - General system information such as hostname, operating system, program list with versions and more
 - Network statistics with support for multiple network interfaces
+- Battery information and status
 
-## Setup and running
+### Miscellaneous
 
-To run the project you need Node.js installed (with npm).  
+- Information about running processes
+- Configurable user settings
+
+## Stable releases
+
+To install a built version of the program on your system, simply [go here](https://github.com/PilatusDevs/StatusPilatus/releases).
+You can download and install the program from there.
+
+## Developing and running from source
+
+To run from source, you need Node.js installed (with npm).  
 The steps to do so, are different for every operating system,  
 and can be found on the [Node.js website](https://nodejs.org/en/).
 
@@ -79,7 +90,8 @@ and fix them mostly automatically with:
 We made use of the following software to create StatusPilatus:
 
 * [Electron](https://github.com/electron/electron) (MIT)
-* [Bootstrap](https://github.com/twbs/bootstrap) (MIT)
+* [Materialize](https://github.com/Dogfalo/materialize) (MIT)
+* [Material Icons](https://github.com/marella/material-icons) (Apache-2.0)
 * [JQuery](https://github.com/jquery/jquery) (MIT)
 * [Chart.js](https://github.com/chartjs/Chart.js) (MIT)
 * [Systeminformation](https://github.com/sebhildebrandt/systeminformation) (MIT)
@@ -87,4 +99,4 @@ We made use of the following software to create StatusPilatus:
 
 ## License
 
-StatusPilatus is copyrighted software made by PilatusDevs in 2018. You can copy and modify it under the GNU GPL version 3 or later, see LICENSE for details.
+StatusPilatus is copyrighted software made by PilatusDevs in 2019. You can copy and modify it under the GNU GPL version 3 or later, see LICENSE for details.

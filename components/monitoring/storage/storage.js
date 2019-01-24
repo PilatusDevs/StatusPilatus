@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ const configDiskUsage = {
     type: "line",
     data: {
         datasets: [{
-            label: "Total disk usage (Mb/sec)",
+            label: "Total disk usage (MB/sec)",
             backgroundColor: "#c1cc66",
             borderColor: "#c1cc66",
             fill: false
@@ -148,8 +148,8 @@ function driveHtml(drives) {
         if (!hasData) {
             body += `No media found</small></h6>`;
         } else {
-            body += `${used[0].toFixed(2)+used[1]} free of
-            ${size[0].toFixed(2)+size[1]}</small></h6>`;
+            body += `${used[0].toFixed(2)+" "+used[1]} free of
+            ${size[0].toFixed(2)+" "+size[1]}</small></h6>`;
             let status;
             if (drive.use < 60){
                 status = "progress-bar-success";
