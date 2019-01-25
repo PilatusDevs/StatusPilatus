@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 /* global settings saveSettings */
 "use strict";
 
-const opn = require('opn');
+const { shell } = require("electron")
 
 module.exports = {
     init: initAbout,
@@ -31,12 +31,12 @@ function initAbout() {
 
     const pilatusdevsButton = document.querySelector("#pilatusdevs-button");
     pilatusdevsButton.onclick = () => {
-        opn("https://github.com/PilatusDevs");
+        shell.openExternal("https://github.com/PilatusDevs");
     };
 
     const licenseButton = document.querySelector("#license-button");
     licenseButton.onclick = () => {
-        opn("https://github.com/PilatusDevs/StatusPilatus/blob/master/LICENSE");
+        shell.openExternal("https://github.com/PilatusDevs/StatusPilatus/blob/master/LICENSE");
     };
 }
 
