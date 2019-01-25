@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ const components = {};
 * Boot all the core things of the app
 */
 function init() {
+    // Promises for components load status
+    const loadingComponents = [];
     // Fill the components
     $('a[href="#tab"]').each((index, element) => {
         const layer = $(element).attr("data-layer");
@@ -57,17 +59,36 @@ function init() {
         const jsPath = `../components/${layer}/${folder}/${name}.js`;
         components[name] = require(jsPath);
         $("#frame").append(`<div style="display: none" id="frame-${name}"></div>`);
-        // Load the html for all components and call the init function
-        $(`#frame-${name}`).load(htmlPath, () => {
-            components[name].init();
+        loadingComponents.push(
+            loadComponent(htmlPath, name)
+        );
+    });
+    // Wait for all components to load beforing continuing
+    Promise.all(loadingComponents)
+        .then(() => {
+            // Activate the listeners to switch between the pages
+            changePageListeners();
+            // Activate and show the startup dashboard page
+            $("#dashboard").click();
+            // Call the loop for the first time
+            setTimeout(loop, 500);
+        });
+}
+
+/*
+* Load the html for all components and call the init function
+*/
+function loadComponent(htmlPath, name) {
+    return new Promise((resolve, reject) => {
+        $(`#frame-${name}`).load(htmlPath, (res, status) => {
+            if (status === "error") {
+                reject(`${name}.html failed to load.`);
+            } else {
+                components[name].init();
+                resolve();
+            }
         });
     });
-    // Activate the listeners to switch between the pages
-    changePageListeners();
-    // Activate and show the startup dashboard page
-    $("#dashboard").click();
-    // Call the loop for the first time
-    setTimeout(loop, 500);
 }
 
 /*

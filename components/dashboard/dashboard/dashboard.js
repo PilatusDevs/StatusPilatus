@@ -1,6 +1,6 @@
 /*
 *    StatusPilatus: Monitor your PC like never before!
-*    Copyright (C) 2018 PilatusDevs
+*    Copyright (C) 2019 PilatusDevs
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/* global util $ */
 "use strict";
 
 module.exports = {
@@ -22,6 +23,9 @@ module.exports = {
     refresh: refreshDashboard,
     activate: activateDashboard
 };
+
+// Array of elements to render
+let favs = [];
 
 function initDashboard() {
     //TODO
@@ -32,5 +36,18 @@ function refreshDashboard() {
 }
 
 function activateDashboard() {
-    //TODO
+    const container = document.getElementById("dashboard-items");
+    console.log(container);
+    container.innerHTML = "";
+    // favs = [...document.querySelectorAll(".card")];
+    if (favs.length === 0) {
+        container.innerHTML = `<h5 class="col m12">You have no favourite items!</h5>`;
+    } else {
+        favs.forEach(fav => {
+            const column = document.createElement("div");
+            column.classList.add("col", "l6", "m12");
+            column.appendChild(fav.cloneNode(true));
+            container.appendChild(column);
+        });
+    }
 }
