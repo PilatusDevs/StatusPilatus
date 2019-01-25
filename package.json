@@ -1,6 +1,6 @@
 {
-  "name": "statuspilatus",
-  "version": "0.4.0",
+  "name": "Statuspilatus",
+  "version": "0.5.0",
   "description": "Monitor your PC like never before!",
   "main": "app/index.js",
   "build": {
@@ -95,7 +95,7 @@
     "systeminformation": "^3.54.0"
   },
   "devDependencies": {
-    "electron": "^4.0.1",
+    "electron": "^4.0.2",
     "electron-builder": "^20.38.5",
     "eslint": "^5.12.1"
   },
