@@ -15,10 +15,10 @@
 *    You should have received a copy of the GNU General Public License
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* global settings saveSettings */
+/* global $ */
 "use strict";
 
-const { shell } = require("electron")
+const { shell, remote } = require("electron");
 
 module.exports = {
     init: initAbout,
@@ -29,7 +29,7 @@ module.exports = {
 function initAbout() {
     // The following is done because electron fucks you over in development.
     // Now we see the correct version in development and also when released.
-    let version = process.env.npm_package_version || require('electron').remote.app.getVersion();
+    const version = process.env.npm_package_version || remote.app.getVersion();
     $("#version").append("Version " + version);
 
     const pilatusdevsButton = document.querySelector("#pilatusdevs-button");
@@ -39,7 +39,8 @@ function initAbout() {
 
     const licenseButton = document.querySelector("#license-button");
     licenseButton.onclick = () => {
-        shell.openExternal("https://github.com/PilatusDevs/StatusPilatus/blob/master/LICENSE");
+        shell.openExternal(
+            "https://github.com/PilatusDevs/StatusPilatus/blob/master/LICENSE");
     };
 }
 
