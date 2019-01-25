@@ -1,5 +1,5 @@
 {
-  "name": "Statuspilatus",
+  "name": "StatusPilatus",
   "version": "0.5.0",
   "description": "Monitor your PC like never before!",
   "main": "app/index.js",
