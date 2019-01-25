@@ -27,7 +27,10 @@ module.exports = {
 };
 
 function initAbout() {
-    $("#version").append("Version " + process.env.npm_package_version);
+    // The following is done because electron fucks you over in development.
+    // Now we see the correct version in development and also when released.
+    let version = process.env.npm_package_version || require('electron').remote.app.getVersion();
+    $("#version").append("Version " + version);
 
     const pilatusdevsButton = document.querySelector("#pilatusdevs-button");
     pilatusdevsButton.onclick = () => {
