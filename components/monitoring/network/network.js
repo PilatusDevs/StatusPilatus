@@ -18,11 +18,127 @@
 /* global settings $ si Chart util */
 "use strict";
 
+const graphs = [{
+    elementId: "canvas-network-down-usage",
+    name: "Download (MB/sec)",
+    isPinned: false,
+    togglePin() { this.isPinned = !this.isPinned; },
+    chart: {},
+    config: {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Download (MB/sec)",
+                backgroundColor: "#a4cc99",
+                borderColor: "#a4cc99",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        suggestedMin: 0,
+                        beginAtZero: true
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: false,
+                        labelString: "Value"
+                    }
+                }]
+            }
+        }
+    },
+    init(element) {
+        const cvs = element
+            ? element.querySelector(`.${this.elementId}`)
+            : document.getElementById(this.elementId);
+        this.chart = new Chart(cvs.getContext("2d"), this.config);
+    },
+    render() {
+        si.networkStats(currentAdapter)
+            .then(data => {
+                /* convert the bytes to Mb */
+                const downUsage = util.formatBytesToMb(data.rx_sec);
+                /* update the graph - usage*/
+                this.config.data.labels.push("");
+                this.config.data.datasets[0].data.push(downUsage);
+                while (this.config.data.datasets[0].data.length > settings.graphs.width) {
+                    this.config.data.datasets[0].data.splice(0, 1);
+                    this.config.data.labels.splice(0, 1);
+                }
+                this.chart.update();
+            });
+    }
+},
+{
+    elementId: "canvas-network-up-usage",
+    name: "Upload (MB/sec)",
+    isPinned: false,
+    togglePin() { this.isPinned = !this.isPinned; },
+    chart: {},
+    config: {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Upload (MB/sec)",
+                backgroundColor: "#a4cc99",
+                borderColor: "#a4cc99",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        suggestedMin: 0,
+                        beginAtZero: true
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: false,
+                        labelString: "Value"
+                    }
+                }]
+            }
+        }
+    },
+    init(element) {
+        const cvs = element
+            ? element.querySelector(`.${this.elementId}`)
+            : document.getElementById(this.elementId);
+        this.chart = new Chart(cvs.getContext("2d"), this.config);
+    },
+    render() {
+        si.networkStats(currentAdapter)
+            .then(data => {
+                /* convert the bytes to Mb */
+                const upUsage = util.formatBytesToMb(data.tx_sec);
+                /* update the graph - usage*/
+                this.config.data.labels.push("");
+                this.config.data.datasets[0].data.push(upUsage);
+                while (this.config.data.datasets[0].data.length > settings.graphs.width) {
+                    this.config.data.datasets[0].data.splice(0, 1);
+                    this.config.data.labels.splice(0, 1);
+                }
+                this.chart.update();
+            });
+    }
+}];
+
 module.exports = {
     init: initNetwork,
     refresh: refreshNetwork,
     activate: activateNetwork,
-    changeAdapter: changeNetworkAdapter
+    changeAdapter: changeNetworkAdapter,
+    graphs
 };
 
 let currentAdapter = null;
@@ -30,76 +146,80 @@ let currentAdapter = null;
 /*
 * Config for the usage chart
 */
-const configNetworkDownUsage = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Download (MB/sec)",
-            backgroundColor: "#a4cc99",
-            borderColor: "#a4cc99",
-            fill: false
-        }]
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks:{
-                    suggestedMin: 0,
-                    beginAtZero: true
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
+// const configNetworkDownUsage = {
+//     type: "line",
+//     data: {
+//         datasets: [{
+//             label: "Download (MB/sec)",
+//             backgroundColor: "#a4cc99",
+//             borderColor: "#a4cc99",
+//             fill: false
+//         }]
+//     },
+//     options: {
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             yAxes: [{
+//                 ticks:{
+//                     suggestedMin: 0,
+//                     beginAtZero: true
+//                 },
+//                 display: true,
+//                 scaleLabel: {
+//                     display: false,
+//                     labelString: "Value"
+//                 }
+//             }]
+//         }
+//     }
+// };
 
-const configNetworkUpUsage = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Upload (MB/sec)",
-            backgroundColor: "#a4cc99",
-            borderColor: "#a4cc99",
-            fill: false
-        }]
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks:{
-                    suggestedMin: 0,
-                    beginAtZero: true
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
+// const configNetworkUpUsage = {
+//     type: "line",
+//     data: {
+//         datasets: [{
+//             label: "Upload (MB/sec)",
+//             backgroundColor: "#a4cc99",
+//             borderColor: "#a4cc99",
+//             fill: false
+//         }]
+//     },
+//     options: {
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             yAxes: [{
+//                 ticks:{
+//                     suggestedMin: 0,
+//                     beginAtZero: true
+//                 },
+//                 display: true,
+//                 scaleLabel: {
+//                     display: false,
+//                     labelString: "Value"
+//                 }
+//             }]
+//         }
+//     }
+// };
 
 function initNetwork() {
     startAdapters();
 
-    /* make the chart */
-    const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
-    window.networkDownUsage = new Chart(ctx, configNetworkDownUsage);
+    // /* make the chart */
+    // const ctx = document.getElementById("canvasNetworkDownUsage").getContext("2d");
+    // window.networkDownUsage = new Chart(ctx, configNetworkDownUsage);
+    //
+    // /* make the chart */
+    // const ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
+    // window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
 
-    /* make the chart */
-    const ctx1 = document.getElementById("canvasNetworkUpUsage").getContext("2d");
-    window.networkUpUsage = new Chart(ctx1, configNetworkUpUsage);
+    graphs.forEach(graph => {
+        graph.init();
+    });
 
     const pingButton = document.querySelector("#pingButton");
     pingButton.onclick = () => {
@@ -119,7 +239,10 @@ function activateNetwork() {
 }
 
 function refreshNetwork() {
-    updateNetworkUsage();
+    // updateNetworkUsage();
+    graphs.forEach(graph => {
+        graph.render();
+    });
     checkConnectivity();
 }
 
@@ -200,9 +323,12 @@ function startAdapters() {
 function changeNetworkAdapter(){
     const e = document.getElementById("networkAdapterSelect");
     currentAdapter = e.options[e.selectedIndex].value;
-    window.networkDownUsage.destroy();
-    window.networkUpUsage.destroy();
-    configNetworkDownUsage.data = {
+    // window.networkDownUsage.destroy();
+    // window.networkUpUsage.destroy();
+    graphs.forEach(graph => {
+        graph.chart.destroy();
+    });
+    graphs[0].config.data = {
         datasets: [
             {
                 label: "Usage down (MB/sec)",
@@ -212,7 +338,7 @@ function changeNetworkAdapter(){
             }
         ]
     };
-    configNetworkUpUsage.data = {
+    graphs[1].config.data = {
         datasets: [
             {
                 label: "Usage up (MB/sec)",
@@ -222,38 +348,41 @@ function changeNetworkAdapter(){
             }
         ]
     };
-    const ctx1 = document.getElementById("canvasNetworkDownUsage")
-        .getContext("2d");
-    window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
-    const ctx2 = document.getElementById("canvasNetworkUpUsage")
-        .getContext("2d");
-    window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
+    // const ctx1 = document.getElementById("canvasNetworkDownUsage")
+    //     .getContext("2d");
+    // window.networkDownUsage = new Chart(ctx1, configNetworkDownUsage);
+    // const ctx2 = document.getElementById("canvasNetworkUpUsage")
+    //     .getContext("2d");
+    // window.networkUpUsage = new Chart(ctx2, configNetworkUpUsage);
+    graphs.forEach(graph => {
+        graph.init();
+    });
 }
 
 /**
 * Update the network usage for the chosen adapter.
 */
-function updateNetworkUsage() {
-    si.networkStats(currentAdapter)
-        .then(data => {
-            /* convert the bytes to Mb */
-            const downUsage = util.formatBytesToMb(data.rx_sec);
-            const upUsage = util.formatBytesToMb(data.tx_sec);
-            /* update the graph - usage*/
-            configNetworkDownUsage.data.labels.push("");
-            configNetworkDownUsage.data.datasets[0].data.push(downUsage);
-            while (configNetworkDownUsage.data.datasets[0].data.length > settings.graphs.width) {
-                configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
-                configNetworkDownUsage.data.labels.splice(0, 1);
-            }
-            window.networkDownUsage.update();
-
-            configNetworkUpUsage.data.labels.push("");
-            configNetworkUpUsage.data.datasets[0].data.push(upUsage);
-            while (configNetworkUpUsage.data.datasets[0].data.length > settings.graphs.width) {
-                configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
-                configNetworkUpUsage.data.labels.splice(0, 1);
-            }
-            window.networkUpUsage.update();
-        });
-}
+// function updateNetworkUsage() {
+//     si.networkStats(currentAdapter)
+//         .then(data => {
+//             /* convert the bytes to Mb */
+//             const downUsage = util.formatBytesToMb(data.rx_sec);
+//             const upUsage = util.formatBytesToMb(data.tx_sec);
+//             /* update the graph - usage*/
+//             configNetworkDownUsage.data.labels.push("");
+//             configNetworkDownUsage.data.datasets[0].data.push(downUsage);
+//             while (configNetworkDownUsage.data.datasets[0].data.length > settings.graphs.width) {
+//                 configNetworkDownUsage.data.datasets[0].data.splice(0, 1);
+//                 configNetworkDownUsage.data.labels.splice(0, 1);
+//             }
+//             window.networkDownUsage.update();
+//
+//             configNetworkUpUsage.data.labels.push("");
+//             configNetworkUpUsage.data.datasets[0].data.push(upUsage);
+//             while (configNetworkUpUsage.data.datasets[0].data.length > settings.graphs.width) {
+//                 configNetworkUpUsage.data.datasets[0].data.splice(0, 1);
+//                 configNetworkUpUsage.data.labels.splice(0, 1);
+//             }
+//             window.networkUpUsage.update();
+//         });
+// }

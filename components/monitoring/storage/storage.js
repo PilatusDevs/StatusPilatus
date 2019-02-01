@@ -18,10 +18,71 @@
 /* global Chart $ si settings util */
 "use strict";
 
+const graphs = [{
+    elementId: "canvas-disk-usage",
+    name: "Disk Usage (MB/sec)",
+    isPinned: false,
+    togglePin() { this.isPinned = !this.isPinned; },
+    chart: {},
+    config: {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Total disk usage (MB/sec)",
+                backgroundColor: "#c1cc66",
+                borderColor: "#c1cc66",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        suggestedMin: 0,
+                        beginAtZero: true
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: false,
+                        labelString: "Value"
+                    }
+                }]
+            }
+        }
+    },
+    init(element) {
+        const cvs = element
+            ? element.querySelector(`.${this.elementId}`)
+            : document.getElementById(this.elementId);
+        this.chart = new Chart(cvs.getContext("2d"), this.config);
+    },
+    render() {
+        si.fsStats()
+            .then(data => {
+                const usageMb = util.formatBytesToMb(data.tx_sec);
+                /* update the graph */
+                this.config.data.labels.push("");
+                this.config.data.datasets.forEach(dataset => {
+                    dataset.data.push(usageMb);
+                    while (dataset.data.length > settings.graphs.width) {
+                        dataset.data.splice(0, 1);
+                        this.config.data.labels.splice(0, 1);
+                    }
+                });
+                this.chart.update();
+            })
+            .catch(() => {});
+    }
+}];
+
 module.exports = {
     init: initStorage,
     refresh: refreshStorage,
-    activate: activateStorage
+    activate: activateStorage,
+    graphs
 };
 
 // Storing static data to call libraries less often
@@ -32,35 +93,35 @@ let isLoading = true;
 /*
 * Config for the usage chart
 */
-const configDiskUsage = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Total disk usage (MB/sec)",
-            backgroundColor: "#c1cc66",
-            borderColor: "#c1cc66",
-            fill: false
-        }]
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks:{
-                    suggestedMin: 0,
-                    beginAtZero: true
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
+// const configDiskUsage = {
+//     type: "line",
+//     data: {
+//         datasets: [{
+//             label: "Total disk usage (MB/sec)",
+//             backgroundColor: "#c1cc66",
+//             borderColor: "#c1cc66",
+//             fill: false
+//         }]
+//     },
+//     options: {
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             yAxes: [{
+//                 ticks:{
+//                     suggestedMin: 0,
+//                     beginAtZero: true
+//                 },
+//                 display: true,
+//                 scaleLabel: {
+//                     display: false,
+//                     labelString: "Value"
+//                 }
+//             }]
+//         }
+//     }
+// };
 
 function refreshData() {
     if (isLoading) {
@@ -84,8 +145,11 @@ function initStorage() {
         refreshData();
     };
     /* make the chart */
-    const ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
-    window.diskUsage = new Chart(ctx1, configDiskUsage);
+    // const ctx1 = document.getElementById("canvasDiskUsage").getContext("2d");
+    // window.diskUsage = new Chart(ctx1, configDiskUsage);
+    graphs.forEach(graph => {
+        graph.init();
+    });
 }
 
 function activateStorage() {
@@ -93,26 +157,29 @@ function activateStorage() {
 }
 
 function refreshStorage() {
-    updateDiskUsage();
+    // updateDiskUsage();
+    graphs.forEach(graph => {
+        graph.render();
+    });
 }
 
-function updateDiskUsage(){
-    si.fsStats()
-        .then(data => {
-            const usageMb = util.formatBytesToMb(data.tx_sec);
-            /* update the graph */
-            configDiskUsage.data.labels.push("");
-            configDiskUsage.data.datasets.forEach(dataset => {
-                dataset.data.push(usageMb);
-                while (dataset.data.length > settings.graphs.width) {
-                    dataset.data.splice(0, 1);
-                    configDiskUsage.data.labels.splice(0, 1);
-                }
-            });
-            window.diskUsage.update();
-        })
-        .catch(() => {});
-}
+// function updateDiskUsage(){
+//     si.fsStats()
+//         .then(data => {
+//             const usageMb = util.formatBytesToMb(data.tx_sec);
+//             /* update the graph */
+//             configDiskUsage.data.labels.push("");
+//             configDiskUsage.data.datasets.forEach(dataset => {
+//                 dataset.data.push(usageMb);
+//                 while (dataset.data.length > settings.graphs.width) {
+//                     dataset.data.splice(0, 1);
+//                     configDiskUsage.data.labels.splice(0, 1);
+//                 }
+//             });
+//             window.diskUsage.update();
+//         })
+//         .catch(() => {});
+// }
 
 function insertData() {
     // Renders drive data once ready

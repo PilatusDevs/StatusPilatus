@@ -19,11 +19,22 @@
 <h5 id="noBatteryText" style="display: none;">No battery found!</h5>
 
 <div class="row" id="batteryRow" style="display: none;">
-    <div class="col l6">
+    <div class="col l6 m12">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">Battery Information</span>
                 <div id="battery-info"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col l6 m12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    Battery Percentage
+                    <a href="#" class="material-icons right amber-text">star</a>
+                </span>
+                <canvas id="canvas-battery-percentage"></canvas>
             </div>
         </div>
     </div>

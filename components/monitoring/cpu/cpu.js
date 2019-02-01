@@ -18,10 +18,152 @@
 /* global $ si Chart settings */
 "use strict";
 
+const graphs = [{
+    elementId: "canvas-cpu-usage",
+    name: "CPU Usage",
+    isPinned: true,
+    togglePin() { this.isPinned = !this.isPinned; },
+    chart: {},
+    config: {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Average",
+                backgroundColor: "#f38b4a",
+                borderColor: "#f38b4a",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        min : 0,
+                        max : 100,
+                        stepSize : 10
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: false,
+                        labelString: "Value"
+                    }
+                }]
+            }
+        }
+    },
+    init(element) {
+        si.currentLoad()
+            .then(data => {
+                if (this.config.data.datasets.length === 1) {
+                    const allThreads = data.cpus;
+                    allThreads.forEach((thread, index) => {
+                        this.config.data.datasets.push({
+                            label: "Thread " + (index+1),
+                            backgroundColor: "#ddd",
+                            borderColor: "#ddd",
+                            fill: false,
+                            borderWidth: 0.5,
+                            pointRadius: 1
+                        });
+                    });
+                }
+                const cvs = element
+                    ? element.querySelector(`.${this.elementId}`)
+                    : document.getElementById(this.elementId);
+                this.chart = new Chart(cvs.getContext("2d"), this.config);
+            });
+    },
+    render() {
+        /* get the cpu information */
+        si.currentLoad()
+            .then(data => {
+            /* update the graph - average*/
+                this.config.data.labels.push("");
+                this.config.data.datasets[0].data.push(data.currentload);
+                while (this.config.data.datasets[0].data.length > settings.graphs.width) {
+                    this.config.data.datasets[0].data.splice(0, 1);
+                    this.config.data.labels.splice(0, 1);
+                }
+                /* update the graph - per thread */
+                for (let s = 0; s < this.config.data.datasets.length - 1; s++) {
+                    this.config.data.datasets[s+1].data.push(data.cpus[s].load);
+                    while (this.config.data.datasets[s+1].data.length > settings.graphs.width) {
+                        this.config.data.datasets[s+1].data.splice(0, 1);
+                    }
+                }
+                this.chart.update();
+            });
+    }
+},
+{
+    elementId: "canvas-cpu-temperature",
+    name: "CPU Temperature",
+    isPinned: false,
+    togglePin() { this.isPinned = !this.isPinned; },
+    chart: {},
+    config: {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Average",
+                backgroundColor: "#f38b4a",
+                borderColor: "#f38b4a",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        min : 0,
+                        max : 100,
+                        stepSize : 10
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: false,
+                        labelString: "Value"
+                    }
+                }]
+            }
+        }
+    },
+    init(element) {
+        const cvs = element
+            ? element.querySelector(`.${this.elementId}`)
+            : document.getElementById(this.elementId);
+        this.chart = new Chart(cvs.getContext("2d"), this.config);
+    },
+    render() {
+        let temperature;
+        si.cpuTemperature()
+            .then(data => {
+                temperature = data.max;
+                /* update the graph */
+                this.config.data.labels.push("");
+                this.config.data.datasets.forEach(dataset => {
+                    dataset.data.push(parseInt(temperature));
+                    while (dataset.data.length > settings.graphs.width) {
+                        dataset.data.splice(0, 1);
+                        this.config.data.labels.splice(0, 1);
+                    }
+                });
+                this.chart.update();
+            });
+    }
+}];
+
 module.exports = {
     init: initCpu,
     refresh: refreshCpu,
-    activate: activateCpu
+    activate: activateCpu,
+    graphs
 };
 
 // Storing static CPU title
@@ -30,95 +172,96 @@ let cpuTitle = "";
 /*
 * Config for the Usage chart
 */
-const configCpuUsage = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Average",
-            backgroundColor: "#f38b4a",
-            borderColor: "#f38b4a",
-            fill: false
-        }]
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks:{
-                    min : 0,
-                    max : 100,
-                    stepSize : 10
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
+// const configCpuUsage = {
+//     type: "line",
+//     data: {
+//         datasets: [{
+//             label: "Average",
+//             backgroundColor: "#f38b4a",
+//             borderColor: "#f38b4a",
+//             fill: false
+//         }]
+//     },
+//     options: {
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             yAxes: [{
+//                 ticks:{
+//                     min : 0,
+//                     max : 100,
+//                     stepSize : 10
+//                 },
+//                 display: true,
+//                 scaleLabel: {
+//                     display: false,
+//                     labelString: "Value"
+//                 }
+//             }]
+//         }
+//     }
+// };
 
 /*
 * Config for the Temperature chart
 */
-const configCpuTemperature = {
-    type: "line",
-    data: {
-        datasets: [{
-            label: "Average",
-            backgroundColor: "#f38b4a",
-            borderColor: "#f38b4a",
-            fill: false
-        }]
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks:{
-                    min : 0,
-                    max : 100,
-                    stepSize : 10
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: "Value"
-                }
-            }]
-        }
-    }
-};
+// const configCpuTemperature = {
+// const configCpuTemperature = {
+//     type: "line",
+//     data: {
+//         datasets: [{
+//             label: "Average",
+//             backgroundColor: "#f38b4a",
+//             borderColor: "#f38b4a",
+//             fill: false
+//         }]
+//     },
+//     options: {
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             yAxes: [{
+//                 ticks:{
+//                     min : 0,
+//                     max : 100,
+//                     stepSize : 10
+//                 },
+//                 display: true,
+//                 scaleLabel: {
+//                     display: false,
+//                     labelString: "Value"
+//                 }
+//             }]
+//         }
+//     }
+// };
 
 function initCpu() {
-    // cpu usage
-    si.currentLoad()
-        .then(data => {
-            if (configCpuUsage.data.datasets.length === 1) {
-                const allThreads = data.cpus;
-                allThreads.forEach((thread, index) => {
-                    configCpuUsage.data.datasets.push({
-                        label: "Thread " + (index+1),
-                        backgroundColor: "#ddd",
-                        borderColor: "#ddd",
-                        fill: false,
-                        borderWidth: 0.5,
-                        pointRadius: 1
-                    });
-                });
-            }
-            const ctx = document.getElementById("canvas-cpu-usage").getContext("2d");
-            window.cpuUsage = new Chart(ctx, configCpuUsage);
-        });
-
-    // cpu temps
-    const ctx = document.getElementById("canvas-cpu-temperature").getContext("2d");
-    window.cpuTemperature = new Chart(ctx, configCpuTemperature);
+    // // cpu usage
+    // si.currentLoad()
+    //     .then(data => {
+    //         if (configCpuUsage.data.datasets.length === 1) {
+    //             const allThreads = data.cpus;
+    //             allThreads.forEach((thread, index) => {
+    //                 configCpuUsage.data.datasets.push({
+    //                     label: "Thread " + (index+1),
+    //                     backgroundColor: "#ddd",
+    //                     borderColor: "#ddd",
+    //                     fill: false,
+    //                     borderWidth: 0.5,
+    //                     pointRadius: 1
+    //                 });
+    //             });
+    //         }
+    //         const ctx = document.getElementById("canvas-cpu-usage").getContext("2d");
+    //         window.cpuUsage = new Chart(ctx, configCpuUsage);
+    //     });
+    //
+    // // cpu temps
+    // const ctx = document.getElementById("canvas-cpu-temperature").getContext("2d");
+    // window.cpuTemperature = new Chart(ctx, configCpuTemperature);
 
     // cpu flags
     si.cpuFlags()
@@ -130,6 +273,10 @@ function initCpu() {
         });
 
     loadCpuInformation();
+
+    graphs.forEach(graph => {
+        graph.init();
+    });
 }
 
 function loadCpuInformation(){
@@ -168,46 +315,49 @@ function activateCpu() {
 }
 
 function refreshCpu() {
-    refreshCpuUsage();
-    refreshCpuTemperature();
+    // refreshCpuUsage();
+    // refreshCpuTemperature();
+    graphs.forEach(graph => {
+        graph.render();
+    });
 }
 
-function refreshCpuUsage() {
-    /* get the cpu information */
-    si.currentLoad()
-        .then(data => {
-        /* update the graph - average*/
-            configCpuUsage.data.labels.push("");
-            configCpuUsage.data.datasets[0].data.push(data.currentload);
-            while (configCpuUsage.data.datasets[0].data.length > settings.graphs.width) {
-                configCpuUsage.data.datasets[0].data.splice(0, 1);
-                configCpuUsage.data.labels.splice(0, 1);
-            }
-            /* update the graph - per thread */
-            for (let s = 0; s < configCpuUsage.data.datasets.length - 1; s++) {
-                configCpuUsage.data.datasets[s+1].data.push(data.cpus[s].load);
-                while (configCpuUsage.data.datasets[s+1].data.length > settings.graphs.width) {
-                    configCpuUsage.data.datasets[s+1].data.splice(0, 1);
-                }
-            }
-            window.cpuUsage.update();
-        });
-}
+// function refreshCpuUsage() {
+//     /* get the cpu information */
+//     si.currentLoad()
+//         .then(data => {
+//         /* update the graph - average*/
+//             configCpuUsage.data.labels.push("");
+//             configCpuUsage.data.datasets[0].data.push(data.currentload);
+//             while (configCpuUsage.data.datasets[0].data.length > settings.graphs.width) {
+//                 configCpuUsage.data.datasets[0].data.splice(0, 1);
+//                 configCpuUsage.data.labels.splice(0, 1);
+//             }
+//             /* update the graph - per thread */
+//             for (let s = 0; s < configCpuUsage.data.datasets.length - 1; s++) {
+//                 configCpuUsage.data.datasets[s+1].data.push(data.cpus[s].load);
+//                 while (configCpuUsage.data.datasets[s+1].data.length > settings.graphs.width) {
+//                     configCpuUsage.data.datasets[s+1].data.splice(0, 1);
+//                 }
+//             }
+//             window.cpuUsage.update();
+//         });
+// }
 
-function refreshCpuTemperature() {
-    let temperature;
-    si.cpuTemperature()
-        .then(data => {
-            temperature = data.max;
-            /* update the graph */
-            configCpuTemperature.data.labels.push("");
-            configCpuTemperature.data.datasets.forEach(dataset => {
-                dataset.data.push(parseInt(temperature));
-                while (dataset.data.length > settings.graphs.width) {
-                    dataset.data.splice(0, 1);
-                    configCpuTemperature.data.labels.splice(0, 1);
-                }
-            });
-            window.cpuTemperature.update();
-        });
-}
+// function refreshCpuTemperature() {
+//     let temperature;
+//     si.cpuTemperature()
+//         .then(data => {
+//             temperature = data.max;
+//             /* update the graph */
+//             configCpuTemperature.data.labels.push("");
+//             configCpuTemperature.data.datasets.forEach(dataset => {
+//                 dataset.data.push(parseInt(temperature));
+//                 while (dataset.data.length > settings.graphs.width) {
+//                     dataset.data.splice(0, 1);
+//                     configCpuTemperature.data.labels.splice(0, 1);
+//                 }
+//             });
+//             window.cpuTemperature.update();
+//         });
+// }
