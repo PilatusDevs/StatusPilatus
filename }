@@ -27,9 +27,6 @@ module.exports = {
 // Storing static CPU title
 let cpuTitle = "";
 
-// Storing max CPU speed for table max value (round up to next int)
-let maxCpuSpeed;
-
 /*
 * Config for the Usage chart
 */
@@ -116,7 +113,7 @@ const configCpuSpeed = {
             yAxes: [{
                 ticks:{
                     min : 0,
-                    max : maxCpuSpeed,
+                    max : 5,
                     stepSize : 1
                 },
                 display: true,
@@ -177,7 +174,7 @@ function loadCpuInformation(){
                 <b>Manufacturer</b>: ${data.manufacturer} </br>
                 <b>Brand</b>: ${data.brand} </br>
                 <b>Cores/Threads</b>: ${data.physicalCores}/${data.cores} </br>
-                <b>Speed</b>: ${data.speed} GHz </br>
+                <b>Speed</b>: ${data.max} GHz </br>
                 <b>Socket</b>: ${data.socket} </br>
                 <b>Family</b>: ${data.family} </br>
                 <h6>Cache</h6>
@@ -188,7 +185,6 @@ function loadCpuInformation(){
             `;
 
             $("#cpu-information").append(text);
-            maxCpuSpeed=parseInt(data.speedmax)+1;
         });
 }
 
