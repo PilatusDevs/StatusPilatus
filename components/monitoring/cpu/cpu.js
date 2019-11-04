@@ -27,6 +27,9 @@ module.exports = {
 // Storing static CPU title
 let cpuTitle = "";
 
+// Storing max CPU speed for table max value (round up to next int)
+let maxCpuSpeed;
+
 /*
 * Config for the Usage chart
 */
@@ -95,6 +98,36 @@ const configCpuTemperature = {
     }
 };
 
+const configCpuSpeed = {
+    type: "line",
+    data: {
+        datasets: [{
+            label: "Average",
+            backgroundColor: "#f38b4a",
+            borderColor: "#f38b4a",
+            fill: false
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks:{
+                    min : 0,
+                    max : maxCpuSpeed,
+                    stepSize : 1
+                },
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: "Value"
+                }
+            }]
+        }
+    }
+};
 function initCpu() {
     // cpu usage
     si.currentLoad()
@@ -116,6 +149,9 @@ function initCpu() {
             window.cpuUsage = new Chart(ctx, configCpuUsage);
         });
 
+    // cpu speed
+    const csx = document.getElementById("canvas-cpu-speed").getContext("2d");
+    window.cpuSpeed = new Chart(csx, configCpuSpeed);
     // cpu temps
     const ctx = document.getElementById("canvas-cpu-temperature").getContext("2d");
     window.cpuTemperature = new Chart(ctx, configCpuTemperature);
@@ -152,6 +188,7 @@ function loadCpuInformation(){
             `;
 
             $("#cpu-information").append(text);
+            maxCpuSpeed=parseInt(data.speedmax)+1;
         });
 }
 
@@ -170,6 +207,7 @@ function activateCpu() {
 function refreshCpu() {
     refreshCpuUsage();
     refreshCpuTemperature();
+    refreshCpuSpeed();
 }
 
 function refreshCpuUsage() {
@@ -209,5 +247,22 @@ function refreshCpuTemperature() {
                 }
             });
             window.cpuTemperature.update();
+        });
+}
+function refreshCpuSpeed() {
+    let speed;
+    si.cpuCurrentspeed()
+        .then(data => {
+            speed = data.max;
+            /* update the graph */
+            configCpuSpeed.data.labels.push("");
+            configCpuSpeed.data.datasets.forEach(dataset => {
+                dataset.data.push(parseFloat(speed));
+                while (dataset.data.length > settings.graphs.width) {
+                    dataset.data.splice(0, 1);
+                    configCpuSpeed.data.labels.splice(0, 1);
+                }
+            });
+            window.cpuSpeed.update();
         });
 }
