@@ -236,6 +236,7 @@ function changeNetworkAdapter(){
 function updateNetworkUsage() {
     si.networkStats(currentAdapter)
         .then(data => {
+            data = data[0];
             /* convert the bytes to Mb */
             const downUsage = util.formatBytesToMb(data.rx_sec);
             const upUsage = util.formatBytesToMb(data.tx_sec);
