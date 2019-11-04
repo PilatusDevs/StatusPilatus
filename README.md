@@ -49,11 +49,14 @@ Any errors that occur during the process can mean two things:
 When the time is right we will generate builds with one of the following commands:
 
 ```
+npm run build
 npm run buildall
 npm run buildlinux
-npm run buildmac
 npm run buildwin
+npm run buildmac
 ```
+
+You can also run the "build.js" script directly with node.
 
 ## Structure
 
