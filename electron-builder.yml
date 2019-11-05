@@ -1,0 +1,54 @@
+appId: com.github.pilatusdevs.statuspilatus
+linux:
+  executableName: statuspilatus
+  icon: app/img/icons
+  category: Office;Utility;
+  maintainer: PilatusDevs
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+    - target: rpm
+      arch:
+        - x64
+    - target: snap
+      arch:
+        - x64
+    - target: tar.gz
+      arch:
+        - x64
+rpm:
+  fpm:
+    - --rpm-rpmbuild-define=_build_id_links none
+mac:
+  icon: app/img/icons
+  target:
+    - target: zip
+      arch:
+        - x64
+  extraFiles:
+    - from: README.md
+      to: ../../README.md
+    - from: LICENSE
+      to: ../../LICENSE
+win:
+  icon: app/img/icons/512x512.png
+  legalTrademarks: Copyright @ PilatusDevs | Licensed as free software (GPL-3.0+)
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: zip
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  license: LICENSE
+copyright: Copyright @ PilatusDevs | Licensed as free software (GPL-3.0+)
+extraFiles:
+  - filter:
+      - README.md
+      - LICENSE

@@ -3,108 +3,26 @@
   "version": "0.5.0",
   "description": "Monitor your PC like never before!",
   "main": "app/index.js",
-  "build": {
-    "appId": "com.github.pilatusdevs.statuspilatus",
-    "linux": {
-      "executableName": "statuspilatus",
-      "icon": "build/icons",
-      "category": "Office;Utility;",
-      "maintainer": "PilatusDevs",
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "deb",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "rpm",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "tar.gz",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
-    "mac": {
-      "icon": "build/icons",
-      "target": [
-        {
-          "target": "zip",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "extraFiles": [
-        {
-          "from": "README.md",
-          "to": "../../README.md"
-        },
-        {
-          "from": "LICENSE",
-          "to": "../../LICENSE"
-        }
-      ]
-    },
-    "win": {
-      "icon": "build/icons",
-      "legalTrademarks": "Copyright @ PilatusDevs | Licensed as free software (GPL-3.0+)",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "zip",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "license": "LICENSE"
-    },
-    "copyright": "Copyright @ PilatusDevs | Licensed as free software (GPL-3.0+)",
-    "extraFiles": [
-      "README.md",
-      "LICENSE"
-    ]
-  },
   "dependencies": {
-    "chart.js": "^2.7.3",
-    "jquery": "^3.3.1",
-    "material-icons": "^0.3.0",
+    "chart.js": "^2.9.2",
+    "jquery": "^3.4.1",
+    "material-icons": "^0.3.1",
     "materialize-css": "^1.0.0",
     "proglistr": "^1.4.0",
-    "systeminformation": "^3.54.0"
+    "systeminformation": "^4.14.17"
   },
   "devDependencies": {
-    "electron": "^4.0.2",
-    "electron-builder": "^20.38.5",
-    "eslint": "^5.12.1"
+    "electron": "^7.0.1",
+    "electron-builder": "^22.1.0",
+    "eslint": "^6.6.0"
   },
   "scripts": {
     "start": "electron app",
-    "buildall": "electron-builder --linux --mac --win",
-    "buildlinux": "electron-builder --linux",
-    "buildmac": "electron-builder --mac",
-    "buildwin": "electron-builder --win"
+    "build": "node build.js",
+    "buildall": "node build.js --linux --win --mac",
+    "buildlinux": "node build.js --linux",
+    "buildwin": "node build.js --win",
+    "buildmac": "node build.js --mac"
   },
   "repository": {
     "type": "git",
