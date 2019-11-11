@@ -212,9 +212,11 @@ function refreshCpu() {
 
 function refreshCpuUsage() {
     /* get the cpu information */
+    let usage;
     si.currentLoad()
         .then(data => {
         /* update the graph - average*/
+            usage = data.currentload;
             configCpuUsage.data.labels.push("");
             configCpuUsage.data.datasets[0].data.push(data.currentload);
             while (configCpuUsage.data.datasets[0].data.length > settings.graphs.width) {
@@ -229,6 +231,7 @@ function refreshCpuUsage() {
                 }
             }
             window.cpuUsage.update();
+            document.getElementById("cpuUsage").getElementsByClassName("card-title")[0].innerText="CPU usage: "+Math.round(parseFloat(usage))+"%"
         });
 }
 
@@ -247,6 +250,7 @@ function refreshCpuTemperature() {
                 }
             });
             window.cpuTemperature.update();
+            document.getElementById("cpuTemperature").getElementsByClassName("card-title")[0].innerText="CPU Temperature: "+temperature+"°C"
         });
 }
 function refreshCpuSpeed() {
@@ -264,5 +268,6 @@ function refreshCpuSpeed() {
                 }
             });
             window.cpuSpeed.update();
+            document.getElementById("cpuSpeed").getElementsByClassName("card-title")[0].innerText="CPU Speed: "+speed+"GHZ"
         });
 }
