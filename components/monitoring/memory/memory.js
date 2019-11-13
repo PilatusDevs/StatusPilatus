@@ -100,6 +100,8 @@ function refreshMemory() {
                 }
             });
             window.memUsage.update();
+            document.getElementById("memoryUsage").getElementsByClassName("card-title")[0].innerText="Memory Usage: "+Math.round(usageGB/10)/100+"GB"
+
         });
 }
 
