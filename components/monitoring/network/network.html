@@ -49,9 +49,12 @@
 
                     <button type="button" name="button" id="pingButton" class="btn btn-primary">Test ping</button>
                     <button type="button" name="button" id="clearButton" class="btn btn-secondary" style="display: none;">Clear</button>
-                    <input type="text" name="" value="8.8.4.4" id="pingTarget" class="form-control" style="margin-top: 20px;">
+                    <input type="text" name="" value="1.1.1.1" id="pingTarget" class="form-control" style="margin-top: 20px;">
                     <p>Note: pinging only works with ip adresses at the moment</p>
 
+                    <div class="well" id="ping-average" style="display: none; margin-top: 20px;">
+                        <p>Average ping: <span id="average-ping-span">0</span></p>
+                    </div>
                     <div class="well" id="ping-well" style="display: none; margin-top: 20px;"></div>
                 </div>
             </div>

@@ -134,6 +134,7 @@ function checkConnectivity(){
 }
 
 function doAPing() {
+    $("#ping-average").show();
     $("#ping-well").show();
     $("#clearButton").show();
     $("#pingButton").prop("disabled", true);
@@ -145,16 +146,23 @@ function doAPing() {
         return;
     }
     const numberOfPings = 4;
+    const pings = [];
     for (let i = 0; i < numberOfPings; i++) {
         util.sleep(1000 * i).then(() => {
             si.inetLatency(ip)
                 .then(data => {
                     $("#ping-well").append(data + "<br>");
+                    pings.push(data);
                 })
                 .catch(error => console.error(error));
         });
     }
     util.sleep(1000 * numberOfPings).then(() => {
+        let total = 0;
+        for (let i = 0; i < pings.length; i++) {
+            total += pings[i];
+            $("#average-ping-span").text(total/numberOfPings);
+        }
         $("#pingButton").prop("disabled", false);
         $("#clearButton").prop("disabled", false);
     });
