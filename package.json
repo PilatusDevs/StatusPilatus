@@ -9,7 +9,7 @@
     "material-icons": "^0.3.1",
     "materialize-css": "^1.0.0",
     "proglistr": "^1.4.0",
-    "systeminformation": "^4.14.17"
+    "systeminformation": "^4.27.11"
   },
   "devDependencies": {
     "electron": "^7.0.1",
