@@ -111,7 +111,7 @@ function refreshOs() {
 }
 
 function osHtml(os) {
-    const body = `<span class="card-title">${os.platform}</span>
+    const body = `<span class="card-title" id="os-tile">${os.platform}</span>
     <b>Distro</b>: ${os.distro}<br />
     <b>Codename</b>: ${os.codename}<br />
     <b>Release</b>: ${os.release}<br />
@@ -137,8 +137,14 @@ function versionHtml(versions) {
 
 function userHtml(users) {
     let body = "";
+    const usr = [];
+
     users.forEach(user => {
-        body += `<b>${user.user}</b><br />`;
+        if (!usr.includes(user.user)) usr.push(user.user);
+    });
+
+    usr.forEach(user => {
+        body += `<b>${user}</b><br />`;
     });
     return body;
 }
