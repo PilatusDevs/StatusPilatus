@@ -12,7 +12,7 @@
     "systeminformation": "^4.14.17"
   },
   "devDependencies": {
-    "electron": "^7.0.1",
+    "electron": "^9.4.0",
     "electron-builder": "^22.1.0",
     "eslint": "^6.6.0"
   },
