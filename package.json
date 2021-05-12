@@ -4,7 +4,7 @@
   "description": "Monitor your PC like never before!",
   "main": "app/index.js",
   "dependencies": {
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "jquery": "^3.4.1",
     "material-icons": "^0.3.1",
     "materialize-css": "^1.0.0",
